@@ -26,7 +26,7 @@
                     <label class="label label-danger label-sm">CÔNG NỢ</label>
                     @endif
                     <br>
-                    <span style="color:#06b7a4; text-transform: uppercase;"><span style="color: #FEE45B;font-weight: bold">PTT{{ $item->id }}</span> - {{ $item->name }} </span> 
+                    <span style="color:#06b7a4; text-transform: uppercase;"><span style="color: #ff9d00;font-weight: bold">PTT{{ $item->id }}</span> - {{ $item->name }} </span> 
                      @if($item->tour_id == 3)
                   <br><label class="label label-warning">Rạch Vẹm</label>
                   @elseif($item->tour_id == 4)
@@ -86,7 +86,7 @@
                     @endif
                     @if($item->notes)
                     <br>                    
-                    <span style="color:#FEE45B">{!! nl2br($item->notes) !!}</span>
+                    <span style="color:#ff9d00">{!! nl2br($item->notes) !!}</span>
                     @endif   
                     
                       @php

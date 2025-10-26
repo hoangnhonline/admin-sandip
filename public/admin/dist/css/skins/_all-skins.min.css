@@ -13,7 +13,7 @@
 .skin-blue .main-header .navbar .nav .open>a:hover,
 .skin-blue .main-header .navbar .nav .open>a:focus,
 .skin-blue .main-header .navbar .nav>.active>a {
-	background: #FEE45B;
+	background: #ff9d00;
 	color: #f6f6f6
 }
 
@@ -45,7 +45,7 @@
 
 .skin-blue .main-header .logo {
 	background-color: #fff;
-	color: #FEE45B;
+	color: #ff9d00;
 	border-bottom: 0 solid transparent
 }
 
@@ -89,7 +89,7 @@
 }
 
 .skin-blue .sidebar-menu>li.active>a {
-	border-left-color: #FEE45B
+	border-left-color: #ff9d00
 }
 
 .skin-blue .sidebar-menu>li>.treeview-menu {
@@ -111,7 +111,7 @@
 
 .skin-blue .sidebar-menu .treeview-menu>li.active>a,
 .skin-blue .sidebar-menu .treeview-menu>li>a:hover {
-	color: #FEE45B
+	color: #ff9d00
 }
 
 .skin-blue .sidebar-form {
@@ -1439,7 +1439,7 @@
 }
 
 .skin-yellow .main-header .navbar {
-	background-color: #FEE45B
+	background-color: #ff9d00
 }
 
 .skin-yellow .main-header .navbar .nav>li>a {
@@ -1497,7 +1497,7 @@
 }
 
 .skin-yellow .main-header li.user-header {
-	background-color: #FEE45B
+	background-color: #ff9d00
 }
 
 .skin-yellow .content-header {
@@ -1532,7 +1532,7 @@
 }
 
 .skin-yellow .sidebar-menu>li.active>a {
-	border-left-color: #FEE45B
+	border-left-color: #ff9d00
 }
 
 .skin-yellow .sidebar-menu>li>.treeview-menu {
@@ -1598,7 +1598,7 @@
 }
 
 .skin-yellow-light .main-header .navbar {
-	background-color: #FEE45B
+	background-color: #ff9d00
 }
 
 .skin-yellow-light .main-header .navbar .nav>li>a {
@@ -1646,7 +1646,7 @@
 }
 
 .skin-yellow-light .main-header .logo {
-	background-color: #FEE45B;
+	background-color: #ff9d00;
 	color: #fff;
 	border-bottom: 0 solid transparent
 }
@@ -1656,7 +1656,7 @@
 }
 
 .skin-yellow-light .main-header li.user-header {
-	background-color: #FEE45B
+	background-color: #ff9d00
 }
 
 .skin-yellow-light .content-header {
@@ -1701,7 +1701,7 @@
 }
 
 .skin-yellow-light .sidebar-menu>li.active {
-	border-left-color: #FEE45B
+	border-left-color: #ff9d00
 }
 
 .skin-yellow-light .sidebar-menu>li.active>a {

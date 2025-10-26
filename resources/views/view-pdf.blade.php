@@ -42,14 +42,14 @@
                                                     
                             
                         </div>
-                         <h4 class="text-center" style="color: #FEE45B;clear: both;margin-top: 20px;">HÓA ĐƠN DỊCH VỤ</h4>
+                         <h4 class="text-center" style="color: #ff9d00;clear: both;margin-top: 20px;">HÓA ĐƠN DỊCH VỤ</h4>
                     </td>                              
                 </tr>
                 @else
                 <tr>
                     <td colspan="2" class="text-center">
                         <img src="{{ asset('images/logo-group.jpg') }}" alt="logo" width="120px" />
-                         <h4 class="text-center" style="color: #FEE45B;clear: both;">XÁC NHẬN ĐẶT DỊCH VỤ</h4>
+                         <h4 class="text-center" style="color: #ff9d00;clear: both;">XÁC NHẬN ĐẶT DỊCH VỤ</h4>
                     </td>                              
                 </tr>
                 @endif

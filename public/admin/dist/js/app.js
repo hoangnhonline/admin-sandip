@@ -106,7 +106,7 @@ $.AdminLTE.options = {
     red: "#f56954",
     green: "#00a65a",
     aqua: "#28AA4A",
-    yellow: "#FEE45B",
+    yellow: "#ff9d00",
     blue: "#0073b7",
     navy: "#001F3F",
     teal: "#39CCCC",
