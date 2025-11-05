@@ -90,7 +90,7 @@
             </div>
             <div class="form-group">
               <select name="cate_id" class="form-control select2">
-                    <option value="">-Dịch vụ-</option>
+                    <option value="">-Dish-</option>
                     @foreach($cateList as $cate)
                       <option value="{{ $cate->id }}" {{ $cate->id == $cate_id ? "selected" : "" }}>{{ $cate->name }}</option>
                     @endforeach
@@ -292,12 +292,12 @@
               <th width="1%">STT</th>
 
               <th style="width: 200px">Thông tin khách</th>
-              <th width="30%">Dịch vụ</th>
+              <th width="30%">Dish</th>
               <th class="text-center" width="120">Ngày</th>
               <th class="text-right" width="100">Tổng tiền</th>
               <th class="text-right" width="100">Tiền cọc</th>
-              <th class="text-right" width="100" >Giảm giá</th>
-              <th class="text-right"  width="100">Chiết khấu</th>
+              <th class="text-right" width="100" >Discount</th>
+              <th class="text-right"  width="100">Discount rate / Discount (%)</th>
               <th class="text-right"  width="100">Còn lại</th>
               <th class="text-center"  width="100">Thanh toán</th>
               <th width="200" style="white-space:nowrap; text-align: right">Thao tác</th>
@@ -540,7 +540,7 @@
                   <div style="clear:both"></div>
 
                   <div class="form-group">
-                    <label>Ghi chú</label>
+                    <label>Notes</label>
                     <textarea class="form-control" rows="6" name="notes" id="notes_payment">{{ old('notes') }}</textarea>
                   </div>
 
@@ -548,7 +548,7 @@
               </div>
 
               <div class="box-footer">
-                <button type="button" id="btnSavePayment" class="btn btn-primary btn-sm">Lưu</button>
+                <button type="button" id="btnSavePayment" class="btn btn-primary btn-sm">Save</button>
 
                 <button type="button" class="btn btn-default btn-sm" id="btnLoading" style="display:none"><i class="fa fa-spin fa-spinner"></i> Đang xử lý...</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>

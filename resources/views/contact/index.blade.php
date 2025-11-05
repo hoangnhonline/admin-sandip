@@ -56,7 +56,7 @@
              
               <th>Họ tên</th>
               <th>Email</th>
-              <th>Điện thoại</th>
+              <th>Phone number</th>
               <th>Nội dung</th>
               <th width="10%">Thời gian tạo</th>
               <th width="1%;white-space:nowrap">Thao tác</th>

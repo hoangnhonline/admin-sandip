@@ -99,7 +99,7 @@
                 <th width="15%" class="text-center">HDV + ghi chú</th>
                 <th width="7%" class="text-center">Số dịch vụ</th>
                 <th width="20%" class="text-right">Tổng doanh thu</th>
-                <th width="17%" class="text-right">Chiết khấu</th>
+                <th width="17%" class="text-right">Discount rate / Discount (%)</th>
                 <th width="20%" class="text-right">DT sau chiết khấu</th>
               </tr>
               @php  $i = 0; 
@@ -164,7 +164,7 @@
                 <th width="15%" class="text-center">HDV + ghi chú</th>
                 <th width="7%" class="text-center">Số dịch vụ</th>
                 <th width="20%" class="text-right">Tổng doanh thu</th>
-                <th width="17%" class="text-right">Chiết khấu</th>
+                <th width="17%" class="text-right">Discount rate / Discount (%)</th>
                 <th width="20%" class="text-right">DT sau chiết khấu</th>
               </tr>
               @php  $i = 0; 

@@ -15,7 +15,7 @@
 
   <!-- Main content -->
   <section class="content">
-    <a class="btn btn-default btn-sm" href="{{ route('w-pages.index') }}" style="margin-bottom:5px">Quay lại</a>
+    <a class="btn btn-default btn-sm" href="{{ route('w-pages.index') }}" style="margin-bottom:5px">Back</a>
     <form role="form" method="POST" action="{{ route('w-pages.store') }}" id="dataForm">
     <div class="row">
       <!-- left column -->
@@ -81,8 +81,8 @@
             </div>          
             <input type="hidden" name="image_url" id="image_url" value="{{ old('image_url') }}"/>                      
             <div class="box-footer">
-              <button type="submit" class="btn btn-primary btn-sm">Lưu</button>
-              <a class="btn btn-default btn-sm" class="btn btn-primary btn-sm" href="{{ route('w-pages.index')}}">Hủy</a>
+              <button type="submit" class="btn btn-primary btn-sm">Save</button>
+              <a class="btn btn-default btn-sm" class="btn btn-primary btn-sm" href="{{ route('w-pages.index')}}">Cancel</a>
             </div>
             
         </div>

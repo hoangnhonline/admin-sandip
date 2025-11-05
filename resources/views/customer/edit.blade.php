@@ -9,14 +9,14 @@
         <ol class="breadcrumb">
             <li><a href="{{ route( 'dashboard' ) }}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
             <li><a href="{{ route('customer.index') }}">Khách hàng</a></li>
-            <li class="active">Cập nhật</li>
+            <li class="active">Update</li>
         </ol>
     </section>
 
     <!-- Main content -->
     <section class="content">
         <a class="btn btn-default btn-sm" href="{{ route('customer.index') }}"
-            style="margin-bottom:5px">Quay lại</a>
+            style="margin-bottom:5px">Back</a>
         <form role="form" method="POST" action="{{ route('customer.update') }}" id="dataForm">
             <div class="row">
                 <!-- left column -->
@@ -96,9 +96,9 @@
                         </div>
                         
                         <div class="box-footer">
-                            <button type="submit" class="btn btn-primary btn-sm">Lưu</button>
+                            <button type="submit" class="btn btn-primary btn-sm">Save</button>
                             <a class="btn btn-default btn-sm" class="btn btn-primary btn-sm"
-                                href="{{ route('customer.index')}}">Hủy</a>
+                                href="{{ route('customer.index')}}">Cancel</a>
                         </div>
 
                     </div>

@@ -9,13 +9,13 @@
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
       <li><a href="{{ route('food.index') }}">Món ăn</a></li>
-      <li class="active">Cập nhật</li>
+      <li class="active">Update</li>
     </ol>
   </section>
 
   <!-- Main content -->
   <section class="content">
-    <a class="btn btn-default btn-sm" href="{{ route('food.index') }}" style="margin-bottom:5px">Quay lại</a>    
+    <a class="btn btn-default btn-sm" href="{{ route('food.index') }}" style="margin-bottom:5px">Back</a>    
     <form role="form" method="POST" action="{{ route('food.update') }}" id="dataForm">
     <div class="row">
       <!-- left column -->
@@ -83,8 +83,8 @@
             </div>          
             
             <div class="box-footer">
-              <button type="submit" class="btn btn-primary btn-sm">Lưu</button>
-              <a class="btn btn-default btn-sm" class="btn btn-primary btn-sm" href="{{ route('food.index')}}">Hủy</a>
+              <button type="submit" class="btn btn-primary btn-sm">Save</button>
+              <a class="btn btn-default btn-sm" class="btn btn-primary btn-sm" href="{{ route('food.index')}}">Cancel</a>
             </div>
             
         </div>

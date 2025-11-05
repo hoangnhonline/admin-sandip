@@ -147,8 +147,8 @@
     </div>
     <!-- /.box-body -->                
     <div class="box-footer">
-      <button type="submit" class="btn btn-primary btn-sm">Lưu</button>
-      <a class="btn btn-default btn-sm" class="btn btn-primary btn-sm" data-dismiss="modal">Hủy</a>
+      <button type="submit" class="btn btn-primary btn-sm">Save</button>
+      <a class="btn btn-default btn-sm" class="btn btn-primary btn-sm" data-dismiss="modal">Cancel</a>
     </div>
     
 </div>

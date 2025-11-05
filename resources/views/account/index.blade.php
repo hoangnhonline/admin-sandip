@@ -83,7 +83,7 @@
           </div> 
           @endif           
           <div class="form-group">
-            <label>&nbsp;&nbsp;Điện thoại</label>
+            <label>&nbsp;&nbsp;Phone number</label>
             <input type="text" name="phone" value="{{ $phone }}" class="form-control">
           </div>
           @if(Auth::user()->id != 333)
@@ -137,7 +137,7 @@
                 <!-- <th>Ảnh avatar</th> -->
                 <th>CODE</th>
                 <th>Email truy cập</th>
-                <th>Điện thoại</th>
+                <th>Phone number</th>
                 <th style="display: none;">Phân loại</th>
                 <th>Level</th>
                 <!-- <th>Status</th>

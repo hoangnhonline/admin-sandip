@@ -15,7 +15,7 @@
 
   <!-- Main content -->
   <section class="content">
-    <a class="btn btn-default btn-sm" href="{{ route('supplier.index', ['cate_id' => $cate_id]) }}" style="margin-bottom:5px">Quay lại</a>
+    <a class="btn btn-default btn-sm" href="{{ route('supplier.index', ['cate_id' => $cate_id]) }}" style="margin-bottom:5px">Back</a>
     <form role="form" method="POST" action="{{ route('supplier.store') }}" id="dataForm">
     <div class="row">
       <!-- left column -->
@@ -127,8 +127,8 @@
             </div>          
                               
             <div class="box-footer">
-              <button type="submit" class="btn btn-primary btn-sm">Lưu</button>
-              <a class="btn btn-default btn-sm" class="btn btn-primary btn-sm" href="{{ route('supplier.index', ['cate_id' => $cate_id])}}">Hủy</a>
+              <button type="submit" class="btn btn-primary btn-sm">Save</button>
+              <a class="btn btn-default btn-sm" class="btn btn-primary btn-sm" href="{{ route('supplier.index', ['cate_id' => $cate_id])}}">Cancel</a>
             </div>
             
         </div>

@@ -95,8 +95,8 @@
                 <th class="text-right">CP vận hành</th>
                 <th class="text-right">Cost khác</th>
                 <th class="text-right">Tổng chi phí</th>
-                <th class="text-right">Chiết khấu bãi</th>
-                <th class="text-right">Chiết khấu khác</th>
+                <th class="text-right">Discount rate / Discount (%) bãi</th>
+                <th class="text-right">Discount rate / Discount (%) khác</th>
                 <th class="text-right">Cost cố định</th>
                 <th class="text-right">Lợi nhuận vận hành</th>
                 <th class="text-right">Lợi nhuận thực</th>

@@ -309,7 +309,7 @@
                     <br>- Giảm: <span style="color: red;font-weight: bold;">{{ number_format($item->discount) }}</span>                    
                     @endif
                     @if($item->commision > 0) 
-                    <br>- Chiết khấu: <span style="color: red;font-weight: bold;">{{ number_format($item->commision) }} 
+                    <br>- Discount rate / Discount (%): <span style="color: red;font-weight: bold;">{{ number_format($item->commision) }} 
                     @if($item->per_com <= 100 && $item->beach_id != 4 && $item->commision < 100)
                     ({{ $item->per_com }}%)
                     @endif
@@ -432,7 +432,7 @@
                   <div style="clear:both"></div>              
             
                   <div class="form-group">
-                    <label>Ghi chú</label>
+                    <label>Notes</label>
                     <textarea class="form-control" rows="6" name="notes" id="notes">{{ old('notes') }}</textarea>
                   </div>            
                   
@@ -440,7 +440,7 @@
               </div>          
                                 
               <div class="box-footer">
-                <button type="button" id="btnSavePayment" class="btn btn-primary btn-sm">Lưu</button>   
+                <button type="button" id="btnSavePayment" class="btn btn-primary btn-sm">Save</button>   
                 <button type="button" class="btn btn-default btn-sm" id="btnLoading" style="display:none"><i class="fa fa-spin fa-spinner"></i> Đang xử lý...</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>                
               </div>
@@ -508,7 +508,7 @@
                   <div style="clear:both"></div>              
             
                   <div class="form-group">
-                    <label>Ghi chú</label>
+                    <label>Notes</label>
                     <textarea class="form-control" rows="6" name="notes" id="notes">{{ old('notes') }}</textarea>
                   </div>            
                   
@@ -516,7 +516,7 @@
               </div>          
                                 
               <div class="box-footer">
-                <button type="button" id="btnSavePayment" class="btn btn-primary btn-sm">Lưu</button>   
+                <button type="button" id="btnSavePayment" class="btn btn-primary btn-sm">Save</button>   
                 <button type="button" class="btn btn-default btn-sm" id="btnLoading" style="display:none"><i class="fa fa-spin fa-spinner"></i> Đang xử lý...</button>                
               </div>
               

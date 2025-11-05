@@ -4,11 +4,11 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-    Dịch vụ
+    Dish
   </h1>
   <ol class="breadcrumb">
     <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-    <li><a href="{{ route( 'cate.index' ) }}">Danh mục</a></li>
+    <li><a href="{{ route( 'dish.index' ) }}">Danh mục</a></li>
     <li class="active">List</li>
   </ol>
 </section>
@@ -20,13 +20,13 @@
       @if(Session::has('message'))
       <p class="alert alert-info" >{{ Session::get('message') }}</p>
       @endif
-      <a href="{{ route('cate.create') }}" class="btn btn-info btn-sm" style="margin-bottom:5px">Add new</a>
+      <a href="{{ route('dish.create') }}" class="btn btn-info btn-sm" style="margin-bottom:5px">Add new</a>
       <div class="box">
         <div class="panel-body">
         @php
        // $role = 4;
         @endphp
-        <form class="form-inline" role="form" method="GET" action="{{ route('cate.index') }}">
+        <form class="form-inline" role="form" method="GET" action="{{ route('dish.index') }}">
                   
           <div class="form-group">
             <label>&nbsp;&nbsp;Tên</label>
@@ -68,21 +68,21 @@
                 <td><span class="order">{{ $i }}</span></td>
                 
                 <td>                  
-                  <a href="{{ route( 'cate.edit', [ 'id' => $item->id ]) }}">{{ $item->name }}</a>               
+                  <a href="{{ route( 'dish.edit', [ 'id' => $item->id ]) }}">{{ $item->name }}</a>               
 
                 </td> 
                 <td class="text-right">
                   {{ number_format($item->price) }}
                 </td>  
                 <td class="text-center">
-                  <input id="hon_son_{{ $item->id }}" data-table="cate" type="checkbox" data-column="hon_son" class="change-column-value-booking" value="1" data-id="{{ $item->id }}"  value="1" {{ $item->hon_son == 1 ? "checked" : "" }}
+                  <input id="hon_son_{{ $item->id }}" data-table="dish" type="checkbox" data-column="hon_son" class="change-column-value-booking" value="1" data-id="{{ $item->id }}"  value="1" {{ $item->hon_son == 1 ? "checked" : "" }}
 
 
                   > Hiện
                 </td>                             
                 <td style="white-space:nowrap">                 
-                  <a href="{{ route( 'cate.edit', [ 'id' => $item->id ]) }}" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></a>
-                  <!-- <a onclick="return callDelete('{{ $item->name }}','{{ route( 'cate.destroy', [ 'id' => $item->id ]) }}');" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></a> -->
+                  <a href="{{ route( 'dish.edit', [ 'id' => $item->id ]) }}" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></a>
+                  <!-- <a onclick="return callDelete('{{ $item->name }}','{{ route( 'dish.destroy', [ 'id' => $item->id ]) }}');" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></a> -->
              
                 </td>
               </tr> 
@@ -137,7 +137,7 @@ $(document).ready(function(){
 });
 function ajaxChange(id, obj){
         $.ajax({
-            url : "{{ route('cate.change-value-by-column') }}",
+            url : "{{ route('dish.change-value-by-column') }}",
             type : 'GET',
             data : {
               id : id,

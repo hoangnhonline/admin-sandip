@@ -298,7 +298,7 @@
                   <div style="clear:both"></div>              
             
                   <div class="form-group">
-                    <label>Ghi chú</label>
+                    <label>Notes</label>
                     <textarea class="form-control" rows="6" name="notes" id="notes">{{ old('notes') }}</textarea>
                   </div>            
                   
@@ -306,7 +306,7 @@
               </div>          
                                 
               <div class="box-footer">
-                <button type="button" id="btnSavePayment" class="btn btn-primary btn-sm">Lưu</button>   
+                <button type="button" id="btnSavePayment" class="btn btn-primary btn-sm">Save</button>   
                 <button type="button" class="btn btn-default btn-sm" id="btnLoading" style="display:none"><i class="fa fa-spin fa-spinner"></i> Đang xử lý...</button>                
               </div>
               

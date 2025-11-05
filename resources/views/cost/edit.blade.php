@@ -9,13 +9,13 @@
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
       <li><a href="{{ route('cost.index') }}">Cost</a></li>
-      <li class="active">Cập nhật</li>
+      <li class="active">Update</li>
     </ol>
   </section>
 
   <!-- Main content -->
   <section class="content">
-    <a class="btn btn-default btn-sm" href="{{ route('cost.index') }}" style="margin-bottom:5px">Quay lại</a>
+    <a class="btn btn-default btn-sm" href="{{ route('cost.index') }}" style="margin-bottom:5px">Back</a>
     <form role="form" method="POST" action="{{ route('cost.update') }}" id="dataForm">
       <input type="hidden" name="id" value="{{ $detail->id }}">
     <div class="row">
@@ -25,7 +25,7 @@
         <!-- general form elements -->
         <div class="box box-primary">
           <div class="box-header with-border">
-            <h3 class="box-title">Cập nhật</h3>
+            <h3 class="box-title">Update</h3>
           </div>
           <!-- /.box-header -->               
             {!! csrf_field() !!}
@@ -69,7 +69,7 @@
                   </select>
                 </div>
                 <div class="form-group col-md-4 col-xs-6">
-                   <label>Bãi biển</label>
+                   <label>Branch</label>
                       <select name="beach_id" id="beach_id" class="form-control select2">
                         @foreach($beachList as $beach)
                         <option value="{{ $beach->id }}" {{ old('beach_id', $detail->beach_id) == $beach->id ? "selected" : "" }}>{{ $beach->name }}</option>
@@ -210,8 +210,8 @@
                 
             
             <div class="box-footer">
-              <button type="submit" class="btn btn-primary btn-sm">Lưu</button>
-              <a class="btn btn-default btn-sm" class="btn btn-primary btn-sm" href="{{ route('cost.index')}}">Hủy</a>
+              <button type="submit" class="btn btn-primary btn-sm">Save</button>
+              <a class="btn btn-default btn-sm" class="btn btn-primary btn-sm" href="{{ route('cost.index')}}">Cancel</a>
             </div>            
         </div>
         <!-- /.box -->     

@@ -6,11 +6,11 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Models\Cate;
+use App\Models\Category;
 use App\Models\WArticlesCate;
 use Helper, File, Session, Auth;
 
-class CateController extends Controller
+class DishController extends Controller
 {
     /**
     * Display a listing of the resource.
@@ -23,26 +23,29 @@ class CateController extends Controller
         $arrSearch['name'] = $name = $request->name ?? null;
         
         $arrSearch['price'] = $price  =  $request->price ? str_replace(",", "", $request->price) : null;
-        $arrSearch['hon_son'] = $hon_son = $request->hon_son ?? null;
+      
 
-        $query = Cate::where('status', 1);
+        $query = Dish::where('status', 1);
         if($price){
             $query->where('price', $price);
-        }
-        if($hon_son){
-            $query->where('hon_son', $hon_son);
-        }
+        }        
         if($name){
             $query->where('name', 'LIKE', '%'.$name.'%');
         }
         $items = $query->orderBy('display_order')->get();
-        return view('cate.index', compact( 'items', 'arrSearch'));
+        $branch_id = $request->branch_id ?? null;
+        $cateList = Category::all();
+        if($branch_id){
+            $cateList = Category::where('branch_id', $branch_id)->get();    
+        }
+        
+        return view('dish.index', compact( 'items', 'arrSearch', 'cateList'));
     }
     public function changeValueByColumn(Request $request){
         $id = $request->id;
         $column = $request->col;
         $value = $request->value;
-        $model = Cate::find($id);
+        $model = Dish::find($id);
         $model->update([$column => $value]);
     }
     /**
@@ -52,8 +55,12 @@ class CateController extends Controller
     */
     public function create(Request $request)
     {
-        
-        return view('cate.create');
+        $branch_id = $request->branch_id ?? null;
+        $cateList = Category::all();
+        if($branch_id){
+            $cateList = Category::where('branch_id', $branch_id)->get();    
+        }
+        return view('dish.create', compact('cateList'));
     }
 
     /**
@@ -71,19 +78,17 @@ class CateController extends Controller
             'price' => 'required'       
         ],
         [
-            'name.required' => 'Bạn chưa nhập tên',            
-            'price.required' => 'Bạn chưa nhập giá',            
+            'name.required' => 'Please fill name',            
+            'price.required' => 'Please fill price',            
         ]);
         
         $dataArr['price'] = str_replace(",", "", $dataArr['price']);
-        $dataArr['hon_son'] = isset($dataArr['hon_son']) ? 1 : 0;
-        $dataArr['chup_anh'] = isset($dataArr['chup_anh']) ? 1 : 0;
-        $dataArr['is_load'] = isset($dataArr['is_load']) ? 1 : 0;
-        Cate::create($dataArr);
+     
+        Dish::create($dataArr);
 
-        Session::flash('message', 'Tạo mới thành công');
+        Session::flash('message', 'Dish added successfully');
 
-        return redirect()->route('cate.index');
+        return redirect()->route('dish.index');
     }
 
     /**
@@ -105,8 +110,8 @@ class CateController extends Controller
     */
     public function edit($id)
     {
-        $detail = Cate::find($id);
-        return view('cate.edit', compact( 'detail'));
+        $detail = Dish::find($id);
+        return view('dish.edit', compact( 'detail'));
     }
 
     /**
@@ -125,21 +130,17 @@ class CateController extends Controller
             'price' => 'required'       
         ],
         [
-            'name.required' => 'Bạn chưa nhập tên',            
-            'price.required' => 'Bạn chưa nhập giá',            
+            'name.required' => 'Please fill name',            
+            'price.required' => 'Please fill price',            
         ]);
         
-        $dataArr['price'] = str_replace(",", "", $dataArr['price']);
+        $dataArr['price'] = str_replace(",", "", $dataArr['price']);     
 
-        $dataArr['hon_son'] = isset($dataArr['hon_son']) ? 1 : 0;
-        $dataArr['chup_anh'] = isset($dataArr['chup_anh']) ? 1 : 0;
-        $dataArr['is_load'] = isset($dataArr['is_load']) ? 1 : 0;
-
-        $model = Cate::find($dataArr['id']);
+        $model = Dish::find($dataArr['id']);
         $model->update($dataArr);
-        Session::flash('message', 'Cập nhật thành công');
+        Session::flash('message', 'Update successful');
 
-        return redirect()->route('cate.index');
+        return redirect()->route('dish.index');
     }
 
     /**
@@ -151,10 +152,10 @@ class CateController extends Controller
     public function destroy($id)
     {
         // delete
-        $model = Cate::find($id);        
+        $model = Dish::find($id);        
         $model->update(['status' => 0]);
         
-        Session::flash('message', 'Xóa dịch vụ thành công');
-        return redirect()->route('cate.index');
+        Session::flash('message', 'Dish deleted successfully');
+        return redirect()->route('dish.index');
     }
 }

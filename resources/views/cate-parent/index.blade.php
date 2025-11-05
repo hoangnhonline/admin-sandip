@@ -44,7 +44,7 @@
               <tr id="row-{{ $item->id }}">
                 <td><span class="order">{{ $i }}</span></td>
                 <td style="vertical-align:middle;text-align:center">
-                  <img src="{{ asset('admin/dist/img/move.png')}}" class="move img-thumbnail" alt="Cập nhật thứ tự"/>
+                  <img src="{{ asset('admin/dist/img/move.png')}}" class="move img-thumbnail" alt="Update thứ tự"/>
                 </td>
                 <td>                  
                   <a href="{{ route( 'cate-parent.edit', [ 'id' => $item->id ]) }}">{{ $item->name }}</a>
@@ -58,7 +58,7 @@
                 <td style="white-space:nowrap">
                 
                 <a href="{{ route( 'w-banner.index', [ 'object_id' => $item->id, 'object_type' => 6 ]) }}" class="link_edit btn-sm btn-info btn"><span style="font-size: 16px;" class="badge">{{ $item->banners($item->id) }}</span> banner</a> 
-                  <a class="btn btn-primary btn-sm" href="{{ route('articles-cate.index', ['parent_id' => $item->id])}}" ><span class="badge">{{ $item->cates->count() }}</span> Danh mục con </a>
+                  <a class="btn btn-primary btn-sm" href="{{ route('articles-dish.index', ['parent_id' => $item->id])}}" ><span class="badge">{{ $item->cates->count() }}</span> Danh mục con </a>
                   <!-- <a href="{{ route( 'cate-parent.edit', [ 'id' => $item->id ]) }}" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></a> -->                 
                   
                 </td>

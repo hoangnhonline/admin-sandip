@@ -20,7 +20,7 @@
       @if(Auth::check() && Auth::user()->chup_anh == 0 && $notNH)
      <div class="input-group input-group-sm " style="width: 150px;position: absolute;left: 45px; top: 10px;" id="div_search_fast">
   
-          <input type="text" class="form-control" id="keyword" name="keyword" placeholder="ID/Điện thoại" value="{{ isset($keyword) ? $keyword : "" }}">
+          <input type="text" class="form-control" id="keyword" name="keyword" placeholder="ID/Phone number" value="{{ isset($keyword) ? $keyword : "" }}">
           <span class="input-group-btn">
               <button type="button" id="btnQuickSearch" class="btn btn-danger btn-flat btn-preview">Tìm</button>
           </span>

@@ -103,9 +103,9 @@
           <i class="fa fa-bar-chart" aria-hidden="true"></i><span>THỐNG KÊ</span>
         </a>
       </li>     
-      <li {{ in_array($routeName, ['cate.index', 'cate.create', 'cate.edit']) ? "class=active" : "" }}>
-        <a href="{{ route('cate.index') }}">
-          <i class="fa fa-list-alt" aria-hidden="true"></i><span>Dịch vụ</span>
+      <li {{ in_array($routeName, ['dish.index', 'dish.create', 'dish.edit']) ? "class=active" : "" }}>
+        <a href="{{ route('dish.index') }}">
+          <i class="fa fa-list-alt" aria-hidden="true"></i><span>Dish</span>
         </a>
       </li> 
 
@@ -126,9 +126,9 @@
           <i class="glyphicon glyphicon-usd"></i> <span>CHI PHÍ</span>
         </a>
       </li>
-      <li {{ in_array($routeName, ['cate.index', 'cate.create', 'cate.edit']) ? "class=active" : "" }}>
-        <a href="{{ route('cate.index') }}">
-          <i class="fa fa-list-alt" aria-hidden="true"></i><span>Dịch vụ</span>
+      <li {{ in_array($routeName, ['dish.index', 'dish.create', 'dish.edit']) ? "class=active" : "" }}>
+        <a href="{{ route('dish.index') }}">
+          <i class="fa fa-list-alt" aria-hidden="true"></i><span>Dish</span>
         </a>
       </li> 
        <li {{ in_array($routeName, ['ntv.index', 'ntv.create', 'ntv.edit']) ? "class=active" : "" }}>

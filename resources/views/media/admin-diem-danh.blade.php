@@ -125,8 +125,8 @@
               </div>
             </div>           
             <div class="box-footer">
-              <button type="submit" class="btn btn-primary btn-sm">Lưu</button>
-              <a class="btn btn-default btn-sm" class="btn btn-primary btn-sm" href="{{ route('media.index')}}">Hủy</a>
+              <button type="submit" class="btn btn-primary btn-sm">Save</button>
+              <a class="btn btn-default btn-sm" class="btn btn-primary btn-sm" href="{{ route('media.index')}}">Cancel</a>
             </div>
             
         </div>
@@ -194,7 +194,7 @@
       </div>
       </form>
       <div class="modal-footer">       
-        <button type="button" id="btnLuu" class="btn btn-primary">Lưu</button>
+        <button type="button" id="btnLuu" class="btn btn-primary">Save</button>
          <button type="button"  class="btn btn-secondary" data-dismiss="modal">Đóng</button>
       </div>
     </div>
@@ -225,7 +225,7 @@
         data : $('#formAjax').serialize(),
         success: function(data){
           console.log(data);
-          alert('Lưu thành công!');
+          alert('Save thành công!');
           window.location.reload();
         }
       });

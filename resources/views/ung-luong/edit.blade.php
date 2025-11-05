@@ -9,13 +9,13 @@
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
       <li><a href="{{ route('ung-luong.index') }}">Ứng lương</a></li>
-      <li class="active">Cập nhật</li>
+      <li class="active">Update</li>
     </ol>
   </section>
 
   <!-- Main content -->
   <section class="content">
-    <a class="btn btn-default btn-sm" href="{{ route('ung-luong.index') }}" style="margin-bottom:5px">Quay lại</a>
+    <a class="btn btn-default btn-sm" href="{{ route('ung-luong.index') }}" style="margin-bottom:5px">Back</a>
     <form role="form" method="POST" action="{{ route('ung-luong.update') }}" id="dataForm">
       <input type="hidden" name="id" value="{{ $detail->id }}">
     <div class="row">
@@ -25,7 +25,7 @@
         <!-- general form elements -->
         <div class="box box-primary">
           <div class="box-header with-border">
-            <h3 class="box-title">Cập nhật</h3>
+            <h3 class="box-title">Update</h3>
           </div>
           <!-- /.box-header -->               
             {!! csrf_field() !!}
@@ -82,8 +82,8 @@
                     <input type="text" name="total_money" class="form-control number total" autocomplete="off" placeholder="Số tiền" value="{{ old('total_money', $detail->total_money) }}">
                   </div>
                    <div class="form-group col-xs-6">
-                    <label for="notes">Ghi chú</label>
-                    <input type="text" name="notes" class="form-control" autocomplete="off" placeholder="Ghi chú" value="{{ old('notes', $detail->notes) }}">
+                    <label for="notes">Notes</label>
+                    <input type="text" name="notes" class="form-control" autocomplete="off" placeholder="Notes" value="{{ old('notes', $detail->notes) }}">
                   </div>
             
                </div>
@@ -104,8 +104,8 @@
                 
             
             <div class="box-footer">
-              <button type="submit" class="btn btn-primary btn-sm">Lưu</button>
-              <a class="btn btn-default btn-sm" class="btn btn-primary btn-sm" href="{{ route('ung-luong.index')}}">Hủy</a>
+              <button type="submit" class="btn btn-primary btn-sm">Save</button>
+              <a class="btn btn-default btn-sm" class="btn btn-primary btn-sm" href="{{ route('ung-luong.index')}}">Cancel</a>
             </div>            
         </div>
         <!-- /.box -->     

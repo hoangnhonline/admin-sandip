@@ -27,13 +27,13 @@
         </select>
       </div>
       <div class="form-group">
-        <label>Ghi chú</label>
+        <label>Notes</label>
         <textarea class="form-control" id="hdv_notes" rows="7">{!! nl2br($detail->hdv_notes) !!}</textarea>
       </div> 
       <input type="hidden" id="booking_id" value="{{ $detail->id }}">
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-info" id="btnSaveInfo">Lưu lại</button>
+    <button type="button" class="btn btn-info" id="btnSaveInfo">Save lại</button>
     <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
 
   </div>

@@ -44,7 +44,7 @@
               <tr id="row-{{ $item->id }}">
                 <td><span class="order">{{ $i }}</span></td>
                 <td style="vertical-align:middle;text-align:center">
-                  <img src="{{ asset('admin/dist/img/move.png')}}" class="move img-thumbnail" alt="Cập nhật thứ tự"/>
+                  <img src="{{ asset('admin/dist/img/move.png')}}" class="move img-thumbnail" alt="Update thứ tự"/>
                 </td>
                 <td>                  
                   <a href="{{ route( 'video.edit', [ 'id' => $item->id ]) }}">{{ $item->name }}</a>                  

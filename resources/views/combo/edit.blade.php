@@ -9,12 +9,12 @@
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
       <li><a href="{{ route('combo.index') }}">Combo</a></li>
-      <li class="active">Cập nhật</li>
+      <li class="active">Update</li>
     </ol>
   </section>
   <!-- Main content -->
   <section class="content">
-    <a class="btn btn-default btn-sm" href="{{ route('combo.index') }}" style="margin-bottom:5px">Quay lại</a>
+    <a class="btn btn-default btn-sm" href="{{ route('combo.index') }}" style="margin-bottom:5px">Back</a>
     <form role="form" method="POST" action="{{ route('combo.update') }}" id="dataForm" class="productForm">
     <input type="hidden" name="id" value="{{ $detail->id }}">    
     <div class="row">
@@ -27,7 +27,7 @@
         <!-- general form elements -->
         <div class="box box-primary">
           <div class="box-header with-border">
-            <h3 class="box-title">Cập nhật</h3>
+            <h3 class="box-title">Update</h3>
           </div>
           <!-- /.box-header -->               
             {!! csrf_field() !!}          
@@ -206,8 +206,8 @@
             </div>
             <div class="box-footer">              
               <button type="button" class="btn btn-default" id="btnLoading" style="display:none"><i class="fa fa-spin fa-spinner"></i></button>
-              <button type="submit" class="btn btn-primary" id="btnSave">Lưu</button>
-              <a class="btn btn-default" class="btn btn-primary" href="{{ route('combo.index')}}">Hủy</a>
+              <button type="submit" class="btn btn-primary" id="btnSave">Save</button>
+              <a class="btn btn-default" class="btn btn-primary" href="{{ route('combo.index')}}">Cancel</a>
             </div>
             
         </div>

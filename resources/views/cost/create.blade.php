@@ -15,7 +15,7 @@
 
   <!-- Main content -->
   <section class="content">
-    <a class="btn btn-default btn-sm" href="{{ route('cost.index') }}" style="margin-bottom:5px">Quay lại</a>
+    <a class="btn btn-default btn-sm" href="{{ route('cost.index') }}" style="margin-bottom:5px">Back</a>
     <form role="form" method="POST" action="{{ route('cost.store') }}" id="dataForm">
     <div class="row">
       <!-- left column -->
@@ -72,7 +72,7 @@
               
               
                 <div class="form-group col-xs-6 col-md-4">
-                   <label>Bãi biển</label>
+                   <label>Branch</label>
                       <select name="beach_id" id="beach_id" class="form-control select2">
                         @foreach($beachList as $beach)
                         <option value="{{ $beach->id }}" {{ old('beach_id') == $beach->id ? "selected" : "" }}>{{ $beach->name }}</option>
@@ -189,8 +189,8 @@
                 </div>
                            
             <div class="box-footer">
-              <button type="submit" class="btn btn-primary btn-sm">Lưu</button>
-              <a class="btn btn-default btn-sm" class="btn btn-primary btn-sm" href="{{ route('cost.index')}}">Hủy</a>
+              <button type="submit" class="btn btn-primary btn-sm">Save</button>
+              <a class="btn btn-default btn-sm" class="btn btn-primary btn-sm" href="{{ route('cost.index')}}">Cancel</a>
             </div>            
         </div>
         <!-- /.box -->     
@@ -345,7 +345,7 @@
         type : 'GET',
         data : $('#formAjax').serialize(),
         success: function(data){
-          alert('Lưu thành công!');
+          alert('Save thành công!');
           window.location.reload();
         }
       });

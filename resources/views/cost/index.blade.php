@@ -239,7 +239,7 @@
               <th style="width: 1%">#</th>
               <th class="text-left">Tạo lúc</th>
               <th class="text-left">Ngày</th>
-              <th class="text-center" style="width: 120px">Bãi biển</th>
+              <th class="text-center" style="width: 120px">Branch</th>
               <th class="text-left">Nội dung</th>
               <th class="text-center">UNC</th>
               <th class="text-center">Số lượng</th>

@@ -4,14 +4,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 
-class Cate extends Model  {
+class Category extends Model  {
 
 	/**
 	 * The database table used by the model.
 	 *
 	 * @var string
 	 */
-	protected $table = 'cate';	
+	protected $table = 'category';	
 
 	 /**
      * Indicates if the model should be timestamped.
@@ -24,6 +24,6 @@ class Cate extends Model  {
      *
      * @var array
      */
-    protected $fillable = ['name', 'price', 'duration', 'type', 'display_order', 'status', 'hon_son', 'chup_anh', 'bai_bien', 'short_name', 'is_load'];
+    protected $fillable = ['name', 'status', 'display_order', 'branch_id'];
     
 }

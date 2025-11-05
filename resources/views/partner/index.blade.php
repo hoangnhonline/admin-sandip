@@ -56,7 +56,7 @@
               <th style="width: 1%">#</th>
               
               <th>Tên</th> 
-              <th>Điện thoại</th>
+              <th>Phone number</th>
               <th>Thông tin khác</th>
               <th style="width: 100px;white-space:nowrap">Thứ tự</th>                              
               <th width="1%;white-space:nowrap">Thao tác</th>

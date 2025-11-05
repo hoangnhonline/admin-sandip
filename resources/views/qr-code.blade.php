@@ -13,7 +13,7 @@
     <!-- Main content -->
     <section class="content">
         <a class="btn btn-default btn-sm" href="{{ route('booking.index', ['type' => $detail->type]) }}"
-            style="margin-bottom:5px">Quay lại</a>
+            style="margin-bottom:5px">Back</a>
         <a class="btn btn-success btn-sm" href="{{ route('booking.index', ['type' => $detail->type]) }}"
             style="margin-bottom:5px">Xem danh sách booking</a>
         <a href="{{ route( 'booking-payment.index', ['booking_id' => $detail->id] ) }}" class="btn btn-danger btn-sm"

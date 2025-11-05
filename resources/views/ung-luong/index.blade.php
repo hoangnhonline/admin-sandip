@@ -155,7 +155,7 @@
               <th style="width: 1%">#</th>
               <th class="text-left">Tạo lúc</th>
               <th class="text-left">Ngày</th>         
-              <th class="text-left">Ghi chú</th>                   
+              <th class="text-left">Notes</th>                   
               <th class="text-right">Tổng tiền</th>
               <th width="200" style="white-space: nowrap;" class="text-center">Người chi</th> 
               @if($notNH)             

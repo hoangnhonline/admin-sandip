@@ -15,7 +15,7 @@
 
   <!-- Main content -->
   <section class="content">
-    <a class="btn btn-default btn-sm" href="{{ route('account.index') }}" style="margin-bottom:5px">Quay lại</a>
+    <a class="btn btn-default btn-sm" href="{{ route('account.index') }}" style="margin-bottom:5px">Back</a>
     <form role="form" method="POST" action="{{ route('account.store') }}" id="formData">
     <div class="row">
       <!-- left column -->
@@ -112,8 +112,8 @@
               <input type="hidden" name="image_url" id="image_url" value="{{ old('image_url') }}"/> 
             </div>
             <div class="box-footer">             
-              <button type="submit" class="btn btn-primary btn-sm" id="btnSave">Lưu</button>
-              <a class="btn btn-default btn-sm" class="btn btn-primary btn-sm" href="{{ route('account.index')}}">Hủy</a>
+              <button type="submit" class="btn btn-primary btn-sm" id="btnSave">Save</button>
+              <a class="btn btn-default btn-sm" class="btn btn-primary btn-sm" href="{{ route('account.index')}}">Cancel</a>
             </div>
             
         </div>

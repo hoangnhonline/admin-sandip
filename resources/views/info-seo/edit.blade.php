@@ -4,18 +4,18 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      Cập nhật thông tin SEO    
+      Update thông tin SEO    
     </h1>
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
       <li><a href="{{ route('info-seo.index') }}">Thông tin SEO</a></li>
-      <li class="active">Cập nhật</li>
+      <li class="active">Update</li>
     </ol>
   </section>
 
   <!-- Main content -->
   <section class="content">
-    <a class="btn btn-default btn-sm" href="{{ route('info-seo.index') }}" style="margin-bottom:5px">Quay lại</a>
+    <a class="btn btn-default btn-sm" href="{{ route('info-seo.index') }}" style="margin-bottom:5px">Back</a>
     <form role="form" method="POST" action="{{ route('info-seo.update') }}">
     <input type="hidden" name="id" value="{{ $detail->id }}">
     <div class="row">
@@ -25,7 +25,7 @@
         <!-- general form elements -->
         <div class="box box-primary">
           <div class="box-header with-border">
-            <h3 class="box-title">Cập nhật</h3>
+            <h3 class="box-title">Update</h3>
           </div>
           <!-- /.box-header -->               
             {!! csrf_field() !!}
@@ -81,8 +81,8 @@
             <input type="hidden" name="image_url" id="image_url" value="{{ $detail->image_url }}"/>          
             <input type="hidden" name="image_name" id="image_name" value=""/>
             <div class="box-footer">
-              <button type="submit" class="btn btn-primary btn-sm">Lưu</button>
-              <a class="btn btn-default btn-sm" class="btn btn-primary btn-sm" href="{{ route('info-seo.index')}}">Hủy</a>
+              <button type="submit" class="btn btn-primary btn-sm">Save</button>
+              <a class="btn btn-default btn-sm" class="btn btn-primary btn-sm" href="{{ route('info-seo.index')}}">Cancel</a>
             </div>
             
         </div>

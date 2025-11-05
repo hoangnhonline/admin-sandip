@@ -4,7 +4,7 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      Cập nhật tài khoản
+      Update tài khoản
     </h1>
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
@@ -15,7 +15,7 @@
 
   <!-- Main content -->
   <section class="content">
-    <a class="btn btn-default btn-sm" href="{{ route('account.index') }}" style="margin-bottom:5px">Quay lại</a>
+    <a class="btn btn-default btn-sm" href="{{ route('account.index') }}" style="margin-bottom:5px">Back</a>
     <form role="form" method="POST" action="{{ route('account.update') }}" id="formData">
       <input type="hidden" name="id" value="{{ $detail->id }}">
     <div class="row">
@@ -122,8 +122,8 @@
                 <input type="hidden" name="image_url" id="image_url" value="{{ $detail->image_url }}"/>
             </div>
             <div class="box-footer">             
-              <button type="submit" class="btn btn-primary btn-sm" id="btnSave">Lưu</button>
-              <a class="btn btn-default btn-sm" class="btn btn-primary btn-sm" href="{{ route('account.index')}}">Hủy</a>
+              <button type="submit" class="btn btn-primary btn-sm" id="btnSave">Save</button>
+              <a class="btn btn-default btn-sm" class="btn btn-primary btn-sm" href="{{ route('account.index')}}">Cancel</a>
             </div>
             
         </div>

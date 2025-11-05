@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="csrf-token" content="{{ csrf_token() }}" />
 
-        <title>Phú Quốc Sea Sports - Hệ thống quản lý booking</title>
+        <title>Sandip Indian Restaurant - Hệ thống quản lý booking</title>
         <meta property="og:type" content="website" />
         <meta property="og:image" content="images/logo.jpg" />
         <meta name="robots" content="noindex" />

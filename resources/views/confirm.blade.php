@@ -53,7 +53,7 @@
                 </tr>
                 <tr>
                     <td width="170">
-                        Tên KH
+                        Customer name
                     </td>
                     <td>
                         <b>{!! $detail->name !!}</b>
@@ -102,7 +102,7 @@
                 </tr>
                 <tr>
                     <td>
-                        Ghi chú
+                        Notes
                     </td>
                     <td style="color: red; font-weight: bold;">
                         {!! nl2br($detail->notes_hotel) !!}

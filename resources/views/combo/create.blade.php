@@ -15,7 +15,7 @@
 
   <!-- Main content -->
   <section class="content">
-    <a class="btn btn-default btn-sm" href="{{ route('combo.index') }}" style="margin-bottom:5px">Quay lại</a>
+    <a class="btn btn-default btn-sm" href="{{ route('combo.index') }}" style="margin-bottom:5px">Back</a>
     <form role="form" method="POST" action="{{ route('combo.store') }}" id="dataForm" class="productForm">
     <input type="hidden" name="is_copy" value="1">
     <div class="row">
@@ -184,8 +184,8 @@
             </div>
             <div class="box-footer">              
               <button type="button" class="btn btn-default" id="btnLoading" style="display:none"><i class="fa fa-spin fa-spinner"></i></button>
-              <button type="submit" class="btn btn-primary" id="btnSave">Lưu</button>
-              <a class="btn btn-default" class="btn btn-primary" href="{{ route('combo.index')}}">Hủy</a>
+              <button type="submit" class="btn btn-primary" id="btnSave">Save</button>
+              <a class="btn btn-default" class="btn btn-primary" href="{{ route('combo.index')}}">Cancel</a>
             </div>
             
         </div>

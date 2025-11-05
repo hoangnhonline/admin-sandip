@@ -2,7 +2,7 @@
 <html >
   <head>
     <meta charset="UTF-8">
-    <title>Phú Quốc Sea Sports - Đăng nhập hệ thống</title>
+    <title>Sandip Indian Restaurant - Đăng nhập hệ thống</title>
     <meta property="og:type" content="website" />
     <meta property="og:image" content="images/logo.jpg" />
     <meta name="robots" content="noindex">

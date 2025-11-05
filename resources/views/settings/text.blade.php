@@ -9,7 +9,7 @@
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
       <li><a href="{{ route('w-text.index') }}">Text</a></li>
-      <li class="active">Cập nhật</li>
+      <li class="active">Update</li>
     </ol>
   </section>
 
@@ -23,7 +23,7 @@
         <!-- general form elements -->
         <div class="box box-primary">
           <div class="box-header with-border">
-            <h3 class="box-title">Cập nhật</h3>
+            <h3 class="box-title">Update</h3>
           </div>
           <!-- /.box-header -->               
             {!! csrf_field() !!}
@@ -57,7 +57,7 @@
                
             </div>                        
             <div class="box-footer">
-              <button type="submit" class="btn btn-primary btn-sm">Lưu</button>         
+              <button type="submit" class="btn btn-primary btn-sm">Save</button>         
             </div>
             
         </div>

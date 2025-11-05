@@ -21,7 +21,7 @@
       @if(Session::has('message'))
       <p class="alert alert-info" >{{ Session::get('message') }}</p>
       @endif
-      <a href="{{ $back_url ?? route('booking.index', ['type' => $detailBooking->type]) }}" class="btn btn-info btn-sm" style="margin-bottom:5px">Quay lại</a>    
+      <a href="{{ $back_url ?? route('booking.index', ['type' => $detailBooking->type]) }}" class="btn btn-info btn-sm" style="margin-bottom:5px">Back</a>    
       <div class="box">
         <div class="box-header with-border">
           <h3 class="box-title">List giao dịch</span></h3>
@@ -132,7 +132,7 @@
                   <div style="clear:both"></div>              
             
                   <div class="form-group">
-                    <label>Ghi chú</label>
+                    <label>Notes</label>
                     <textarea class="form-control" rows="6" name="notes" id="notes">{{ old('notes') }}</textarea>
                   </div>            
                   
@@ -140,8 +140,8 @@
               </div>          
                                 
               <div class="box-footer">
-                <button type="submit" class="btn btn-primary btn-sm">Lưu</button>
-                <a class="btn btn-default btn-sm" class="btn btn-primary btn-sm" href="{{ route('booking-bill.index', ['booking_id' => $booking_id])}}">Hủy</a>
+                <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                <a class="btn btn-default btn-sm" class="btn btn-primary btn-sm" href="{{ route('booking-bill.index', ['booking_id' => $booking_id])}}">Cancel</a>
               </div>
               
           </div>

@@ -222,14 +222,14 @@
             <tr style="background-color: #f4f4f4">              
               <th style="width: 1%" class="text-center" ><input type="checkbox" id="check_all" value="1"></th>
               <th style="width: 1%"></th>
-              <th width="200">Tên KH</th>
+              <th width="200">Customer name</th>
               <th  width="140">Sales</th>                    
               <th class="text-center" width="80">NL/TE</th>
               <th class="text-center" width="80">ĂN NL/TE</th>
               <th class="text-center" width="80">CÁP NL/TE</th>
               <th class="text-right" width="100">Cọc</th>
               <th class="text-right" width="150">Tổng tiền</th>
-              <th class="text-right" width="100">Phụ thu<br> Giảm giá</th>
+              <th class="text-right" width="100">Phụ thu<br> Discount</th>
               <th class="text-right" width="100">Công nợ tạm</th>
               <th class="text-right" width="140" >Thực thu</th>
               <th class="text-center" width="60">Ngày đi</th>              
@@ -399,7 +399,7 @@
                   <option value="">--SET TRẠNG THÁI--</option>
                   <option value="1">Mới</option>
                   <option value="2">Hoàn tất</option>
-                  <option value="3">Hủy</option>
+                  <option value="3">Cancel</option>
                 </select>
               <select class="form-control select2 multi-change-column-value" name="nguoi_thu_tien" id="nguoi_thu_tien">
                   <option value="">--SET THU TIỀN--</option>

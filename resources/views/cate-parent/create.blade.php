@@ -15,7 +15,7 @@
 
   <!-- Main content -->
   <section class="content">
-    <a class="btn btn-default btn-sm" href="{{ route('cate-parent.index') }}" style="margin-bottom:5px">Quay lại</a>
+    <a class="btn btn-default btn-sm" href="{{ route('cate-parent.index') }}" style="margin-bottom:5px">Back</a>
     <form role="form" method="POST" action="{{ route('cate-parent.store') }}" id="dataForm">
     <div class="row">
       <!-- left column -->
@@ -54,8 +54,8 @@
                           
             </div>                        
             <div class="box-footer">
-              <button type="submit" class="btn btn-primary btn-sm">Lưu</button>
-              <a class="btn btn-default btn-sm" class="btn btn-primary btn-sm" href="{{ route('cate-parent.index')}}">Hủy</a>
+              <button type="submit" class="btn btn-primary btn-sm">Save</button>
+              <a class="btn btn-default btn-sm" class="btn btn-primary btn-sm" href="{{ route('cate-parent.index')}}">Cancel</a>
             </div>
             
         </div>

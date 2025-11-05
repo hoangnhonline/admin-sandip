@@ -4,19 +4,19 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      Dịch vụ    
+      Dish    
     </h1>
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-      <li><a href="{{ route('cate.index') }}">Dịch vụ</a></li>
-      <li class="active">Cập nhật</li>
+      <li><a href="{{ route('dish.index') }}">Dish</a></li>
+      <li class="active">Update</li>
     </ol>
   </section>
 
   <!-- Main content -->
   <section class="content">
-    <a class="btn btn-default btn-sm" href="{{ route('cate.index') }}" style="margin-bottom:5px">Quay lại</a>
-    <form role="form" method="POST" action="{{ route('cate.update') }}" id="dataForm">
+    <a class="btn btn-default btn-sm" href="{{ route('dish.index') }}" style="margin-bottom:5px">Back</a>
+    <form role="form" method="POST" action="{{ route('dish.update') }}" id="dataForm">
       <input type="hidden" name="id" value="{{ $detail->id }}">
     <div class="row">
       <!-- left column -->
@@ -78,7 +78,7 @@
                   <input type="text" class="form-control" name="duration" id="duration" value="{{ old('duration', $detail->duration) }}">
                 </div>
                 <div class="form-group">
-                  <label>Loại dịch vụ<span class="red-star">*</span></label>
+                  <label>Category<span class="red-star">*</span></label>
                   <select name="type" id="type" class="form-control">
                     <option value="1" {{ old('type', $detail->type) == 1 ? "selected" : "" }}>Dù bay</option>
                     <option value="2" {{ old('type', $detail->type) == 2 ? "selected" : "" }}>Jetski</option>
@@ -90,8 +90,8 @@
                 </div>                      
             </div>                        
             <div class="box-footer">
-              <button type="submit" class="btn btn-primary btn-sm">Lưu</button>
-              <a class="btn btn-default btn-sm" class="btn btn-primary btn-sm" href="{{ route('cate.index')}}">Hủy</a>
+              <button type="submit" class="btn btn-primary btn-sm">Save</button>
+              <a class="btn btn-default btn-sm" class="btn btn-primary btn-sm" href="{{ route('dish.index')}}">Cancel</a>
             </div>
             
         </div>

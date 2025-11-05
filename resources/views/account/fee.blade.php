@@ -9,13 +9,13 @@
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
       <li><a href="{{ route('account.index') }}">Phí giao dịch</a></li>
-      <li class="active">Cập nhật</li>
+      <li class="active">Update</li>
     </ol>
   </section>
 
   <!-- Main content -->
   <section class="content">
-    <a class="btn btn-default btn-sm" href="{{ route('account.index') }}" style="margin-bottom:5px">Quay lại</a>
+    <a class="btn btn-default btn-sm" href="{{ route('account.index') }}" style="margin-bottom:5px">Back</a>
     <form role="form" method="POST" action="{{ route('account.updateFee') }}" id="formData">
     <div class="row">
       <!-- left column -->
@@ -24,7 +24,7 @@
         <!-- general form elements -->
         <div class="box box-primary">
           <div class="box-header with-border">
-            Cập nhật phí giao dịch
+            Update phí giao dịch
           </div>
           <!-- /.box-header -->               
             {!! csrf_field() !!}
@@ -65,8 +65,8 @@
                   </div>
             </div>
             <div class="box-footer">             
-              <button type="submit" class="btn btn-primary btn-sm" id="btnSave">Lưu</button>
-              <a class="btn btn-default btn-sm" class="btn btn-primary btn-sm" href="{{ route('account.index')}}">Hủy</a>
+              <button type="submit" class="btn btn-primary btn-sm" id="btnSave">Save</button>
+              <a class="btn btn-default btn-sm" class="btn btn-primary btn-sm" href="{{ route('account.index')}}">Cancel</a>
             </div>
             
         </div>

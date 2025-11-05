@@ -129,8 +129,8 @@
             </div>          
             <input type="hidden" name="image_url" id="image_url" value="{{ $detail->image_url }}"/>
             <div class="box-footer">
-              <button type="submit" class="btn btn-primary btn-sm">Lưu</button>
-              <a class="btn btn-default btn-sm" class="btn btn-primary btn-sm" href="{{ route('supplier.index', ['cate_id' => $cate_id])}}">Hủy</a>
+              <button type="submit" class="btn btn-primary btn-sm">Save</button>
+              <a class="btn btn-default btn-sm" class="btn btn-primary btn-sm" href="{{ route('supplier.index', ['cate_id' => $cate_id])}}">Cancel</a>
             </div>
             
         </div>

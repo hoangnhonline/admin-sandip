@@ -166,14 +166,14 @@ Route::group([
         Route::get('/create',   ['as' => 'ticket-type.create', 'uses' => 'TicketTypeController@create']);
         Route::post('/store',   ['as' => 'ticket-type.store', 'uses' => 'TicketTypeController@store']);
     });
-    Route::group(['prefix' => 'cate'], function () {
-        Route::get('/', ['as' => 'cate.index', 'uses' => 'CateController@index']);
-        Route::get('/create', ['as' => 'cate.create', 'uses' => 'CateController@create']);
-        Route::post('/store', ['as' => 'cate.store', 'uses' => 'CateController@store']);
-        Route::get('{id}/edit',   ['as' => 'cate.edit', 'uses' => 'CateController@edit']);
-        Route::post('/update', ['as' => 'cate.update', 'uses' => 'CateController@update']);
-        Route::get('{id}/destroy', ['as' => 'cate.destroy', 'uses' => 'CateController@destroy']);
-        Route::get('/change-value', ['as' => 'cate.change-value-by-column', 'uses' => 'CateController@changeValueByColumn']);
+    Route::group(['prefix' => 'dish'], function () {
+        Route::get('/', ['as' => 'dish.index', 'uses' => 'DishController@index']);
+        Route::get('/create', ['as' => 'dish.create', 'uses' => 'DishController@create']);
+        Route::post('/store', ['as' => 'dish.store', 'uses' => 'DishController@store']);
+        Route::get('{id}/edit',   ['as' => 'dish.edit', 'uses' => 'DishController@edit']);
+        Route::post('/update', ['as' => 'dish.update', 'uses' => 'DishController@update']);
+        Route::get('{id}/destroy', ['as' => 'dish.destroy', 'uses' => 'DishController@destroy']);
+        Route::get('/change-value', ['as' => 'dish.change-value-by-column', 'uses' => 'DishController@changeValueByColumn']);
     });    
     Route::group(['prefix' => 'room'], function () {
         Route::get('/', ['as' => 'room.index', 'uses' => 'RoomController@index']);

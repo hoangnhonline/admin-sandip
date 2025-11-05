@@ -15,7 +15,7 @@
 
   <!-- Main content -->
   <section class="content">
-    <a class="btn btn-default btn-sm" href="{{ $back_url ?? route('revenue.index') }}" style="margin-bottom:5px">Quay lại</a>
+    <a class="btn btn-default btn-sm" href="{{ $back_url ?? route('revenue.index') }}" style="margin-bottom:5px">Back</a>
     <form role="form" method="POST" action="{{ route('revenue.store') }}" id="dataForm">
     <div class="row">
       <!-- left column -->
@@ -85,8 +85,8 @@
                 </div>                            
             </div>                        
             <div class="box-footer">
-              <button type="submit" class="btn btn-primary btn-sm">Lưu</button>
-              <a class="btn btn-default btn-sm" class="btn btn-primary btn-sm" href="{{ route('revenue.index')}}">Hủy</a>
+              <button type="submit" class="btn btn-primary btn-sm">Save</button>
+              <a class="btn btn-default btn-sm" class="btn btn-primary btn-sm" href="{{ route('revenue.index')}}">Cancel</a>
             </div>
             
         </div>
