@@ -138,10 +138,10 @@
               &nbsp;&nbsp;&nbsp;<input type="checkbox" name="tren_2" id="tren_2" {{ $arrSearch['tren_2'] == 1 ? "checked" : "" }} value="1">
               <label for="tren_2">Trên 5tr&nbsp;&nbsp;&nbsp;&nbsp;</label>
             </div> 
-            <button type="submit" class="btn btn-info btn-sm" style="margin-top: -5px">Lọc</button> 
+            <button type="submit" class="btn btn-info btn-sm" style="margin-top: -5px">Search</button> 
             <button type="reset" class="btn btn-default btn-sm" style="margin-top: -5px">Reset</button>
              <div>
-              @foreach($beachList as $beach)
+              @foreach($branchList as $beach)
                 <div class="form-group">
                   &nbsp;&nbsp;&nbsp;<input type="checkbox" name="branch_ids[]" id="branch_ids" {{ in_array($beach->id, $arrSearch['branch_ids']) || empty($arrSearch['branch_ids']) ? "checked" : "" }} value="{{$beach->id}}">
                   <label for="branch_ids">{{$beach->name}}</label>
@@ -185,9 +185,9 @@
         @if(Auth::user()->role == 1 && $notNH)
         <div class="form-inline" style="padding: 5px">
           <div class="form-group">              
-              <select class="form-control select2 multi-change-column-value" data-column="beach_id">                  
+              <select class="form-control select2 multi-change-column-value" data-column="branch_id">                  
                 <option value="">--SET BÃI--</option>
-                @foreach($beachList as $beach)
+                @foreach($branchList as $beach)
                 <option value="{{ $beach->id }}">{{ $beach->name }}</option>
                 @endforeach 
               </select>
@@ -290,8 +290,8 @@
                   @else
                   <span class="label label-warning">Khác</span>
                   @endif
-                  @if($item->beach_id)                                  
-                  <br><i class="fa fa-map-marker" aria-hidden="true"></i> {{ $beachArr[$item->beach_id] }}
+                  @if($item->branch_id)                                  
+                  <br><i class="fa fa-map-marker" aria-hidden="true"></i> {{ $beachArr[$item->branch_id] }}
                   @endif
                 </td>
                 <td>

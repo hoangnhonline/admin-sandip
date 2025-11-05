@@ -70,7 +70,7 @@
                   <input type="text" class="form-control" name="short_name" id="short_name" value="{{ old('short_name', $detail->short_name) }}">
                 </div> 
                 <div class="form-group">
-                  <label>Giá tiền<span class="red-star">*</span></label>
+                  <label>Price<span class="red-star">*</span></label>
                   <input type="text" class="form-control number" name="price" id="price" value="{{ old('price', $detail->price) }}">
                 </div>
                 <div class="form-group">

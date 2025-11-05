@@ -32,7 +32,7 @@ class DriversController extends Controller
         $name = $request->name ?? null;
         $car_cate_id = $request->car_cate_id ?? null;
         $city_id = $request->city_id ?? null;
-        $carCateList = CarCate::all();
+        $carCateList = CarDish::all();
 
         $query = Drivers::where('status', 1);
         if($car_cate_id){
@@ -73,7 +73,7 @@ class DriversController extends Controller
     public function create(Request $request)
     {
         $car_cate_id = $request->car_cate_id ?? null;
-        $carCateList = CarCate::all();
+        $carCateList = CarDish::all();
         $back_url = $request->back_url ?? null;
         return view('drivers.create', compact('carCateList', 'car_cate_id', 'back_url'));
     }
@@ -125,7 +125,7 @@ class DriversController extends Controller
     public function edit($id)
     {        
         $detail = Drivers::find($id);             
-        $carCateList = CarCate::all();
+        $carCateList = CarDish::all();
         return view('drivers.edit', compact( 'detail', 'carCateList'));
     }
 

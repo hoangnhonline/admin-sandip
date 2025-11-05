@@ -147,8 +147,8 @@ class JetskiController extends Controller
 
         $bankInfoList = BankInfo::all();
         $vietNameBanks = \App\Helpers\Helper::getVietNamBanks();
-        $beachList = Branch::where('status', 1)->orderBy('display_order')->get();
-        return view('cost.edit', compact( 'detail', 'cateList', 'partnerList', 'bankInfoList', 'vietNameBanks', 'beachList'));
+        $branchList = Branch::where('status', 1)->orderBy('display_order')->get();
+        return view('cost.edit', compact( 'detail', 'cateList', 'partnerList', 'bankInfoList', 'vietNameBanks', 'branchList'));
     }
     public function copy($id)
     {

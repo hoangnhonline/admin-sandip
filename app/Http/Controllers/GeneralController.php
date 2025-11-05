@@ -113,7 +113,7 @@ class GeneralController extends Controller
     	return response()->json( ['str' => $strReturn] );
     }
     public function setupMenu(Request $request){        
-        $articlesCateList = WArticlesCate::where('status', 1)->orderBy('display_order', 'asc')->get();
+        $articlesCateList = WArticlesDish::where('status', 1)->orderBy('display_order', 'asc')->get();
         $pageList = WPages::where('status', 1)->get();
         return view('menu.index', compact( 'landingList', 'articlesCateList', 'pageList'));
     }

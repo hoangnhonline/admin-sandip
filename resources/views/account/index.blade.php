@@ -92,7 +92,7 @@
             <label for="hdv">HDV&nbsp;&nbsp;&nbsp;&nbsp;</label>
           </div>   
           @endif
-          <button class="btn btn-info" type="submit">Lọc</button>     
+          <button class="btn btn-info" type="submit">Search</button>     
           </form>
       </div>
       </div>

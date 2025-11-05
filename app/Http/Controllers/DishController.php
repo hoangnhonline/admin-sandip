@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
-use App\Models\WArticlesCate;
+use App\Models\Dish;
+use App\Models\Branch;
 use Helper, File, Session, Auth;
 
 class DishController extends Controller
@@ -19,6 +20,7 @@ class DishController extends Controller
     */
     public function index(Request $request)
     {
+        $branchList = Branch::where('status', 1)->orderBy('display_order')->get();
         $userLogin = Auth::user();        
         $arrSearch['name'] = $name = $request->name ?? null;
         
@@ -55,12 +57,13 @@ class DishController extends Controller
     */
     public function create(Request $request)
     {
+        $branchList = Branch::where('status', 1)->orderBy('display_order')->get();
         $branch_id = $request->branch_id ?? null;
         $cateList = Category::all();
         if($branch_id){
             $cateList = Category::where('branch_id', $branch_id)->get();    
         }
-        return view('dish.create', compact('cateList'));
+        return view('dish.create', compact('cateList', 'branchList'));
     }
 
     /**

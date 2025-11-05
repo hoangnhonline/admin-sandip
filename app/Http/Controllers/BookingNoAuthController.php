@@ -821,15 +821,15 @@ class BookingNoAuthController extends Controller
             }
         }
         
-        $cateList = Cate::orderBy('display_order')->get();
-        $beachList = Branch::where('status', 1)->orderBy('display_order')->get();
+        $cateList = Dish::orderBy('display_order')->get();
+        $branchList = Branch::where('status', 1)->orderBy('display_order')->get();
         $beachArr = [];
-        foreach($beachList as $beach){
+        foreach($branchList as $beach){
             $beachArr[$beach->id] = $beach->name;
         }
         $partners = Account::where('is_partner', 1)->get();
         $tuvanList = NguoiTuVan::where('status', 1 )->orderBy('display_order')->get();
-        return view($view, compact( 'items', 'arrSearch', 'keyword', 'time_type', 'month', 'year', 'month_do', 'arrData', 'chi_tien_mat', 'chietkhauList', 'chi_khac', 'branch_id', 'cateList', 'cate_id', 'use_date_from_format', 'use_date_to_format', 'beachList', 'beachArr', 'partners', 'partner_id', 'tuvanList'));
+        return view($view, compact( 'items', 'arrSearch', 'keyword', 'time_type', 'month', 'year', 'month_do', 'arrData', 'chi_tien_mat', 'chietkhauList', 'chi_khac', 'branch_id', 'cateList', 'cate_id', 'use_date_from_format', 'use_date_to_format', 'branchList', 'beachArr', 'partners', 'partner_id', 'tuvanList'));
 
     }
 
@@ -843,7 +843,7 @@ class BookingNoAuthController extends Controller
     {
         $user = Auth::user();
 
-        $cateList = Cate::orderBy('display_order')->get();
+        $cateList = Dish::orderBy('display_order')->get();
 
         $view = "booking.add-tour";
 
@@ -862,8 +862,8 @@ class BookingNoAuthController extends Controller
         }
         $chietkhauList = ChietKhau::orderBy('sort_order')->get();
         $partners = Account::where('is_partner', 1)->get();
-        $beachList = Branch::where('status', 1)->orderBy('display_order')->get();
-        return view($view, compact('cateList', 'use_date', 'bill', 'chietkhauList', 'partners', 'beachList'));
+        $branchList = Branch::where('status', 1)->orderBy('display_order')->get();
+        return view($view, compact('cateList', 'use_date', 'bill', 'chietkhauList', 'partners', 'branchList'));
     }
     /**
     * Store a newly created resource in storage.
@@ -957,11 +957,11 @@ class BookingNoAuthController extends Controller
     {
 
         $detail = Booking::find($id);
-        $cateList = Cate::orderBy('display_order')->get();
+        $cateList = Dish::orderBy('display_order')->get();
         $chietkhauList = ChietKhau::orderBy('sort_order')->get();
         $partners = Account::where('is_partner', 1)->get();
-        $beachList = Branch::where('status', 1)->orderBy('display_order')->get();
-        return view('booking.edit-tour', compact( 'detail', 'cateList','chietkhauList', 'partners', 'beachList'));
+        $branchList = Branch::where('status', 1)->orderBy('display_order')->get();
+        return view('booking.edit-tour', compact( 'detail', 'cateList','chietkhauList', 'partners', 'branchList'));
 
     }
 

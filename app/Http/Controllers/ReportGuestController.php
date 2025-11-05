@@ -674,7 +674,7 @@ class ReportGuestController extends Controller
         
         
 
-        $carCate = CarCate::all();
+        $carCate = CarDish::all();
         
         //if(Auth::user()->id == 21){
         if($agent->isMobile()){

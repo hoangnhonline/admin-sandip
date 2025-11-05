@@ -63,7 +63,7 @@ class OrdersController extends Controller
             $total_actual_amount+= $o->actual_amount;
         }   
 
-        $foodCate = FoodCate::all();
+        $foodCate = FoodDish::all();
         $listUser = User::all();
         return view('orders.index', compact( 'items', 'name', 'cate_id', 'foodCate', 'listUser', 'arrSearch', 'date_use', 'total_actual_amount'));
     }
@@ -76,7 +76,7 @@ class OrdersController extends Controller
     */
     public function create(Request $request)
     {   
-        $foodCate = FoodCate::all();
+        $foodCate = FoodDish::all();
         $cate_id = $request->cate_id ? $request->cate_id : null;  
         $listUser = User::all();  
         $foodList = Food::all(); 

@@ -75,7 +75,7 @@
             </select>
           </div>      
           <input class="form-control" name="id_loaitru" value="{{ $id_loaitru }}" style="width: 500px" />
-            <button type="submit" class="btn btn-info btn-sm" style="margin-top: -5px">Lọc</button>
+            <button type="submit" class="btn btn-info btn-sm" style="margin-top: -5px">Search</button>
 
           </form>         
         </div>

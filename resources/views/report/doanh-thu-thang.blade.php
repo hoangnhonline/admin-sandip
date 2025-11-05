@@ -41,7 +41,7 @@
                   <option value="2026" {{ $year == 2026 ? "selected" : "" }}>2026</option>
                 </select>
               </div>       
-            <button type="submit" class="btn btn-info btn-sm" style="margin-top: -5px">Lọc</button>
+            <button type="submit" class="btn btn-info btn-sm" style="margin-top: -5px">Search</button>
           </form>         
         </div>
       </div>      

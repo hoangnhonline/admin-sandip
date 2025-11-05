@@ -38,7 +38,15 @@
                           @endforeach
                       </ul>
                   </div>
-              @endif            
+              @endif  
+              <div class="form-group">
+               <label>Branch</label>
+                  <select name="branch_id" id="branch_id" class="form-control select2">
+                    @foreach($branchList as $beach)
+                    <option value="{{ $beach->id }}" {{ old('branch_id') == $beach->id ? "selected" : "" }}>{{ $beach->name }}</option>
+                    @endforeach                      
+                  </select>
+             </div>          
                 <div class="form-group">
                   <label>Category<span class="red-star">*</span></label>
                   <select name="category_id" id="category_id" class="form-control select2">

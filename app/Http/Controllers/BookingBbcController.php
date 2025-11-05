@@ -271,23 +271,23 @@ class BookingBbcController extends Controller
         if($userLogin->branch_id == 7){
        
                 $cateList = CateBbc::where('status', 1)->orderBy('display_order')->get();    
-                $beachList = Branch::where('status', 1)->orderBy('display_order')->get();
+                $branchList = Branch::where('status', 1)->orderBy('display_order')->get();
             
             $partners = Account::where('is_partner', 1)->where('branch_id', 7)->get();
         }else{
             $cateList = Cate::orderBy('display_order')->get();                
-            $beachList = Branch::where('status', 1)->orderBy('display_order')->get();
+            $branchList = Branch::where('status', 1)->orderBy('display_order')->get();
             $partners = Account::where('is_partner', 1)->get();
         }
         
         $beachArr = [];
-        foreach($beachList as $beach){
+        foreach($branchList as $beach){
             $beachArr[$beach->id] = $beach->name;
         }
         
         
         $tuvanList = NguoiTuVan::where('status', 1 )->orderBy('display_order')->get();
-        return view($view, compact( 'items', 'arrSearch', 'keyword', 'time_type', 'month', 'year', 'month_do', 'arrData', 'chi_tien_mat', 'chietkhauList', 'chi_khac', 'branch_id', 'cateList', 'cate_id', 'use_date_from_format', 'use_date_to_format', 'beachList', 'beachArr', 'partners', 'tuvanList'));
+        return view($view, compact( 'items', 'arrSearch', 'keyword', 'time_type', 'month', 'year', 'month_do', 'arrData', 'chi_tien_mat', 'chietkhauList', 'chi_khac', 'branch_id', 'cateList', 'cate_id', 'use_date_from_format', 'use_date_to_format', 'branchList', 'beachArr', 'partners', 'tuvanList'));
 
     }
 
@@ -316,16 +316,16 @@ class BookingBbcController extends Controller
         }
         $chietkhauList = ChietKhau::orderBy('sort_order')->get();
         $partners = Account::where('is_partner', 1)->get();
-        $beachList = Branch::where('status', 1)->orderBy('display_order')->get();
+        $branchList = Branch::where('status', 1)->orderBy('display_order')->get();
        
         
         $cateList = CateBbc::where('chup_anh', 1)->orderBy('display_order')->get();    
-        $beachList = Branch::where('id', 7)->get();
+        $branchList = Branch::where('id', 7)->get();
         
         $partners = Account::where('is_partner', 1)->where('branch_id', 7)->get();
         
         $tuvanList = NguoiTuVan::where('status', 1 )->orderBy('display_order')->get();
-        return view('booking-bbc.add', compact('cateList', 'use_date', 'bill', 'chietkhauList', 'partners', 'beachList', 'tuvanList'));
+        return view('booking-bbc.add', compact('cateList', 'use_date', 'bill', 'chietkhauList', 'partners', 'branchList', 'tuvanList'));
     }
     /**
     * Store a newly created resource in storage.
@@ -426,10 +426,10 @@ class BookingBbcController extends Controller
         $chietkhauList = ChietKhau::orderBy('sort_order')->get();        
        
         $cateList = CateBbc::where('status', 1)->orderBy('display_order')->get();    
-        $beachList = Branch::where('id', 7)->get();            
+        $branchList = Branch::where('id', 7)->get();            
         $partners = Account::where('is_partner', 1)->where('branch_id', 7)->get();        
         $tuvanList = NguoiTuVan::where('status', 1 )->orderBy('display_order')->get();
-        return view('booking-bbc.edit' , compact( 'detail', 'cateList','chietkhauList', 'partners', 'beachList', 'tuvanList'));
+        return view('booking-bbc.edit' , compact( 'detail', 'cateList','chietkhauList', 'partners', 'branchList', 'tuvanList'));
 
     }
 

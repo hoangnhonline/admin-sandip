@@ -25,7 +25,7 @@ class BookingDetail extends Model  {
      * @var array
      */
     protected $fillable = ['booking_id', 
-                            'cate_id',                           
+                            'dish_id',                           
                             'amount', 
                             'price', 
                             'total_price'        
@@ -35,8 +35,8 @@ class BookingDetail extends Model  {
     {
         return $this->belongsTo('App\Models\Booking', 'booking_id');
     } 
-    public function cate()
+    public function dish()
     {
-        return $this->belongsTo('App\Models\Cate', 'cate_id');
+        return $this->belongsTo('App\Models\Dish', 'dish_id');
     }  
 }

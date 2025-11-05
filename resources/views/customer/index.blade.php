@@ -41,7 +41,7 @@
                                 <label for="code">&nbsp;&nbsp;Mã Code</label>
                                 <input type="text" class="form-control" name="code" value="{{ $code }}">
                             </div>
-                            <button type="submit" class="btn btn-default btn-sm">Lọc</button>
+                            <button type="submit" class="btn btn-default btn-sm">Search</button>
                         </form>
                     </div>
                 </div>

@@ -42,7 +42,7 @@
                                 <option value="5" {{ $area_id == 5 ? "selected" : "" }}>Bãi Sao-2 đảo</option>
               </select>
             </div>
-            <button type="submit" class="btn btn-default btn-sm">Lọc</button>
+            <button type="submit" class="btn btn-default btn-sm">Search</button>
           </form>         
         </div>
       </div>

@@ -24,10 +24,10 @@
         <div class="panel-body">
           <form class="form-inline" role="form" method="GET" action="{{ route('report.loi-nhuan') }}" id="searchForm">
             <div class="form-group  chon-thang">                             
-                <select class="form-control select2" id="beach_id" name="beach_id">
+                <select class="form-control select2" id="branch_id" name="branch_id">
                   <option value="">--BÃI BIỂN--</option>
-                  @foreach($beachList as $beach)
-                  <option value="{{ $beach->id }}" {{ $beach_id == $beach->id ? "selected" : "" }}>{{ $beach->name }}</option>
+                  @foreach($branchList as $beach)
+                  <option value="{{ $beach->id }}" {{ $branch_id == $beach->id ? "selected" : "" }}>{{ $beach->name }}</option>
                   @endforeach
                 </select>
               </div>
@@ -49,7 +49,7 @@
                   <option value="2026" {{ $year == 2026 ? "selected" : "" }}>2026</option>
                 </select>
               </div>       
-            <button type="submit" class="btn btn-info btn-sm" style="margin-top: -5px">Lọc</button>
+            <button type="submit" class="btn btn-info btn-sm" style="margin-top: -5px">Search</button>
           </form>         
         </div>
       </div>      
@@ -116,7 +116,7 @@
               $chiet_khau_khac = isset($arrDay[$day]['tong_toto']) ? $arrDay[$day]['tong_toto'] : 0;
               $tong_chi_phi_van_hanh = isset($arrCost[$day]['tong_chi_phi_van_hanh']) ? ($arrCost[$day]['tong_chi_phi_van_hanh']) : 0;
               $tong_chi_phi_khac = isset($arrCost[$day]['tong_chi_phi_khac']) ? ($arrCost[$day]['tong_chi_phi_khac']) : 0;
-              $chi_phi_co_dinh = $beach_id == 4 ? 3500000 : 1350000;
+              $chi_phi_co_dinh = $branch_id == 4 ? 3500000 : 1350000;
               ?>
               <tr>
                 <th class="text-center">{{ $day }}</th>

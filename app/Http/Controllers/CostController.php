@@ -179,12 +179,12 @@ class CostController extends Controller
         }else{
             $view = 'cost.index';
         }
-        $beachList = Branch::where('status', 1)->orderBy('display_order')->get();
+        $branchList = Branch::where('status', 1)->orderBy('display_order')->get();
         $beachArr = [];
-        foreach($beachList as $beach){
+        foreach($branchList as $beach){
             $beachArr[$beach->id] = $beach->name;
         }
-        return view($view, compact( 'items', 'content', 'cate_id', 'arrSearch', 'date_use', 'total_actual_amount', 'cateList', 'nguoi_chi', 'partnerList', 'partner_id', 'total_quantity', 'month', 'city_id', 'time_type','year', 'is_fixed', 'type', 'branch_id', 'beachList', 'beachArr', 'arrReport', 'cateArr'));
+        return view($view, compact( 'items', 'content', 'cate_id', 'arrSearch', 'date_use', 'total_actual_amount', 'cateList', 'nguoi_chi', 'partnerList', 'partner_id', 'total_quantity', 'month', 'city_id', 'time_type','year', 'is_fixed', 'type', 'branch_id', 'branchList', 'beachArr', 'arrReport', 'cateArr'));
     }
     public function export(Request $request)
     {
@@ -348,8 +348,8 @@ class CostController extends Controller
 
         $bankInfoList = BankInfo::all();
         $vietNameBanks = \App\Helpers\Helper::getVietNamBanks();
-        $beachList = Branch::where('status', 1)->orderBy('display_order')->get();
-        return view('cost.create', compact('cate_id', 'date_use', 'cateList', 'month', 'partnerList', 'bankInfoList', 'vietNameBanks', 'beachList'));
+        $branchList = Branch::where('status', 1)->orderBy('display_order')->get();
+        return view('cost.create', compact('cate_id', 'date_use', 'cateList', 'month', 'partnerList', 'bankInfoList', 'vietNameBanks', 'branchList'));
     }
     public function sms(Request $request)
     {
@@ -499,8 +499,8 @@ class CostController extends Controller
 
         $bankInfoList = BankInfo::all();
         $vietNameBanks = \App\Helpers\Helper::getVietNamBanks();
-        $beachList = Branch::where('status', 1)->orderBy('display_order')->get();
-        return view('cost.edit', compact( 'detail', 'cateList', 'partnerList', 'bankInfoList', 'vietNameBanks', 'beachList'));
+        $branchList = Branch::where('status', 1)->orderBy('display_order')->get();
+        return view('cost.edit', compact( 'detail', 'cateList', 'partnerList', 'bankInfoList', 'vietNameBanks', 'branchList'));
     }
     public function copy($id)
     {

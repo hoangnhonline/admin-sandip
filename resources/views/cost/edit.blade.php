@@ -70,9 +70,9 @@
                 </div>
                 <div class="form-group col-md-4 col-xs-6">
                    <label>Branch</label>
-                      <select name="beach_id" id="beach_id" class="form-control select2">
-                        @foreach($beachList as $beach)
-                        <option value="{{ $beach->id }}" {{ old('beach_id', $detail->beach_id) == $beach->id ? "selected" : "" }}>{{ $beach->name }}</option>
+                      <select name="branch_id" id="branch_id" class="form-control select2">
+                        @foreach($branchList as $beach)
+                        <option value="{{ $beach->id }}" {{ old('branch_id', $detail->branch_id) == $beach->id ? "selected" : "" }}>{{ $beach->name }}</option>
                         @endforeach      
                       </select>
                  </div>

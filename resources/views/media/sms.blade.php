@@ -31,7 +31,7 @@
               <label for="email">Ngày</label>
               <input type="text" class="form-control datepicker" name="send_date" value="{{ $send_date }}">
             </div>
-            <button type="submit" class="btn btn-default btn-sm">Lọc</button>
+            <button type="submit" class="btn btn-default btn-sm">Search</button>
           </form>         
         </div>
       </div>

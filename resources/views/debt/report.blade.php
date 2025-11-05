@@ -129,7 +129,7 @@
                 <option value="3" {{ $arrSearch['nguoi_thu_coc'] == 3 ? "selected" : "" }}>HDV</option>
               </select>
             </div>             
-            <button type="submit" class="btn btn-info btn-sm" style="margin-top: -5px">Lọc</button>
+            <button type="submit" class="btn btn-info btn-sm" style="margin-top: -5px">Search</button>
             <div class="form-group">
               <button type="button" id="btnReset" class="btn btn-default btn-sm">Reset</button>
             </div>

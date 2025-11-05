@@ -88,7 +88,7 @@
             </div>                     
             @endif           
            
-            <button type="submit" class="btn btn-info btn-sm" style="margin-top: -5px">Lọc</button>         
+            <button type="submit" class="btn btn-info btn-sm" style="margin-top: -5px">Search</button>         
          
           </form>         
         </div>

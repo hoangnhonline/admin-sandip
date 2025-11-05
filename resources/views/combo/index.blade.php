@@ -50,7 +50,7 @@
               <label for="email">&nbsp;&nbsp;Tên :</label>
               <input type="text" class="form-control" name="name" value="{{ $name }}">
             </div>
-            <button type="submit" class="btn btn-default btn-sm">Lọc</button>
+            <button type="submit" class="btn btn-default btn-sm">Search</button>
           </form>         
         </div>
       </div>

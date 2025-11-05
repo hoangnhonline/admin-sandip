@@ -101,7 +101,7 @@
             @endif
            
 
-            <button type="submit" class="btn btn-success btn-sm">Lọc</button>
+            <button type="submit" class="btn btn-success btn-sm">Search</button>
             <button type="reset" class="btn btn-danger btn-sm">Reset</button>
           </form>         
         </div>

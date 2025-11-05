@@ -88,7 +88,7 @@
               <label for="content">&nbsp;&nbsp;&nbsp;Nội dung</label>
               <input type="text" class="form-control" name="content" value="{{ $content }}" placeholder="Nội dung"  style="width: 100px">
             </div>
-            <button type="submit" class="btn btn-info btn-sm" style="margin-top: -5px">Lọc</button>
+            <button type="submit" class="btn btn-info btn-sm" style="margin-top: -5px">Search</button>
           </form>         
         </div>
       </div>

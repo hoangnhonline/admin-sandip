@@ -75,7 +75,7 @@
             @endif
             </div>  
             <div class="row">
-                @foreach($beachList as $beach)
+                @foreach($branchList as $beach)
                   <div class="form-group col-xs-6">
                     &nbsp;&nbsp;&nbsp;<input type="checkbox" name="branch_ids[]" id="branch_ids" {{ in_array($beach->id, $arrSearch['branch_ids']) || empty($arrSearch['branch_ids']) ? "checked" : "" }} value="{{$beach->id}}">
                     <label for="branch_ids">{{$beach->name}}</label>
@@ -154,7 +154,7 @@
               </div>   
             </div>
             @endif
-            <button type="submit" class="btn btn-info btn-sm">Lọc</button>
+            <button type="submit" class="btn btn-info btn-sm">Search</button>
             <button type="button" id="btnReset" class="btn btn-danger btn-sm">Reset</button>
           </form>         
         </div>
@@ -277,8 +277,8 @@
                     <i class="glyphicon glyphicon-phone"></i> <a href="tel:{{ $item->phone }}" target="_blank">{{ $item->phone }}</a> 
                     <br>
                   <i class="glyphicon glyphicon-map-marker"></i> 
-                  @if($item->beach_id)
-                  {{ $beachArr[$item->beach_id] }}
+                  @if($item->branch_id)
+                  {{ $beachArr[$item->branch_id] }}
                   @endif
                     <br>
                     <i class="glyphicon glyphicon-user"></i> 
@@ -310,7 +310,7 @@
                     @endif
                     @if($item->commision > 0) 
                     <br>- Discount rate / Discount (%): <span style="color: red;font-weight: bold;">{{ number_format($item->commision) }} 
-                    @if($item->per_com <= 100 && $item->beach_id != 4 && $item->commision < 100)
+                    @if($item->per_com <= 100 && $item->branch_id != 4 && $item->commision < 100)
                     ({{ $item->per_com }}%)
                     @endif
                     </span>

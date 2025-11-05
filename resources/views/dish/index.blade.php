@@ -8,7 +8,7 @@
   </h1>
   <ol class="breadcrumb">
     <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-    <li><a href="{{ route( 'dish.index' ) }}">Danh mục</a></li>
+    <li><a href="{{ route( 'dish.index' ) }}">Dish</a></li>
     <li class="active">List</li>
   </ol>
 </section>
@@ -29,18 +29,10 @@
         <form class="form-inline" role="form" method="GET" action="{{ route('dish.index') }}">
                   
           <div class="form-group">
-            <label>&nbsp;&nbsp;Tên</label>
+            <label>&nbsp;&nbsp;Name</label>
             <input type="text" name="name" value="{{ $arrSearch['name'] }}" class="form-control">
-          </div>
-          <div class="form-group">
-            <label>&nbsp;&nbsp;Số tiền</label>
-            <input type="text" name="price" value="{{ $arrSearch['price'] > 0 ? number_format($arrSearch['price']) : "" }}" class="form-control number">
-          </div>
-          <div class="form-group" style="font-weight: bold; color: blue">            
-            <input type="checkbox" name="hon_son" value="1" {{ $arrSearch['hon_son'] == 1 ? "checked" : "" }}> Hòn Sơn
-          </div>
-         
-          <button class="btn btn-info" type="submit">Lọc</button>     
+          </div>                   
+          <button class="btn btn-info" type="submit">Search</button>     
           </form>
       </div>
       </div>
@@ -54,10 +46,10 @@
             <tr>
               <th style="width: 1%">#</th>
               
-              <th>Tên</th> 
-              <th class="text-right">Giá tiền</th>          
-              <th class="text-center">Hòn Sơn</th>                              
-              <th width="1%" style="white-space: nowrap;">Thao tác</th>
+              <th>Dish name</th> 
+              <th class="text-right">Price</th>
+              <th class="text-right">Display order</th>                                          
+              <th width="1%" style="white-space: nowrap;">Action</th>
             </tr>
             <tbody>
             @if( $items->count() > 0 )
@@ -73,23 +65,20 @@
                 </td> 
                 <td class="text-right">
                   {{ number_format($item->price) }}
-                </td>  
-                <td class="text-center">
-                  <input id="hon_son_{{ $item->id }}" data-table="dish" type="checkbox" data-column="hon_son" class="change-column-value-booking" value="1" data-id="{{ $item->id }}"  value="1" {{ $item->hon_son == 1 ? "checked" : "" }}
-
-
-                  > Hiện
-                </td>                             
+                </td> 
+                <td class="text-right">
+                  {{ number_format($item->display_order) }}
+                </td>                                          
                 <td style="white-space:nowrap">                 
                   <a href="{{ route( 'dish.edit', [ 'id' => $item->id ]) }}" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></a>
-                  <!-- <a onclick="return callDelete('{{ $item->name }}','{{ route( 'dish.destroy', [ 'id' => $item->id ]) }}');" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></a> -->
+                  <a onclick="return callDelete('{{ $item->name }}','{{ route( 'dish.destroy', [ 'id' => $item->id ]) }}');" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></a>
              
                 </td>
               </tr> 
               @endforeach
             @else
             <tr>
-              <td colspan="9">Không có dữ liệu.</td>
+              <td colspan="9">No data!</td>
             </tr>
             @endif
 
@@ -109,8 +98,8 @@
 <script type="text/javascript">
 function callDelete(name, url){  
   swal({
-    title: 'Bạn muốn xóa "' + name +'"?',
-    text: "Dữ liệu sẽ không thể phục hồi.",
+    title: 'Do you want to delete "' + name +'"?',
+    text: "Once deleted, the data cannot be recovered..",
     type: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
@@ -122,19 +111,6 @@ function callDelete(name, url){
   return flag;
 }
 
-$(document).ready(function(){
-  $('.change-column-value-booking').change(function(){
-        var obj = $(this);
-        if(confirm('Chắc chắn đã thu tiền?')){
-            
-            ajaxChange(obj.data('id'), obj);
-        }else {
-          obj.removeAttr('checked');
-        }  
-       });
-
-
-});
 function ajaxChange(id, obj){
         $.ajax({
             url : "{{ route('dish.change-value-by-column') }}",

@@ -356,7 +356,7 @@ class ReportController extends Controller
     }
     public function loiNhuan(Request $request){       
         
-        $beachList = Branch::where('status', 1)->orderBy('display_order')->get();
+        $branchList = Branch::where('status', 1)->orderBy('display_order')->get();
         $branch_id = $request->branch_id ?? null;
         $error = $request->error ?? 0;
         $monthDefault = date('m');
@@ -498,7 +498,7 @@ class ReportController extends Controller
         $cateList = CostType::orderBy('display_order')->get();
         //dd($cateList);
         
-        return view($view, compact('arrDay', 'tong_thuc_thu', 'tong_hoa_hong_sales', 'arrCost', 'tong_chi','maxDay', 'minDateFormat', 'maxDateFormat', 'month', 'year', 'cateList', 'type', 'tong_chi_phi_van_hanh', 'tong_chi_phi_khac', 'beachList', 'branch_id'));
+        return view($view, compact('arrDay', 'tong_thuc_thu', 'tong_hoa_hong_sales', 'arrCost', 'tong_chi','maxDay', 'minDateFormat', 'maxDateFormat', 'month', 'year', 'cateList', 'type', 'tong_chi_phi_van_hanh', 'tong_chi_phi_khac', 'branchList', 'branch_id'));
 
 
     }

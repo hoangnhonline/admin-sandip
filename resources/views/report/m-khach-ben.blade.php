@@ -100,7 +100,7 @@
              @endif
             @endif   
             </div>                            
-            <button type="submit" class="btn btn-info btn-sm">Lọc</button>
+            <button type="submit" class="btn btn-info btn-sm">Search</button>
 
           </form>         
         </div>

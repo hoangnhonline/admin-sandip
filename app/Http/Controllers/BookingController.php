@@ -7,16 +7,15 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
-use App\Models\Cate;
-use App\Models\Hotels;
+use App\Models\Category;
+
 use App\Models\BookingDetail;
 use App\Models\ChietKhau;
 use App\Models\BookingLogs;
 use App\Models\Account;
 use App\Models\Cost;
-use App\Models\NguoiTuVan;
 use App\Models\Branch;
-use App\Models\Hdv;
+use App\Models\Dish;
 use App\User;
 use App\Models\Settings;
 use Helper, File, Session, Auth, Image, Hash;
@@ -534,8 +533,7 @@ class BookingController extends Controller
         $arrSearch['xe_4t'] = $xe_4t = $request->xe_4t ?? null;
         $arrSearch['user_id'] = $user_id = $request->user_id ? $request->user_id : null;
         $arrSearch['branch_id'] = $branch_id = $request->branch_id ? $request->branch_id : null;
-        $arrSearch['branch_ids'] = $branch_ids = $request->branch_ids ? $request->branch_ids : [];
-        $arrSearch['cate_id'] = $cate_id = $request->cate_id ?? null;
+        $arrSearch['branch_ids'] = $branch_ids = $request->branch_ids ? $request->branch_ids : [];      
         $arrSearch['nguoi_tu_van'] = $nguoi_tu_van = $request->nguoi_tu_van ?? null;
         $arrSearch['partner_id'] = $partner_id = $request->partner_id ?? null;
         $arrSearch['hdv_id'] = $hdv_id = $request->hdv_id ?? null;
@@ -561,7 +559,7 @@ class BookingController extends Controller
         $arrSearch['keyword'] = $keyword = $request->keyword ? $request->keyword : null;
 
         $arrSearch['created_at'] = $created_at = $request->created_at ? $request->created_at :  null;
-        $chi_tien_mat = $chi_khac = 0;
+        
         
         $query = Booking::where('city_id', 1);             
 
@@ -600,10 +598,7 @@ class BookingController extends Controller
             if($status){
                 $query->whereIn('status', $status);
             }
-            if($cate_id){
-                $query->join('booking_detail', 'booking_detail.booking_id', '=', 'booking.id')
-                ->where('booking_detail.cate_id', $cate_id);
-            }
+            
             if($not_john){
                 $query->where('partner_id', '<>', 493);
             }
@@ -680,40 +675,19 @@ class BookingController extends Controller
 
                     $query->where('use_date','>=', $mindate);
                     $query->where('use_date', '<=', $maxdate);
-                    $queryTienmat = Cost::where('status','>', 0)
-                                ->where('nguoi_chi', 1);
-                    $queryTienmat->where('date_use','>=', $mindate);
-                    $queryTienmat->where('date_use',  '<=', $maxdate);
-                    
-                    if($branch_ids){
-                      $queryTienmat->whereIn('branch_id', $branch_ids);
-                    }
-                    $chi_tien_mat = $queryTienmat->sum('total_money');
-
-                    $queryCostOther = Cost::where('status', 1)
-                                ->where('nguoi_chi','<>', 1);
-                    $queryCostOther->where('date_use','>=', $mindate);
-                    $queryCostOther->where('date_use',  '<=', $maxdate);
-                    if($branch_ids){
-                      $queryCostOther->whereIn('branch_id', $branch_ids);
-                    }
-                    $chi_khac = $queryCostOther->sum('total_money');
-
 
                 }elseif($time_type == 2){ // theo khoang ngay
                     $arrSearch['use_date_from'] = $use_date_from = $date_use = $request->use_date_from ? $request->use_date_from : date('d/m/Y', time());
                     $arrSearch['use_date_to'] = $use_date_to = $request->use_date_to ? $request->use_date_to : $use_date_from;
 
-                    $queryTienmat = Cost::where('status','>', 0)
-                                ->where('nguoi_chi', 1);
-
+               
 
                     if($use_date_from){
                         $arrSearch['use_date_from'] = $use_date_from;
                         $tmpDate = explode('/', $use_date_from);
                         $use_date_from_format = $tmpDate[2].'-'.$tmpDate[1].'-'.$tmpDate[0];
                         $query->where('use_date','>=', $use_date_from_format);
-                        $queryTienmat->where('date_use','>=', $use_date_from_format);
+                       
                     }
                     if($use_date_to){
                         $arrSearch['use_date_to'] = $use_date_to;
@@ -724,12 +698,9 @@ class BookingController extends Controller
                             $use_date_to_format = $use_date_from_format;
                         }
                         $query->where('use_date', '<=', $use_date_to_format);
-                        $queryTienmat->where('date_use', '<=', $use_date_to_format);
+                     
                     }
-                    if($branch_ids){
-                      $queryTienmat->whereIn('branch_id', $branch_ids);
-                    }
-                    $chi_tien_mat = $queryTienmat->sum('total_money');
+                    
                 }else{
                     $arrSearch['use_date_from'] = $use_date_from = $arrSearch['use_date_to'] = $use_date_to = $date_use = $request->use_date_from ? $request->use_date_from : date('d/m/Y', time());
 
@@ -738,13 +709,7 @@ class BookingController extends Controller
                     $query->where('use_date','=', $use_date_from_format);
                     $day = $tmpDate[0];
                     $month_do = $tmpDate[1];
-                    $queryTienmat = Cost::where('date_use', $use_date_from_format)
-                                ->where('status','>', 0)
-                                ->where('nguoi_chi', 1);
-                    if($branch_ids){
-                      $queryTienmat->whereIn('branch_id', $branch_ids);
-                    }
-                    $chi_tien_mat=$queryTienmat->sum('total_money');
+                   
                 }
             }
         }//end else
@@ -783,24 +748,7 @@ class BookingController extends Controller
 
             foreach($item->details as $detail){               
                 
-                if($detail->cate_id == 68){
-                    $arrData['tong_du_doi'] += $detail->amount;
-                }
-                if($detail->cate_id == 63){
-                    $arrData['tong_du_don'] += $detail->amount;       
-                }
-                if($detail->cate_id == 71) // cam 500 JohnTour
-                {
-                    $arrData['tong_tien_ko_cam_jt'] += 0;
-                    $arrData['tong_cam'] += $detail->total_price;
-                }else{
-                    $arrData['tong_tien_ko_cam_jt'] += $detail->total_price;
-                    //tính tổng tiền không flycam theo ngày
-                    if(!isset($arrTongTienKhongCam[$item->use_date][$item->branch_id])){
-                        $arrTongTienKhongCam[$item->use_date][$item->branch_id] = 0;
-                    } 
-                    $arrTongTienKhongCam[$item->use_date][$item->branch_id] += $detail->total_price;
-                }
+               
                 
             }
             $arrData['tong_tien'] += $item->total_price;
@@ -855,77 +803,15 @@ class BookingController extends Controller
                 }
             }
                 
-        }  
-        //chen chi phi hoa hong    
-        if(!empty($arrHoahong)){
-            foreach($arrHoahong as $date_use => $beachArr){
-                if($date_use >= '2024-06-01'){
-                    foreach($beachArr as $branch_id => $total_money){
-                        
-                            $arrDataCost = [
-                                'total_money' => $total_money,
-                                'branch_id' => $branch_id,
-                                'amount' => 1,
-                                'price' => $total_money,
-                                'cate_id' => 57, // hoa hồng cano
-                                'nguoi_chi' => 1,
-                                'city_id' => 1,
-                                'status' => 1,                            
-                                'date_use' => $date_use
-                            ];
-                            $rs = Cost::where(['branch_id' => $branch_id, 'cate_id' => 57, 'date_use' => $date_use])->first();
-                            if(!$rs){
-                                Cost::create($arrDataCost);
-                            }else{ 
-                                //kiem tra tien da luu co bang tien tong hay khong thi update
-                                if($arrDataCost['total_money'] != $rs->total_money){
-                                    $rs->update($arrDataCost);    
-                                }                        
-                            }
-                        
-                        
-                    }
-                }                
-            }    
-        }
-      
-        //chen chi phí 5% nhân viên
-        if(!empty($arrTongTienKhongCam)){
-            foreach($arrTongTienKhongCam as $date_use => $beachArr){
-                if($date_use >= '2024-06-01'){
-                    foreach($beachArr as $branch_id => $total_money){
-                        $phantram = $total_money*0.05;
-                        $arrDataCost = [
-                            'total_money' => $phantram,
-                            'branch_id' => $branch_id,
-                            'amount' => 1,
-                            'price' => $phantram,
-                            'cate_id' => 58, // 5% nhân viên
-                            'nguoi_chi' => 2,
-                            'city_id' => 1,
-                            'status' => 1,                            
-                            'date_use' => $date_use
-                        ];
-                        $rs = Cost::where(['branch_id' => $branch_id, 'cate_id' => 58, 'date_use' => $date_use])->first();
-                        if(!$rs){
-                            Cost::create($arrDataCost);
-                        }else{ 
-                            //kiem tra tien da luu co bang tien tong hay khong thi update
-                            if($arrDataCost['total_money'] != $rs->total_money){
-                                $rs->update($arrDataCost);    
-                            }                        
-                        }
-                    }
-                }
-            }    
-        }
+        }       
+       
         
-        $cateList = Cate::orderBy('display_order')->get();                
-        $beachList = Branch::where('status', 1)->orderBy('display_order')->get();
+        $cateList = Dish::orderBy('display_order')->get();                
+        $branchList = Branch::where('status', 1)->orderBy('display_order')->get();
         $partners = Account::where('is_partner', 1)->get();        
         
         $beachArr = [];
-        foreach($beachList as $beach){
+        foreach($branchList as $beach){
             $beachArr[$beach->id] = $beach->name;
         }
         $cateArr = [];
@@ -933,13 +819,8 @@ class BookingController extends Controller
             $cateArr[$cate->id] = $cate->name;
         }
         
-        $tuvanList = NguoiTuVan::where('status', 1 )->orderBy('display_order')->get();
-        if($partner_id > 0){
-            $hdvList = Hdv::where(['status' => 1, 'user_id' => $partner_id])->get();
-        }else{
-            $hdvList = Hdv::where(['status' => 1, 'user_id' => 493])->get();
-        }
-        return view($view, compact( 'items', 'arrSearch', 'keyword', 'time_type', 'month', 'year', 'month_do', 'arrData', 'chi_tien_mat', 'chietkhauList', 'chi_khac', 'branch_id', 'cateList', 'cate_id', 'use_date_from_format', 'use_date_to_format', 'beachList', 'beachArr', 'partners', 'partner_id', 'cateArr', 'tuvanList', 'hdvList'));
+      
+        return view($view, compact( 'items', 'arrSearch', 'keyword', 'time_type', 'month', 'year', 'month_do', 'arrData', 'chietkhauList', 'branch_id', 'cateList', 'use_date_from_format', 'use_date_to_format', 'branchList', 'beachArr', 'partners', 'partner_id', 'cateArr'));
 
     }
 
@@ -956,7 +837,7 @@ class BookingController extends Controller
         $arrSearch['user_id'] = $user_id = $request->user_id ? $request->user_id : null;
         $arrSearch['branch_id'] = $branch_id = $request->branch_id ? $request->branch_id : null;
         $arrSearch['branch_ids'] = $branch_ids = $request->branch_ids ? $request->branch_ids : [];
-        $arrSearch['cate_id'] = $cate_id = $request->cate_id ?? null;
+        
         $arrSearch['nguoi_tu_van'] = $nguoi_tu_van = $request->nguoi_tu_van ?? null;
         $arrSearch['partner_id'] = $partner_id = $request->partner_id ?? null;
         $arrSearch['hdv_id'] = $hdv_id = $request->hdv_id ?? null;
@@ -984,7 +865,7 @@ class BookingController extends Controller
         $arrSearch['keyword'] = $keyword = $request->keyword ? $request->keyword : null;
 
         $arrSearch['created_at'] = $created_at = $request->created_at ? $request->created_at :  null;
-        $chi_tien_mat = $chi_khac = 0;
+        
         
         $query = Booking::where('city_id', 1);             
 
@@ -1023,10 +904,7 @@ class BookingController extends Controller
             if($status){
                 $query->whereIn('status', $status);
             }
-            if($cate_id){
-                $query->join('booking_detail', 'booking_detail.booking_id', '=', 'booking.id')
-                ->where('booking_detail.cate_id', $cate_id);
-            }
+        
 
             if($per_com){
                 $arrSearch['per_com'] = $per_com;
@@ -1104,40 +982,20 @@ class BookingController extends Controller
 
                     $query->where('use_date','>=', $mindate);
                     $query->where('use_date', '<=', $maxdate);
-                    $queryTienmat = Cost::where('status','>', 0)
-                                ->where('nguoi_chi', 1);
-                    $queryTienmat->where('date_use','>=', $mindate);
-                    $queryTienmat->where('date_use',  '<=', $maxdate);
+                 
                     
-                    if($branch_ids){
-                      $queryTienmat->whereIn('branch_id', $branch_ids);
-                    }
-                    $chi_tien_mat = $queryTienmat->sum('total_money');
-
-                    $queryCostOther = Cost::where('status', 1)
-                                ->where('nguoi_chi','<>', 1);
-                    $queryCostOther->where('date_use','>=', $mindate);
-                    $queryCostOther->where('date_use',  '<=', $maxdate);
-                    if($branch_ids){
-                      $queryCostOther->whereIn('branch_id', $branch_ids);
-                    }
-                    $chi_khac = $queryCostOther->sum('total_money');
 
 
                 }elseif($time_type == 2){ // theo khoang ngay
                     $arrSearch['use_date_from'] = $use_date_from = $date_use = $request->use_date_from ? $request->use_date_from : date('d/m/Y', time());
                     $arrSearch['use_date_to'] = $use_date_to = $request->use_date_to ? $request->use_date_to : $use_date_from;
 
-                    $queryTienmat = Cost::where('status','>', 0)
-                                ->where('nguoi_chi', 1);
-
 
                     if($use_date_from){
                         $arrSearch['use_date_from'] = $use_date_from;
                         $tmpDate = explode('/', $use_date_from);
                         $use_date_from_format = $tmpDate[2].'-'.$tmpDate[1].'-'.$tmpDate[0];
-                        $query->where('use_date','>=', $use_date_from_format);
-                        $queryTienmat->where('date_use','>=', $use_date_from_format);
+                        $query->where('use_date','>=', $use_date_from_format);                      
                     }
                     if($use_date_to){
                         $arrSearch['use_date_to'] = $use_date_to;
@@ -1148,12 +1006,9 @@ class BookingController extends Controller
                             $use_date_to_format = $use_date_from_format;
                         }
                         $query->where('use_date', '<=', $use_date_to_format);
-                        $queryTienmat->where('date_use', '<=', $use_date_to_format);
+                      
                     }
-                    if($branch_ids){
-                      $queryTienmat->whereIn('branch_id', $branch_ids);
-                    }
-                    $chi_tien_mat = $queryTienmat->sum('total_money');
+                    
                 }else{
                     $arrSearch['use_date_from'] = $use_date_from = $arrSearch['use_date_to'] = $use_date_to = $date_use = $request->use_date_from ? $request->use_date_from : date('d/m/Y', time());
 
@@ -1162,13 +1017,7 @@ class BookingController extends Controller
                     $query->where('use_date','=', $use_date_from_format);
                     $day = $tmpDate[0];
                     $month_do = $tmpDate[1];
-                    $queryTienmat = Cost::where('date_use', $use_date_from_format)
-                                ->where('status','>', 0)
-                                ->where('nguoi_chi', 1);
-                    if($branch_ids){
-                      $queryTienmat->whereIn('branch_id', $branch_ids);
-                    }
-                    $chi_tien_mat=$queryTienmat->sum('total_money');
+                    
                 }
             }
         }//end else
@@ -1294,7 +1143,7 @@ class BookingController extends Controller
         $arrSearch['user_id'] = $user_id = $request->user_id ? $request->user_id : null;
         $arrSearch['branch_id'] = $branch_id = $request->branch_id ? $request->branch_id : null;
         $arrSearch['branch_ids'] = $branch_ids = $request->branch_ids ? $request->branch_ids : [];
-        $arrSearch['cate_id'] = $cate_id = $request->cate_id ?? null;
+        
         $arrSearch['nguoi_tu_van'] = $nguoi_tu_van = $request->nguoi_tu_van ?? null;
         $arrSearch['partner_id'] = $partner_id = $request->partner_id ?? null;
         $arrSearch['hdv_id'] = $hdv_id = $request->hdv_id ?? null;
@@ -1321,7 +1170,7 @@ class BookingController extends Controller
         $arrSearch['keyword'] = $keyword = $request->keyword ? $request->keyword : null;
 
         $arrSearch['created_at'] = $created_at = $request->created_at ? $request->created_at :  null;
-        $chi_tien_mat = $chi_khac = 0;
+        
         
         $query = Booking::where('city_id', 1);             
 
@@ -1359,11 +1208,7 @@ class BookingController extends Controller
             }
             if($status){
                 $query->whereIn('status', $status);
-            }
-            if($cate_id){
-                $query->join('booking_detail', 'booking_detail.booking_id', '=', 'booking.id')
-                ->where('booking_detail.cate_id', $cate_id);
-            }
+            }            
 
             if($per_com){
                 $arrSearch['per_com'] = $per_com;
@@ -1441,40 +1286,21 @@ class BookingController extends Controller
 
                     $query->where('use_date','>=', $mindate);
                     $query->where('use_date', '<=', $maxdate);
-                    $queryTienmat = Cost::where('status','>', 0)
-                                ->where('nguoi_chi', 1);
-                    $queryTienmat->where('date_use','>=', $mindate);
-                    $queryTienmat->where('date_use',  '<=', $maxdate);
-                    
-                    if($branch_ids){
-                      $queryTienmat->whereIn('branch_id', $branch_ids);
-                    }
-                    $chi_tien_mat = $queryTienmat->sum('total_money');
+                 
 
-                    $queryCostOther = Cost::where('status', 1)
-                                ->where('nguoi_chi','<>', 1);
-                    $queryCostOther->where('date_use','>=', $mindate);
-                    $queryCostOther->where('date_use',  '<=', $maxdate);
-                    if($branch_ids){
-                      $queryCostOther->whereIn('branch_id', $branch_ids);
-                    }
-                    $chi_khac = $queryCostOther->sum('total_money');
+                   
 
 
                 }elseif($time_type == 2){ // theo khoang ngay
                     $arrSearch['use_date_from'] = $use_date_from = $date_use = $request->use_date_from ? $request->use_date_from : date('d/m/Y', time());
-                    $arrSearch['use_date_to'] = $use_date_to = $request->use_date_to ? $request->use_date_to : $use_date_from;
-
-                    $queryTienmat = Cost::where('status','>', 0)
-                                ->where('nguoi_chi', 1);
-
+                    $arrSearch['use_date_to'] = $use_date_to = $request->use_date_to ? $request->use_date_to : $use_date_from;                 
 
                     if($use_date_from){
                         $arrSearch['use_date_from'] = $use_date_from;
                         $tmpDate = explode('/', $use_date_from);
                         $use_date_from_format = $tmpDate[2].'-'.$tmpDate[1].'-'.$tmpDate[0];
                         $query->where('use_date','>=', $use_date_from_format);
-                        $queryTienmat->where('date_use','>=', $use_date_from_format);
+                     
                     }
                     if($use_date_to){
                         $arrSearch['use_date_to'] = $use_date_to;
@@ -1485,12 +1311,9 @@ class BookingController extends Controller
                             $use_date_to_format = $use_date_from_format;
                         }
                         $query->where('use_date', '<=', $use_date_to_format);
-                        $queryTienmat->where('date_use', '<=', $use_date_to_format);
+                      
                     }
-                    if($branch_ids){
-                      $queryTienmat->whereIn('branch_id', $branch_ids);
-                    }
-                    $chi_tien_mat = $queryTienmat->sum('total_money');
+                   
                 }else{
                     $arrSearch['use_date_from'] = $use_date_from = $arrSearch['use_date_to'] = $use_date_to = $date_use = $request->use_date_from ? $request->use_date_from : date('d/m/Y', time());
 
@@ -1499,13 +1322,7 @@ class BookingController extends Controller
                     $query->where('use_date','=', $use_date_from_format);
                     $day = $tmpDate[0];
                     $month_do = $tmpDate[1];
-                    $queryTienmat = Cost::where('date_use', $use_date_from_format)
-                                ->where('status','>', 0)
-                                ->where('nguoi_chi', 1);
-                    if($branch_ids){
-                      $queryTienmat->whereIn('branch_id', $branch_ids);
-                    }
-                    $chi_tien_mat=$queryTienmat->sum('total_money');
+                    
                 }
             }
         }//end else
@@ -1626,23 +1443,22 @@ class BookingController extends Controller
         }
         $chietkhauList = ChietKhau::orderBy('sort_order')->get();
         $partners = Account::where('is_partner', 1)->get();
-        $beachList = Branch::where('status', 1)->orderBy('display_order')->get();
+        $branchList = Branch::where('status', 1)->orderBy('display_order')->get();
         if($user->branch_id == 7){
             if($user->chup_anh == 1){
-                $cateList = Cate::where('chup_anh', 1)->orderBy('display_order')->get();    
-                $beachList = Branch::where('id', 7)->get();
+                $cateList = Dish::where('chup_anh', 1)->orderBy('display_order')->get();    
+                $branchList = Branch::where('id', 7)->get();
             }else{
-                $cateList = Cate::where('hon_son', 1)->orderBy('display_order')->get();    
-                $beachList = Branch::where('id', 7)->get();    
+                $cateList = Dish::where('hon_son', 1)->orderBy('display_order')->get();    
+                $branchList = Branch::where('id', 7)->get();    
             }
             $partners = Account::where('is_partner', 1)->where('branch_id', 7)->get();
         }else{
-            $cateList = Cate::orderBy('display_order')->get();                
-            $beachList = Branch::where('status', 1)->orderBy('display_order')->get();
+            $cateList = Dish::orderBy('display_order')->get();                
+            $branchList = Branch::where('status', 1)->orderBy('display_order')->get();
             $partners = Account::where('is_partner', 1)->get();
-        }
-        $tuvanList = NguoiTuVan::where('status', 1 )->orderBy('display_order')->get();
-        return view($view, compact('cateList', 'use_date', 'bill', 'chietkhauList', 'partners', 'beachList', 'tuvanList'));
+        }        
+        return view($view, compact('cateList', 'use_date', 'bill', 'chietkhauList', 'partners', 'branchList'));
     }
     /**
     * Store a newly created resource in storage.
@@ -1669,10 +1485,8 @@ class BookingController extends Controller
         ]);
 
         $dataArr['total_price'] =(int) str_replace(',', '', $dataArr['total_price']);
-        $dataArr['commision'] = (int) str_replace(',', '', $dataArr['commision']);
-        $dataArr['tien_coc'] = (int) str_replace(',', '', $dataArr['tien_coc']);
-        $dataArr['discount'] = (int) str_replace(',', '', $dataArr['discount']);
-        $dataArr['con_lai'] = (int) str_replace(',', '', $dataArr['con_lai']);
+        $dataArr['commision'] = (int) str_replace(',', '', $dataArr['commision']);        
+        $dataArr['discount'] = (int) str_replace(',', '', $dataArr['discount']);        
         $dataArr['phone'] = str_replace('.', '', $dataArr['phone']);
         $dataArr['phone'] = str_replace(' ', '', $dataArr['phone']);
         $dataArr['da_thu'] = isset($dataArr['da_thu']) ? 1 : 0;
@@ -1683,30 +1497,26 @@ class BookingController extends Controller
 
         $dataArr['name'] = ucwords($dataArr['name']);
         if($dataArr['name'] == ''){
-            $dataArr['name'] = 'Khach';
+            $dataArr['name'] = 'Guest';
         }
         if($dataArr['phone'] == ''){
-            $dataArr['phone'] = '0901424868';
+            $dataArr['phone'] = '+84911647111';
         }
         // ------------- add customer
-        //dd($dataArr);
-        if(Auth::user()->chup_anh == 1){
-            $dataArr['chup_anh'] = 1;
-            $dataArr['da_thu'] = 1;
-        }
+       
         $dataArr['created_user'] = $dataArr['updated_user'] = Auth::user()->id;
         $rs = Booking::create($dataArr);
         $booking_id = $rs->id;
 
         //
-        foreach($dataArr['cate_id'] as $k => $cate_id){
+        foreach($dataArr['dish_id'] as $k => $dish_id){
             if($dataArr['amount'][$k] > 0 && $dataArr['total'][$k] > 0){
                // dd($dataArr['total'][$k]);
                 $total = str_replace(',', '', $dataArr['total'][$k]);
 
                 BookingDetail::create([
                     'booking_id' => $booking_id,
-                    'cate_id' => $cate_id,
+                    'dish_id' => $dish_id,
                     'price' => $total/$dataArr['amount'][$k],
                     'amount' => $dataArr['amount'][$k],
                     'total_price' => $total
@@ -1746,28 +1556,25 @@ class BookingController extends Controller
         
         if(Auth::user()->branch_id == 7){
             if(Auth::user()->chup_anh == 1){
-                $cateList = Cate::where('chup_anh', 1)->orderBy('display_order')->get();    
-                $beachList = Branch::where('id', 7)->get();
+                $cateList = Dish::where('chup_anh', 1)->orderBy('display_order')->get();    
+                $branchList = Branch::where('id', 7)->get();
             }else{
-                $cateList = Cate::where('hon_son', 1)->orderBy('display_order')->get();    
-                $beachList = Branch::where('id', 7)->get();    
+                $cateList = Dish::where('hon_son', 1)->orderBy('display_order')->get();    
+                $branchList = Branch::where('id', 7)->get();    
             }
             $partners = Account::where('is_partner', 1)->where('branch_id', 7)->get();
         }else{
-            $cateList = Cate::orderBy('display_order')->get();                
-            $beachList = Branch::where('status', 1)->orderBy('display_order')->get();
+            $cateList = Dish::orderBy('display_order')->get();                
+            $branchList = Branch::where('status', 1)->orderBy('display_order')->get();
             $partners = Account::where('is_partner', 1)->get();
         }
         $view = 'booking.edit-tour';
         if($detail->branch_id == 7){
         //    $view = 'booking.edit-baibang';
         }
-        $tuvanList = NguoiTuVan::where('status', 1 )->orderBy('display_order')->get();
-        $hdvList = false;
-        if($detail->partner_id > 0){
-            $hdvList = Hdv::where(['status' => 1, 'user_id' => $detail->partner_id])->get();
-        }
-        return view($view , compact( 'detail', 'cateList','chietkhauList', 'partners', 'beachList', 'tuvanList', 'hdvList'));
+        
+        
+        return view($view , compact( 'detail', 'cateList','chietkhauList', 'partners', 'branchList'));
 
     }
 
@@ -1825,14 +1632,14 @@ class BookingController extends Controller
         $booking_id = $model->id;
         $oldData = $model->toArray();
         BookingDetail::where('booking_id', $booking_id)->delete();
-        foreach($dataArr['cate_id'] as $k => $cate_id){
+        foreach($dataArr['dish_id'] as $k => $dish_id){
             if($dataArr['amount'][$k] > 0 && $dataArr['total'][$k] > 0){
                // dd($dataArr['total'][$k]);
                 $total = str_replace(',', '', $dataArr['total'][$k]);
 
                 BookingDetail::create([
                     'booking_id' => $booking_id,
-                    'cate_id' => $cate_id,
+                    'dish_id' => $dish_id,
                     'price' => $total/$dataArr['amount'][$k],
                     'amount' => $dataArr['amount'][$k],
                     'total_price' => $total
@@ -1842,7 +1649,7 @@ class BookingController extends Controller
 
         unset($dataArr['_token']);
         unset($dataArr['count_services']);
-        unset($dataArr['cate_id']);
+        unset($dataArr['dish_id']);
         unset($dataArr['amount']);
         unset($dataArr['total']);
         $model->update($dataArr);

@@ -165,12 +165,12 @@ class CostGuestController extends Controller
         }else{
             $view = 'cost-guest.index';
         }
-        $beachList = Branch::where('status', 1)->orderBy('display_order')->get();
+        $branchList = Branch::where('status', 1)->orderBy('display_order')->get();
         $beachArr = [];
-        foreach($beachList as $beach){
+        foreach($branchList as $beach){
             $beachArr[$beach->id] = $beach->name;
         }
-        return view($view, compact( 'items', 'content', 'cate_id', 'arrSearch', 'date_use', 'total_actual_amount', 'cateList', 'nguoi_chi', 'partnerList', 'partner_id', 'total_quantity', 'month', 'city_id', 'time_type','year', 'is_fixed', 'type', 'branch_id', 'beachList', 'beachArr', 'arrReport', 'cateArr'));
+        return view($view, compact( 'items', 'content', 'cate_id', 'arrSearch', 'date_use', 'total_actual_amount', 'cateList', 'nguoi_chi', 'partnerList', 'partner_id', 'total_quantity', 'month', 'city_id', 'time_type','year', 'is_fixed', 'type', 'branch_id', 'branchList', 'beachArr', 'arrReport', 'cateArr'));
     }
   
     /**

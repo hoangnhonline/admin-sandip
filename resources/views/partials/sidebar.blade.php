@@ -34,7 +34,7 @@
     </ul>
     @else
     <ul class="sidebar-menu">
-      @if(Auth::user()->beach_id > 0)
+      @if(Auth::user()->branch_id > 0)
       <li {{ in_array($routeName, ['booking.index', 'booking.create', 'booking.edit']) ? "class=active" : "" }}>
         <a href="{{ route('booking.index') }}">
           <i class="fa fa-ship" aria-hidden="true"></i><span>THỂ THAO BIỂN</span>
@@ -61,14 +61,14 @@
       </li>
       @endif
       
-      @if(Auth::user()->beach_id == 7 || Auth::user()->role == 1)
+      @if(Auth::user()->branch_id == 7 || Auth::user()->role == 1)
      <!--  <li {{ in_array($routeName, ['booking-bbc.index', 'booking-bbc.create', 'booking-bbc.edit']) ? "class=active" : "" }}>
         <a href="{{ route('booking-bbc.index') }}">
           <i class="fa fa-camera" aria-hidden="true"></i><span>KHU CHỤP ẢNH</span>
         </a>
       </li>  -->
       @endif
-      @if(Auth::user()->beach_id != 7)
+      @if(Auth::user()->branch_id != 7)
       @if(Auth::user()->role == 1)
       <li {{ in_array($routeName, ['cost.index', 'cost.create', 'cost.edit']) ? "class=active" : "" }}>
         <a href="{{ route('cost.index') }}">

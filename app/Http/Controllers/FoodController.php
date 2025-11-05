@@ -28,7 +28,7 @@ class FoodController extends Controller
         }
         $items = $query->orderBy('id', 'desc')->paginate(20);        
         
-        $foodCate = FoodCate::all();
+        $foodCate = FoodDish::all();
         return view('food.index', compact( 'items', 'name', 'cate_id', 'foodCate'));
     }
     
@@ -40,7 +40,7 @@ class FoodController extends Controller
     */
     public function create(Request $request)
     {   
-        $foodCate = FoodCate::all();
+        $foodCate = FoodDish::all();
         $cate_id = $request->cate_id ? $request->cate_id : null;     
         return view('food.create', compact('cate_id', 'foodCate'));
     }

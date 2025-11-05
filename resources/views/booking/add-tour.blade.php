@@ -42,9 +42,9 @@
                 </div>
                  <div class="form-group col-md-4 col-xs-6">
                    <label>Branch</label>
-                      <select name="beach_id" id="beach_id" class="form-control select2">
-                        @foreach($beachList as $beach)
-                        <option value="{{ $beach->id }}" {{ old('beach_id', 7) == $beach->id ? "selected" : "" }}>{{ $beach->name }}</option>
+                      <select name="branch_id" id="branch_id" class="form-control select2">
+                        @foreach($branchList as $beach)
+                        <option value="{{ $beach->id }}" {{ old('branch_id', 7) == $beach->id ? "selected" : "" }}>{{ $beach->name }}</option>
                         @endforeach
                         
                       </select>
@@ -68,7 +68,7 @@
                 <div class="row services" style="margin-top: 4px;margin-bottom: 4px;" >
                   <div class="form-group col-xs-5" style="padding-right: 0px">
                     <!-- <label>Dish</label> -->
-                    <select name="cate_id[]" class="form-control select2 cate">
+                    <select name="dish_id[]" class="form-control select2 cate">
                       <option value="">-Dish name-</option>
                       @foreach($cateList as $cate)
                         <option value="{{ $cate->id }}" data-price="{{ $cate->price }}">{{ $cate->name }}- {{ number_format($cate->price) }}</option>
@@ -180,16 +180,16 @@
     var count_services = 0;
     $('.services').each(function(){
       var row = $(this);
-      var cate_id = row.find('.cate').val();
+      var dish_id = row.find('.cate').val();
       var amount = row.find('.amount').val();
-      //console.log(cate_id, amount);
-      if(cate_id > 0 && amount > 0){
+      //console.log(dish_id, amount);
+      if(dish_id > 0 && amount > 0){
         count_services++;
         var price = row.find('.cate option:selected').data('price');
         var total = price*amount;
         row.find('.total').val(total);
         total_price = total_price + total;
-        if(cate_id != 15 && cate_id != 16 && cate_id != 27){
+        if(dish_id != 15 && dish_id != 16 && dish_id != 27){
           total_price_ck = total_price_ck + total;
         }
       }
@@ -202,7 +202,7 @@
     }
     var per_com = $('#per_com').val();
     var commision = $('#commision').val();
-    if($('#beach_id').val() != 4){
+    if($('#branch_id').val() != 4){
       if(per_com > 0){
         if(per_com <= 100){
           commision = per_com*total_price_ck/100;

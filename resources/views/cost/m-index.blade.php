@@ -68,7 +68,7 @@
             @endif
             </div>  
             <div class="row">
-                @foreach($beachList as $beach)
+                @foreach($branchList as $beach)
                   <div class="form-group col-xs-6">
                     &nbsp;&nbsp;&nbsp;<input type="checkbox" name="branch_ids[]" id="branch_ids" {{ in_array($beach->id, $arrSearch['branch_ids']) || empty($arrSearch['branch_ids']) ? "checked" : "" }} value="{{$beach->id}}">
                     <label for="branch_ids">{{$beach->name}}</label>
@@ -138,7 +138,7 @@
             @endif
            
 
-            <button type="submit" class="btn btn-success btn-sm">Lọc</button>
+            <button type="submit" class="btn btn-success btn-sm">Search</button>
             <button type="reset" class="btn btn-default btn-sm">Reset</button>
           </form>         
         </div>
@@ -242,8 +242,8 @@
                   - {{ $item->partner->name }}
                   @endif
                   <br>
-                     @if($item->beach_id)                                  
-                  <i class="fa fa-map-marker" aria-hidden="true"></i> {{ $beachArr[$item->beach_id] }} <br>
+                     @if($item->branch_id)                                  
+                  <i class="fa fa-map-marker" aria-hidden="true"></i> {{ $beachArr[$item->branch_id] }} <br>
                   @endif
                     <i class="  glyphicon glyphicon-user"></i> Người chi: 
                     @if($item->nguoi_chi)
