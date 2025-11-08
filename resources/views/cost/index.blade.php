@@ -25,7 +25,7 @@
       @endif
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">Bộ lọc</h3>
+          <h3 class="panel-title">Filter</h3>
         </div>
         <div class="panel-body">
           <form class="form-inline" role="form" method="GET" action="{{ route('cost.index') }}" id="searchForm">
@@ -37,19 +37,13 @@
             <div class="form-group">
                <select class="form-control select2" name="status" id="status">
                     <option value="">--Status--</option>
-                    <option value="1" {{ $arrSearch['status'] == 1 ? "selected" : "" }}>Chưa thanh toán</option>
+                    <option value="1" {{ $arrSearch['status'] == 1 ? "selected" : "" }}>Not yet paid</option>
                     <option value="2" {{ $arrSearch['status'] == 2 ? "selected" : "" }}>Đã thanh toán</option>
                     <option value="3" {{ $arrSearch['status'] == 3 ? "selected" : "" }}>Thanh toán sau</option>
                 </select>
             </div>
             @endif    
-            <div class="form-group"> 
-              <select class="form-control select2" name="type">
-                  <option value="-1" {{ $type == -1 ? "selected" : "" }}>--Phân loại--</option>
-                  <option value="1" {{ $type == 1 ? "selected" : "" }}>Vận hành</option>
-                  <option value="2" {{ $type == 2 ? "selected" : "" }}>Khác</option>                 
-                </select>       
-            </div>
+            
             <div class="form-group">              
               <select class="form-control select2" name="cate_id" id="cate_id">
                 <option value="">--Cost category--</option>
@@ -58,24 +52,11 @@
                 @endforeach
               </select>
             </div>
-            <div class="form-group" id="load_doi_tac">
-              @if(!empty($partnerList ) || $partnerList->count() > 0)
-                      
-                <select class="form-control select2" id="partner_id" name="partner_id">     
-                  <option value="">--Chọn--</option>      
-                  @foreach($partnerList as $cate)
-                  <option value="{{ $cate->id }}" {{ $partner_id == $cate->id ? "selected" : "" }}>
-                    {{ $cate->name }}
-                  </option>
-                  @endforeach
-                </select>
-          
-            @endif
-            </div>  
+            
             @if($notNH)         
             <div class="form-group">              
               <select class="form-control select2" name="nguoi_chi" id="nguoi_chi">
-                <option value="">--Người chi--</option>
+                <option value="">--Payer--</option>
                 @foreach($collecterList as $payer)
                 <option value="{{ $payer->id }}" {{ $nguoi_chi == $payer->id ? "selected" : "" }}>{{ $payer->name }}</option>
                 @endforeach                
@@ -84,15 +65,15 @@
             @endif
             <div class="form-group">              
               <select class="form-control select2" name="time_type" id="time_type">                
-                <option value="1" {{ $time_type == 1 ? "selected" : "" }}>Theo tháng</option>
-                <option value="2" {{ $time_type == 2 ? "selected" : "" }}>Khoảng ngày</option>
-                <option value="3" {{ $time_type == 3 ? "selected" : "" }}>Ngày cụ thể </option>
+                <option value="1" {{ $time_type == 1 ? "selected" : "" }}>By month</option>
+                <option value="2" {{ $time_type == 2 ? "selected" : "" }}>Date range</option>
+                <option value="3" {{ $time_type == 3 ? "selected" : "" }}>By date</option>
               </select>
             </div> 
             @if($time_type == 1)
             <div class="form-group  chon-thang">                
                 <select class="form-control select2" id="month_change" name="month">
-                  <option value="">--Tháng--</option>
+                  <option value="">--Month--</option>
                   @for($i = 1; $i <=12; $i++)
                   <option value="{{ str_pad($i, 2, "0", STR_PAD_LEFT) }}" {{ $month == $i ? "selected" : "" }}>{{ str_pad($i, 2, "0", STR_PAD_LEFT) }}</option>
                   @endfor
@@ -100,10 +81,8 @@
               </div>
               <div class="form-group  chon-thang">                
                 <select class="form-control select2" id="year_change" name="year">
-                  <option value="">--Năm--</option>                  
-                  <option value="2022" {{ $year == 2022 ? "selected" : "" }}>2022</option>
-                  <option value="2023" {{ $year == 2023 ? "selected" : "" }}>2023</option>
-                  <option value="2024" {{ $year == 2024 ? "selected" : "" }}>2024</option>
+                  <option value="">--Year--</option>                  
+                 
                   <option value="2025" {{ $year == 2025 ? "selected" : "" }}>2025</option>
                   <option value="2026" {{ $year == 2026 ? "selected" : "" }}>2026</option>
                   <option value="2027" {{ $year == 2027 ? "selected" : "" }}>2027</option>
@@ -113,31 +92,17 @@
             @if($time_type == 2 || $time_type == 3)
             
             <div class="form-group chon-ngay">              
-              <input type="text" class="form-control datepicker" autocomplete="off" name="use_date_from" placeholder="@if($time_type == 2) Từ ngày @else Ngày @endif" value="{{ $arrSearch['use_date_from'] }}" style="width: 100px">
+              <input type="text" class="form-control datepicker" autocomplete="off" name="use_date_from" placeholder="@if($time_type == 2) From date @else Ngày @endif" value="{{ $arrSearch['use_date_from'] }}" style="width: 100px">
             </div>
            
             @if($time_type == 2)
             <div class="form-group chon-ngay den-ngay">              
-              <input type="text" class="form-control datepicker" autocomplete="off" name="use_date_to" placeholder="Đến ngày" value="{{ $arrSearch['use_date_to'] }}" style="width: 100px">
+              <input type="text" class="form-control datepicker" autocomplete="off" name="use_date_to" placeholder="To date" value="{{ $arrSearch['use_date_to'] }}" style="width: 100px">
             </div>
              @endif
             @endif
-            @if($notNH)
-          <!--   <div class="form-group">
-                      <label style="font-weight: bold; color: blue">
-                        <input type="checkbox" id="xe_4t" name="xe_4t" value="1" {{ $arrSearch['xe_4t'] == 1 ? "checked" : "" }}>
-                        4T
-                      </label>
-                  </div> -->
-            <div class="form-group" style="border-right: 1px solid #9ba39d">
-              &nbsp;&nbsp;&nbsp;<input type="checkbox" name="is_fixed" id="is_fixed" {{ $arrSearch['is_fixed'] == 1 ? "checked" : "" }} value="1">
-              <label for="is_fixed">Cố định&nbsp;&nbsp;&nbsp;&nbsp;</label>
-            </div> 
-            @endif
-            <div class="form-group" style="border-right: 1px solid #9ba39d">
-              &nbsp;&nbsp;&nbsp;<input type="checkbox" name="tren_2" id="tren_2" {{ $arrSearch['tren_2'] == 1 ? "checked" : "" }} value="1">
-              <label for="tren_2">Trên 5tr&nbsp;&nbsp;&nbsp;&nbsp;</label>
-            </div> 
+           
+           
             <button type="submit" class="btn btn-info btn-sm" style="margin-top: -5px">Search</button> 
             <button type="reset" class="btn btn-default btn-sm" style="margin-top: -5px">Reset</button>
              <div>
@@ -156,8 +121,8 @@
           <div class="table-responsive">
           <table class="table table-bordered" id="table_report" style="margin-bottom:0px;font-size: 14px;">
               <tr style="background-color: #f4f4f4">
-                <th class="text-left">Tổng mục</th>
-                <th class="text-right">Tổng chi phí</th>
+                <th class="text-left">Total items</th>
+                <th class="text-right">Total</th>
                 @foreach($arrReport as $cate_id => $amountByCate)
                 <th class="text-right">{!! isset($cateArr[$cate_id]) ? $cateArr[$cate_id] : "<span style=color:red>Không xác định</span>" !!}</th>
                 @endforeach
@@ -186,22 +151,16 @@
         <div class="form-inline" style="padding: 5px">
           <div class="form-group">              
               <select class="form-control select2 multi-change-column-value" data-column="branch_id">                  
-                <option value="">--SET BÃI--</option>
+                <option value="">--SET BRANCH--</option>
                 @foreach($branchList as $beach)
                 <option value="{{ $beach->id }}">{{ $beach->name }}</option>
                 @endforeach 
               </select>
             </div> 
-          <div class="form-group">            
-            <select class="form-control select2 multi-change-column-value" data-column="type">
-                <option value="">--SET PHÂN LOẠI--</option>
-                 <option value="1">Vận hành</option>
-                 <option value="2">Khác</option>                 
-              </select>                         
-          </div> 
+  
           <div class="form-group">            
             <select class="form-control select2 multi-change-column-value" data-column="nguoi_chi">
-                <option value="">--SET NGƯỜI CHI--</option>
+                <option value="">--SET PAYER--</option>
                  @foreach($collecterList as $payer)
                 <option value="{{ $payer->id }}">{{ $payer->name }}</option>
                 @endforeach
@@ -209,7 +168,7 @@
           </div>           
           <div class="form-group">        
               <select class="form-control select2 multi-change-column-value" data-column="cate_id">
-                <option value="">--SET LOẠI CHI PHÍ--</option>
+                <option value="">--SET CATEGORY--</option>
                 @foreach($cateList as $cate)
                 <option value="{{ $cate->id }}">{{ $cate->name }}</option>
                 @endforeach
@@ -217,11 +176,11 @@
             </div>
           <div class="form-group">            
             <select class="form-control select2 multi-change-column-value" data-column="status">
-                <option value="">--SET TRẠNG THÁI--</option>                 
-                <option value="1">Chưa thanh toán</option>
-                <option value="2">Đã thanh toán</option>
-                <option value="3">Thanh toán sau</option>
-                <option value="0">Xóa</option>
+                <option value="">--SET STATUS--</option>                 
+                <option value="1">Not yet paid</option>
+                <option value="2">Paid</option>
+                <option value="3">Pay later</option>
+                <option value="0">Deleted</option>
               </select>
           </div>        
         </div>
@@ -237,17 +196,17 @@
               <th style="width: 1%"><input type="checkbox" id="check_all" value="1"></th>
               @endif
               <th style="width: 1%">#</th>
-              <th class="text-left">Tạo lúc</th>
-              <th class="text-left">Ngày</th>
+              <th class="text-left">Created at</th>
+              <th class="text-left">Date</th>
               <th class="text-center" style="width: 120px">Branch</th>
-              <th class="text-left">Nội dung</th>
+              <th class="text-left">Content</th>
               <th class="text-center">UNC</th>
-              <th class="text-center">Số lượng</th>
-              <th class="text-right">Giá</th>
-              <th class="text-right">Tổng tiền</th>
-              <th width="1%" style="white-space: nowrap;" class="text-center">Người chi</th> 
+              <th class="text-center">Amount</th>
+              <th class="text-right">Price</th>
+              <th class="text-right">Total</th>
+              <th width="1%" style="white-space: nowrap;" class="text-center">Payer</th> 
               @if($notNH)             
-              <th width="1%;white-space:nowrap">Thao tác</th>
+              <th width="1%;white-space:nowrap">Action</th>
               @endif
             </tr>
             <tbody>
@@ -270,14 +229,11 @@
                     {{ date('d/m/y', strtotime($item->date_use)) }} 
                     @if($notNH)
                     @if($item->status == 1)
-                        <label class="label label-danger label-sm">Chưa thanh
-                            toán</label>                        
+                        <label class="label label-danger label-sm">Not yet paid</label>                        
                     @elseif($item->status == 2)
-                        <label class="label label-success label-sm">Đã thanh
-                            toán</label>
+                        <label class="label label-success label-sm">Paid</label>
                     @else
-                      <label class="label label-warning label-sm">Thanh
-                            toán sau</label>
+                      <label class="label label-warning label-sm">Pay later</label>
                     @endif
                     @endif
                     @if($item->user)
@@ -285,11 +241,7 @@
                      @endif
                 </td>
                 <td class="text-center">
-                  @if($item->type == 1)
-                  <span class="label label-default">Vận hành</span>
-                  @else
-                  <span class="label label-warning">Khác</span>
-                  @endif
+                 
                   @if($item->branch_id)                                  
                   <br><i class="fa fa-map-marker" aria-hidden="true"></i> {{ $beachArr[$item->branch_id] }}
                   @endif
@@ -301,33 +253,14 @@
                   ?>
                   <a href="https://plantotravel.vn/cost/{{ Helper::mahoa('mahoa', $str ) }}">{{ $item->costType->name }}</a>
                   @endif
-                  @if($item->partner)
-                  - {{ $item->partner->name }}
-                  @endif
-                  @if($item->is_fixed == 1)
-                  <label class="label label-success">Cố định</label>
-                  @endif
+                  
                   <p style="color:red; font-style: italic">{{ $item->notes }}</p>
-                  @if($item->image_url && $item->unc_type == 2)
-                  <p class="alert-success">
-                   SMS: {{ $item->image_url }}
-                  </p>
-                  @endif
-                  @if($item->sms_ung)
-                  <p class="alert-warning sms">
-                   SMS ỨNG : {{ $item->sms_ung }}
-                  </p>
-                  @endif
-                  @if($item->sms_chi)
-                  <p class="alert-success sms">
-                   SMS CHI : {{ $item->sms_chi }}
-                  </p>
-                  @endif
+                 
                    
                 </td>
                 <td class="text-center">
                   @if($item->image_url && $item->unc_type == 1)
-                  <span style="color: blue; cursor: pointer;" class="img-unc" data-src="{{ config('plantotravel.upload_url').$item->image_url }}">XEM ẢNH</span>               
+                  <span style="color: blue; cursor: pointer;" class="img-unc" data-src="{{ config('plantotravel.upload_url').$item->image_url }}">View Images</span>               
                   @endif
                   @if($notNH)
                     <select class="form-control select2 change-column-value" data-id="{{ $item->id }}" data-column="cate_id" style="width: 100%" data-table="cost">
@@ -336,11 +269,7 @@
                       <option value="{{ $cate->id }}" {{ $cate->id == $item->cate_id ? "selected" : "" }}>{{ $cate->name }}</option>
                       @endforeach
                     </select>
-                    @if($item->type == 1)
-                    <input class="change-column-value" data-id="{{ $item->id }}" type="checkbox" data-column="type" value="2" style="width: 100%" data-table="cost"> Khác
-                    @else
-                    <input class="change-column-value" data-id="{{ $item->id }}" type="checkbox" data-column="type" value="1" style="width: 100%" data-table="cost"> Vận hành
-                    @endif
+                   
                   @endif
                 </td>
                 <td class="text-center">{{ $item->amount }}</td>
@@ -373,15 +302,13 @@
                     <a onclick="return callDelete('{{ number_format($item->total_money) }}','{{ route( 'cost.destroy', [ 'id' => $item->id ]) }}');" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></a>
                     @endif
                  
-                
-                 
                 </td>
                 @endif
               </tr> 
               @endforeach
             @else
             <tr>
-              <td colspan="4">Không có dữ liệu.</td>
+              <td colspan="4">No data!</td>
             </tr>
             @endif
 
@@ -391,41 +318,7 @@
            {{ $items->appends( $arrSearch )->links() }}
           </div>  
         </div>  
-        @if(Auth::user()->role == 1 && $notNH)
-        <div class="form-inline" style="padding: 5px">
-          <div class="form-group">            
-            <select class="form-control select2 multi-change-column-value" data-column="type">
-                <option value="">--SET PHÂN LOẠI--</option>
-                 <option value="1">Vận hành</option>
-                 <option value="2">Khác</option>                 
-              </select>                         
-          </div> 
-          <div class="form-group">            
-            <select class="form-control select2 multi-change-column-value" data-column="nguoi_chi">
-                <option value="">--SET NGƯỜI CHI--</option>
-                @foreach($collecterList as $payer)
-                <option value="{{ $payer->id }}">{{ $payer->name }}</option>
-                @endforeach
-              </select>                         
-          </div>          
-          <div class="form-group">        
-              <select class="form-control select2 multi-change-column-value" data-column="cate_id">
-                <option value="">--SET LOẠI CHI PHÍ--</option>
-                @foreach($cateList as $cate)
-                <option value="{{ $cate->id }}">{{ $cate->name }}</option>
-                @endforeach
-              </select>
-          </div> 
-          <div class="form-group">            
-            <select class="form-control select2 multi-change-column-value" data-column="status">
-                <option value="">--SET TRẠNG THÁI--</option>                 
-                <option value="1">Chưa thanh toán</option>
-                <option value="2">Đã thanh toán</option>
-                <option value="3">Thanh toán sau</option>
-              </select>
-          </div>              
-        </div>
-        @endif      
+             
       </div>
       <!-- /.box -->     
     </div>

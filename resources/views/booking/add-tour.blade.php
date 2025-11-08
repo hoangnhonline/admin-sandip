@@ -54,17 +54,17 @@
                   <input type="text" class="form-control datepicker" name="use_date" id="use_date" value="{{ old('use_date', $use_date) }}" autocomplete="off">
                 </div>
                 
-                 
-                  <div class="form-group col-md-6 col-xs-6">
-                    <label>Phone number <span class="red-star">*</span></label>
-                    <input type="text" maxlength="20" class="form-control" name="phone" id="phone" value="{{ old('phone') }}" autocomplete="off">
-                  </div>
-                  <div class="form-group col-md-6 col-xs-6">
+                 <div class="form-group col-md-6 col-xs-6" >
                     <label>Customer name</label>
                     <input type="text" class="form-control" name="name" id="name" value="{{ old('name') }}" autocomplete="off">
                   </div>
+                  <div class="form-group col-md-6 col-xs-6" >
+                    <label>Phone number <span class="red-star">*</span></label>
+                    <input type="text" maxlength="20" class="form-control" name="phone" id="phone" value="{{ old('phone') }}" autocomplete="off">
+                  </div>
+                  
                 </div>
-                @for($k = 0; $k < 7; $k++)
+                @for($k = 0; $k < 15; $k++)
                 <div class="row services" style="margin-top: 4px;margin-bottom: 4px;" >
                   <div class="form-group col-xs-5" style="padding-right: 0px">
                     <!-- <label>Dish</label> -->
@@ -104,7 +104,7 @@
                     <input type="text" class="form-control number" autocomplete="off" name="discount" id="discount" value="{{ old('discount') }}">
                   </div>
                 </div>
-                <div class="row">
+                <div class="row" style="display: none;">
                   <div class="form-group col-xs-6">
                       <label>Discount rate / Discount (%)</label>
                       <select name="per_com" id="per_com" class="form-control select2">
@@ -119,14 +119,22 @@
                       <input type="text" class="form-control number" name="commision" id="commision" value="{{ old('commision') }}">
                   </div>
                 </div>
-                <div class="row">                 
-                  <div class="form-group col-xs-12" >
+                <div class="row">  
+                <div class="form-group col-xs-4">
+                      <label>Revenue</label>
+                      <input type="text" class="form-control number" name="con_lai" id="con_lai" value="{{ old('con_lai') }}">
+                  </div>               
+                  <div class="form-group col-xs-4" >
                       <label>Receiver <span class="red-star">*</span></label>
                       <select class="form-control select2" name="nguoi_thu_tien" id="nguoi_thu_tien">
                         @foreach($collecterList as $payer)
                         <option value="{{ $payer->id }}" {{ old('nguoi_thu_tien') == $payer->id ? "selected" : "" }}>{{ $payer->name }}</option>
                         @endforeach
                       </select>
+                  </div>
+                  <div class="form-group col-xs-4" >
+                      <label>Rupees</label>
+                      <input type="text" class="form-control number" name="rupees" id="rupees" value="{{ old('rupees') }}">
                   </div>
                 </div>
 

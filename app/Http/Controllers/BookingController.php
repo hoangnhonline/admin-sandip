@@ -735,7 +735,9 @@ class BookingController extends Controller
         ];
         $arrHoahong = [];
         $arrTongTienKhongCam = [];
+        $totalRevenue = 0;
         foreach($allList as $item){
+            $totalRevenue+= $item->con_lai;
             $arrData['tong_bk']++;
             $arrData['tong_giam'] += $item->discount;
             $arrData['tong_chietkhau'] += $item->commision;                
@@ -820,7 +822,7 @@ class BookingController extends Controller
         }
         
       
-        return view($view, compact( 'items', 'arrSearch', 'keyword', 'time_type', 'month', 'year', 'month_do', 'arrData', 'chietkhauList', 'branch_id', 'cateList', 'use_date_from_format', 'use_date_to_format', 'branchList', 'beachArr', 'partners', 'partner_id', 'cateArr'));
+        return view($view, compact( 'items', 'arrSearch', 'keyword', 'time_type', 'month', 'year', 'month_do', 'arrData', 'chietkhauList', 'branch_id', 'cateList', 'use_date_from_format', 'use_date_to_format', 'branchList', 'beachArr', 'partners', 'partner_id', 'cateArr', 'totalRevenue'));
 
     }
 
@@ -1486,7 +1488,9 @@ class BookingController extends Controller
 
         $dataArr['total_price'] =(int) str_replace(',', '', $dataArr['total_price']);
         $dataArr['commision'] = (int) str_replace(',', '', $dataArr['commision']);        
-        $dataArr['discount'] = (int) str_replace(',', '', $dataArr['discount']);        
+        $dataArr['discount'] = (int) str_replace(',', '', $dataArr['discount']);
+        $dataArr['con_lai'] = (int) str_replace(',', '', $dataArr['con_lai']);        
+        $dataArr['rupees'] = (int) str_replace(',', '', $dataArr['rupees']);
         $dataArr['phone'] = str_replace('.', '', $dataArr['phone']);
         $dataArr['phone'] = str_replace(' ', '', $dataArr['phone']);
         $dataArr['da_thu'] = isset($dataArr['da_thu']) ? 1 : 0;
@@ -1577,7 +1581,35 @@ class BookingController extends Controller
         return view($view , compact( 'detail', 'cateList','chietkhauList', 'partners', 'branchList'));
 
     }
+    public function detail($id, Request $request)
+    {
 
+        $detail = Booking::find($id);
+        $chietkhauList = ChietKhau::orderBy('sort_order')->get();
+        
+        if(Auth::user()->branch_id == 7){
+            if(Auth::user()->chup_anh == 1){
+                $cateList = Dish::where('chup_anh', 1)->orderBy('display_order')->get();    
+                $branchList = Branch::where('id', 7)->get();
+            }else{
+                $cateList = Dish::where('hon_son', 1)->orderBy('display_order')->get();    
+                $branchList = Branch::where('id', 7)->get();    
+            }
+            $partners = Account::where('is_partner', 1)->where('branch_id', 7)->get();
+        }else{
+            $cateList = Dish::orderBy('display_order')->get();                
+            $branchList = Branch::where('status', 1)->orderBy('display_order')->get();
+            $partners = Account::where('is_partner', 1)->get();
+        }
+        $view = 'print';
+        if($detail->branch_id == 7){
+        //    $view = 'booking.edit-baibang';
+        }
+        
+        
+        return view($view , compact( 'detail', 'cateList','chietkhauList', 'partners', 'branchList'));
+
+    }
 
 
     /**
@@ -1608,9 +1640,10 @@ class BookingController extends Controller
 
         $dataArr['total_price'] =(int) str_replace(',', '', $dataArr['total_price']);
         $dataArr['commision'] = (int) str_replace(',', '', $dataArr['commision']);
-        $dataArr['tien_coc'] = (int) str_replace(',', '', $dataArr['tien_coc']);
+        
         $dataArr['discount'] = (int) str_replace(',', '', $dataArr['discount']);
         $dataArr['con_lai'] = (int) str_replace(',', '', $dataArr['con_lai']);
+        $dataArr['rupees'] = (int) str_replace(',', '', $dataArr['rupees']);
         $dataArr['phone'] = str_replace('.', '', $dataArr['phone']);
         $dataArr['phone'] = str_replace(' ', '', $dataArr['phone']);
         $dataArr['da_thu'] = isset($dataArr['da_thu']) ? 1 : 0;

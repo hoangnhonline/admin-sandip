@@ -36,11 +36,11 @@
 
         <div class="panel-body" style="padding: 5px !important;">
           <form class="form-inline" role="form" method="GET" action="{{ route('booking.index') }}" id="searchForm" style="margin-bottom: 0px;">
-            @if($notNH)
+         
             <div class="form-group">
               <input type="text" class="form-control" autocomplete="off" name="id_search" placeholder="BILL ID" value="{{ $arrSearch['id_search'] }}" style="width: 70px">
             </div>
-            @endif
+            
             
             <div class="form-group">
               <select class="form-control select2" name="time_type" id="time_type" style="width: 150px;">
@@ -107,10 +107,16 @@
         </div>
       </div>     
       <div class="box">
-        <div class="form-group" style="float: right">
+       <!--  <div class="form-group" style="float: right">
           <a href="javascript:;" class="btn btn-primary btn-sm" id="btnExport">Report</a>
           <a href="javascript:;" class="btn btn-primary btn-sm" id="btnExcel">Excel</a>
-        </div>
+        </div> -->
+         <!-- /.box-header -->
+          <div class="box-header with-border">
+              <h3 class="box-title">List ( <span class="value">{{ $items->total() }} bills )</span>
+                - Total revenue: <strong style="color: blue; font-weight: bold;">{{ number_format($totalRevenue) }}</strong>
+              </h3>
+          </div>
         <!-- /.box-header -->
         <div class="clearfix"></div>
         <div class="box-body">
@@ -118,23 +124,7 @@
           <div style="text-align:center">
             {{ $items->appends( $arrSearch )->links() }}
           </div>
-          @if($notNH) 
-          <div class="form-inline" style="padding: 5px">
-                  
-           
-              <div class="form-group">
-                <select class="form-control select2 multi-change-column-value" data-column="nguoi_thu_tien">
-                  <option value="">--SET THU TIỀN--</option>
-                  @foreach($collecterList as $payer)
-                  <option value="{{ $payer->id }}" {{ $arrSearch['nguoi_thu_tien'] == $payer->id ? "selected" : "" }}>{{ $payer->name }}</option>
-                  @endforeach
-                </select>
-              </div>
-              
-
-             
-          </div>
-          @endif
+          
           <div class="table-responsive">
           <table class="table table-bordered table-hover" id="table-list-data">
             <tr style="background-color: #f4f4f4">
@@ -148,16 +138,20 @@
               <th class="text-center" width="120">Dining date</th>
               <th class="text-right" width="100">Total</th>             
               <th class="text-right" width="100" >Discount</th>
-              <th class="text-right"  width="100">Discount rate / Discount (%)</th>
-          
+             
+              <th class="text-right" width="100" >Revenue</th>
               <th class="text-center"  width="100">Receiver</th>
               <th width="1%" style="white-space:nowrap; text-align: right">Action</th>
             </tr>
             <tbody>
             @if( $items->count() > 0 )
-              <?php $l = 0; ?>
+              <?php $l = 0; 
+              $total_revenue = 0;
+              ?>
               @foreach( $items as $item )
-                <?php $l ++; ?>
+                <?php $l ++; 
+                $total_revenue+= $item->con_lai;
+                ?>
               <tr class="booking" id="row-{{ $item->booking_id }}" data-id="{{ $item->booking_id }}" data-date="{{ $item->use_date }}" style="border-bottom: 1px solid #000 !important; @if($l%2 == 0)  background-color:#c9ced6 @endif">
                 @if($notNH)
                 <td>
@@ -169,21 +163,17 @@
                   <span style="color: #eea236; font-weight: bold;">{{ str_pad($item->booking_id,5,"0",STR_PAD_LEFT) }}</span>
                   @if($item->bill_no)
                     - Bill : <span style="color: blue; font-weight: bold">{{ $item->bill_no }}</span>
-                    @endif                   
+                    @endif           
+                    @if($item->phone != "+84911647111")        
                     <br>
                   {{ $item->name }}  <i class="glyphicon glyphicon-phone"></i> <a href="tel:{{ $item->phone }}" target="_blank">{{ $item->phone }}</a>
+                  @endif
                   <br>
                   <i class="glyphicon glyphicon-map-marker"></i>
                   @if($item->branch_id)
                   {{ $beachArr[$item->branch_id] }}
                   @endif
-                  @if($item->branch_id == 4)
-                    @if($item->partner_id)
-                      <br/> <i class="glyphicon glyphicon-user"></i> <label class="label label-success label-sm">{{ $item->partner->name }}</label>
-                    @else
-                      <label class="label-sm label-danger label">Chưa chọn đối tác</label>
-                    @endif
-                  @endif
+                 
                 </td>
                 <td>
                   <table class="table" style="margin-top:5px;margin-bottom: 10px;">
@@ -213,16 +203,13 @@
                 <td class="text-right">
                   {{ $item->discount ?number_format($item->discount) : '-' }}
                 </td>
+                
                 <td class="text-right">
-                  @if($item->commision)
-                  {{ number_format($item->commision) }}
-                  @if($item->per_com <= 100 && $item->branch_id != 4 && $item->commision < 100)
-                  ({{ $item->per_com }}%)
+                  {{ number_format($item->con_lai) }}
+                  @if($item->rupees)
+                  <br><span style="color: red;">{{ number_format($item->rupees) }} rupees</span>
                   @endif
-                  @else
-                  -
-                  @endif
-                </td>               
+                </td>            
                 <td class="text-center">
                   @if($item->nguoi_thu_tien)
                   {{ $collecterNameArr[$item->nguoi_thu_tien] }}
@@ -230,17 +217,21 @@
                 </td>
 
                 <td class="text-right" style="white-space:nowrap">
+
                   @if($notNH)                
                   @php $arrEdit = array_merge(['id' => $item->booking_id], $arrSearch) @endphp
                   <a style="float:right; margin-left: 2px" href="{{ route( 'booking.edit', $arrEdit ) }}" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></a>
                   <br>
-                  @endif                 
+                  @endif           
+                  <p style="clear:both; margin-top: 5px;">      
+                  <a class="btn btn-default btn-sm" href="{{ route( 'booking.detail', $item->id ) }}" ><i class="fa fa-print" aria-hidden="true"></i></a>
+                </p>
                 </td>
               </tr>
               @endforeach
             @else
             <tr>
-              <td colspan="9">Không có dữ liệu.</td>
+              <td colspan="9">No data!</td>
             </tr>
             @endif
 
@@ -334,7 +325,7 @@
                 <input type="hidden" name="booking_id" value="" id="booking_id_unc">
 
                   <div class="form-group" style="margin-top:10px;margin-bottom:10px">
-                  <label class="col-md-3 row">Hình ảnh </label>
+                  <label class="col-md-3 row">Images </label>
                   <div class="col-md-9">
                     <img id="thumbnail_image" src="{{ old('image_url') ? Helper::showImage(old('image_url')) : URL::asset('admin/dist/img/img.png') }}" class="img-thumbnail" width="145" height="85">
 
@@ -360,8 +351,8 @@
               <div class="box-footer">
                 <button type="button" id="btnSavePayment" class="btn btn-primary btn-sm">Save</button>
 
-                <button type="button" class="btn btn-default btn-sm" id="btnLoading" style="display:none"><i class="fa fa-spin fa-spinner"></i> Đang xử lý...</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-default btn-sm" id="btnLoading" style="display:none"><i class="fa fa-spin fa-spinner"></i> Processing...</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
               </div>
 
           </div>

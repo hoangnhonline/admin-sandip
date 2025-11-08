@@ -41,32 +41,14 @@
               @endif 
               
               <input type="hidden" name="month" value="{{ $month }}">
-              <div class="row">
-                <!-- <div class="form-group col-xs-6">
-
-                  <div class="checkbox">
-                      <label style="font-weight: bold; color: blue">
-                        <input type="checkbox" id="xe_4t" name="xe_4t" value="1" {{ old('xe_4t') == 1 ? "checked" : "" }}>
-                        4T
-                      </label>
-                    </div>
-                  </div> -->
-                <div class="form-group col-xs-6">
-                  <div class="checkbox">
-                    <label>
-                      <input type="checkbox" name="is_fixed" value="1" {{ old('is_fixed') == 1 ? "checked" : "" }}>
-                      <span style="color: red; font-weight: bold;">CHI PHÍ CỐ ĐỊNH</span>
-                    </label>
-                  </div>               
-                </div>
-              </div>
+            
               <div class="row">
                 <div class="form-group col-md-4 col-xs-12">
                   <label for="status">Status</label>
                   <select class="form-control select2" name="status" id="status">                    
-                    <option value="1"  {{ old('status') == 1 ? "selected" : "" }}>Chưa thanh toán</option>
-                    <option value="2"  {{  old('status') == 2 ? "selected" : "" }}>Đã thanh toán</option>
-                    <option value="3"  {{  old('status') == 3 ? "selected" : "" }}>Thanh toán sau</option>
+                    <option value="1"  {{ old('status') == 1 ? "selected" : "" }}>Not yet paid</option>
+                    <option value="2"  {{  old('status') == 2 ? "selected" : "" }}>Paid</option>
+                    <option value="3"  {{  old('status') == 3 ? "selected" : "" }}>Pay later</option>
                   </select>
                 </div>
               
@@ -80,16 +62,11 @@
                       </select>
                  </div>
                  <div class="form-group col-md-4 col-xs-6">
-                  <label for="email">Ngày</label>
-                  <input type="text" name="date_use" class="form-control datepicker" value="{{ old('date_use' ) }}" autocomplete="off">
+                  <label for="date_use">Date</label>
+                  <input type="text" name="date_use" class="form-control datepicker" value="{{ old('date_use' ) }}" id="date_use" autocomplete="off">
                 </div> 
               </div>
-              <div class="row">
-                <div class="form-group col-md-12 col-xs-12">
-                  <label for="email">BOOKING ID <span style="color: red">(code1, code2, code3, code4 ....)</span></label>
-                  <input type="text" name="booking_id" class="form-control" value="{{ old('booking_id') }}" autocomplete="off">
-                </div>
-              </div>
+             
               <div class="row">
                 <input type="hidden" name="type" value="1">
                 <div class="form-group col-md-12 col-xs-12">
@@ -104,52 +81,38 @@
                 
                              
               </div>
-              <div class="row" id="load_doi_tac">
-                  @if($partnerList != null)
-                  <div class="form-group col-md-12">
-                      <label>Chi tiết<span class="red-star">*</span></label>
-                      <select class="form-control select2" id="partner_id" name="partner_id">     
-                        <option value="">--Chọn--</option>      
-                        @foreach($partnerList as $cate)
-                        <option value="{{ $cate->id }}" {{ old('partner_id') == $cate->id ? "selected" : "" }}>
-                          {{ $cate->name }}
-                        </option>
-                        @endforeach
-                      </select>
-                  </div>
-                  @endif
-              </div>
+              
               <div class="row">
                 <div class="form-group col-md-12">
-                  <label for="notes">Nội dung</label>
+                  <label for="notes">Content</label>
                   <textarea class="form-control" name="notes" id="notes" rows="3">{!! old('notes') !!}</textarea>
                 </div>             
                 <div class="tinh-toan" >
                   <div class="form-group col-md-4  col-xs-6">
-                    <label for="price">Giá</label>
+                    <label for="price">Price</label>
                     <input type="text" name="price" class="form-control number gia" autocomplete="off" placeholder="Giá" value="{{ old('price') }}">
                   </div>
                   <div class="form-group col-md-4  col-xs-6">
-                    <label for="amount">Số lượng</label>
+                    <label for="amount">Amount</label>
                     <input type="text" name="amount" class="form-control amount" autocomplete="off" placeholder="Số lượng" value="{{ old('amount', 1) }}">
                   </div>
                                     
                   <div class="form-group col-md-4 col-xs-12">
-                    <label for="total_money">Tổng tiền</label>
+                    <label for="total_money">Total</label>
                     <input type="text" name="total_money" class="form-control number total" autocomplete="off" placeholder="Tổng tiền" value="{{ old('total_money') }}">
                   </div>
                 </div>
                 <div class="form-group col-md-12 input-group" style="padding-left: 15px;">
-                  <label for="type">Tài khoản nhận tiền (<span style="color:red; font-weight: bold">Chỉ "Thêm mới" tài khoản của ĐỐI TÁC</span>)</label>
+                  <label for="type">Bank account</label>
                   <select class="form-control select2" name="bank_info_id" id="bank_info_id">
-                    <option value="">--Tất cả--</option>
+                    <option value="">--All--</option>
                     @foreach($bankInfoList as $cate)
                     <option value="{{ $cate->id }}" {{ old('bank_info_id') == $cate->id ? "selected" : "" }}>{{ $cate->name }} - {{ $cate->bank_name }} - {{ $cate->bank_no }}</option>
                     @endforeach
                   </select>
                   <span class="input-group-btn">
                       <button style="margin-top:24px" class="btn btn-primary btn-sm" id="btnAddBankInfo" type="button" data-value="3">
-                        Thêm
+                        Add new
                       </button>
                     </span>
                 </div>
@@ -163,7 +126,7 @@
                       </select>
                   </div>            
                 <div class="form-group col-md-12" style="margin-top: 15px;">  
-                  <label class="col-md-3 row">Hình ảnh </label>    
+                  <label class="col-md-3 row">Images</label>    
                   <div class="col-md-9">
                     <img id="thumbnail_image" src="{{ old('image_url') ? Helper::showImage(old('image_url')) : URL::asset('admin/dist/img/img.png') }}" class="img-thumbnail" width="145" height="85">
                     
@@ -179,7 +142,7 @@
                          
                           <div class="col-md-12" style="text-align:left">
                          
-                            <button class="btn btn-primary btnMultiUpload" type="button"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Upload nhiều ảnh</button>
+                            <button class="btn btn-primary btnMultiUpload" type="button"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Upload multi images</button>
                             <div class="clearfix"></div>
                             <div id="div-image" style="margin-top:10px"></div>
                           </div>
@@ -213,18 +176,18 @@
     <form method="POST" action="{{ route('bank-info.ajax-save')}}" id="formAjaxBankInfo">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Add new tài khoản ngân hàng đối tác</h4>
+        <h4 class="modal-title">Add new bank account</h4>
       </div>
       <div class="modal-body" id="contentTag">
           <input type="hidden" name="type" value="1">
            <!-- text input -->
           <div class="col-md-12">
             <div class="form-group">
-              <label>Tên đối tác<span class="red-star">*</span></label>
+              <label>Name<span class="red-star">*</span></label>
               <input type="text" autocomplete="off" class="form-control" id="add_name" value="{{ old('name') }}" name="name"></textarea>
             </div>
             <div class="form-group">
-              <label>Tên ngân hàng<span class="red-star">*</span></label>
+              <label>Bank name<span class="red-star">*</span></label>
                 <select class="form-control select2" id="add_bank_name" name="bank_name" style="width: 100%">
                   <option value="">--Chọn--</option>
                     @foreach($vietNameBanks as $bank)
@@ -233,15 +196,15 @@
                 </select>
             </div>
             <div class="form-group">
-              <label>Chủ tài khoản<span class="red-star">*</span></label>
+              <label>Account name<span class="red-star">*</span></label>
               <input type="text" autocomplete="off" class="form-control" id="add_account_name" value="{{ old('account_name') }}" name="account_name"></textarea>
             </div>
             <div class="form-group">
-              <label>Số tài khoản<span class="red-star">*</span></label>
+              <label>Account No<span class="red-star">*</span></label>
               <input type="text" autocomplete="off" class="form-control" id="add_bank_no" value="{{ old('bank_no') }}" name="bank_no"></textarea>
             </div>
             <div class="form-group">
-              <label>Chi nhánh</label>
+              <label>Branch</label>
               <input type="text" autocomplete="off" class="form-control" id="bank_branch" value="{{ old('bank_branch') }}" name="bank_branch"></textarea>
             </div>
 

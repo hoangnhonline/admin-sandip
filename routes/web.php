@@ -233,7 +233,7 @@ Route::group([
         Route::post('/update-car', ['as' => 'booking.update-car', 'uses' => 'BookingController@updateCar']);
         Route::get('{id}/edit',   ['as' => 'booking.edit', 'uses' => 'BookingController@edit']);      
        
-       
+       Route::get('{id}/detail',   ['as' => 'booking.detail', 'uses' => 'BookingController@detail']);
         Route::get('{id}/history',   ['as' => 'history.booking', 'uses' => 'HistoryController@booking']);
         Route::post('/update', ['as' => 'booking.update', 'uses' => 'BookingController@update']);
         Route::get('{id}/destroy', ['as' => 'booking.destroy', 'uses' => 'BookingController@destroy']);  

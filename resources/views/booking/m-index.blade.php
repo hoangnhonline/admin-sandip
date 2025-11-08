@@ -5,7 +5,7 @@
 <!-- Content Header (Page header) -->
 <section class="content-header" style="padding-top: 10px;">
   <h1 style="text-transform: uppercase;">    
-    BOOKING NGÀY {{$arrSearch['use_date_from']}}
+    BILL MANAGEMENT {{$arrSearch['use_date_from']}}
   </h1>
   
 </section>
@@ -21,9 +21,9 @@
       @endif
       @if($notNH)
       @if($time_type == 3)
-      <a href="{{ route('booking.create') }}?use_date={{ $arrSearch['use_date_from'] }}" class="btn btn-info btn-sm" style="margin-bottom:5px">Add new</a>
+      <a href="{{ route('booking.create') }}?use_date={{ $arrSearch['use_date_from'] }}" class="btn btn-info btn-sm" style="margin-bottom:5px">MAKE A BILL</a>
       @else
-      <a href="{{ route('booking.create') }}" class="btn btn-info btn-sm" style="margin-bottom:5px">Add new</a>
+      <a href="{{ route('booking.create') }}" class="btn btn-info btn-sm" style="margin-bottom:5px">MAKE A BILL</a>
       @endif
       @endif
       
@@ -34,19 +34,26 @@
                         <div class="row">
               
               
-   
+              <div class="row">
+                @foreach($branchList as $beach)
+                  <div class="form-group col-xs-4" style="padding:0px; padding-left: 10px;">
+                    &nbsp;&nbsp;&nbsp;<input type="checkbox" name="branch_ids[]" id="branch_ids" {{ in_array($beach->id, $arrSearch['branch_ids']) || empty($arrSearch['branch_ids']) ? "checked" : "" }} value="{{$beach->id}}">
+                    <label for="branch_ids">{{$beach->name}}</label>
+                  </div>
+                @endforeach
+              </div>
               <div class="form-group @if($time_type == 3) col-xs-6 @else col-xs-4 @endif" style="padding-right: 0px">              
                 <select class="form-control select2" name="time_type" id="time_type">                  
-                  <option value="">--Thời gian--</option>
-                  <option value="1" {{ $time_type == 1 ? "selected" : "" }}>Theo tháng</option>
-                  <option value="2" {{ $time_type == 2 ? "selected" : "" }}>Khoảng ngày</option>
-                  <option value="3" {{ $time_type == 3 ? "selected" : "" }}>Ngày cụ thể </option>
+                  <option value="">--TIME--</option>
+                  <option value="1" {{ $time_type == 1 ? "selected" : "" }}>Month</option>
+                  <option value="2" {{ $time_type == 2 ? "selected" : "" }}>Date range</option>
+                  <option value="3" {{ $time_type == 3 ? "selected" : "" }}>Specific date </option>
                 </select>
               </div>
               @if($time_type == 1)
             <div class="form-group col-xs-4 chon-thang" style="padding-right: 5px">                
                 <select class="form-control select2 " id="month_change" name="month">
-                  <option value="">--THÁNG--</option>
+                  <option value="">--MONTH--</option>
                   @for($i = 1; $i <=12; $i++)
                   <option value="{{ str_pad($i, 2, "0", STR_PAD_LEFT) }}" {{ $month == $i ? "selected" : "" }}>{{ str_pad($i, 2, "0", STR_PAD_LEFT) }}</option>
                   @endfor
@@ -54,8 +61,8 @@
               </div>
               <div class="form-group col-xs-4 chon-thang" style="padding-left: 5px">                
                 <select class="form-control select2" id="year_change" name="year">
-                  <option value="">--NĂM--</option>                                            
-                  <option value="2024" {{ $year == 2024 ? "selected" : "" }}>2024</option>
+                  <option value="">--YEAR--</option>                                            
+                  
                   <option value="2025" {{ $year == 2025 ? "selected" : "" }}>2025</option>
                   <option value="2026" {{ $year == 2026 ? "selected" : "" }}>2026</option>
                 </select>
@@ -74,36 +81,13 @@
               @endif
             @endif
             </div>  
-            <div class="row">
-                @foreach($branchList as $beach)
-                  <div class="form-group col-xs-6">
-                    &nbsp;&nbsp;&nbsp;<input type="checkbox" name="branch_ids[]" id="branch_ids" {{ in_array($beach->id, $arrSearch['branch_ids']) || empty($arrSearch['branch_ids']) ? "checked" : "" }} value="{{$beach->id}}">
-                    <label for="branch_ids">{{$beach->name}}</label>
-                  </div>
-                @endforeach
-              </div>
-              <div class="row">
-                <div class="form-group col-xs-6" style="padding-right: 0px">
-                    <select name="partner_id" class="form-control select2">
-                        <option value="" {{ !old('partner_id') ? "selected" : "" }}>-- Đối tác</option>
-                        @foreach($partners as $partner)
-                            <option value="{{ $partner->id }}" {{ $partner_id == $partner->id ? "selected" : "" }}>{{ $partner->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-              
-                <div class="form-group col-xs-6" style="padding-left: 5px">
-                  <select class="form-control select2" name="hdv_id" id="hdv_id">
-                    <option value="">--HDV--</option>
-                    @foreach($hdvList as $hdv)
-                    <option value="{{ $hdv->id }}" {{ $arrSearch['hdv_id'] == $hdv->id ? "selected" : "" }}>{{ $hdv->name }}</option>
-                    @endforeach
-                  </select>
-                </div>
-            </div>
-            @if($notNH) 
-            <div class="row">         
-              <div class="form-group col-xs-6"  style="padding-right: 0px">
+           
+         
+            <div class="row">  
+              <div class="form-group col-xs-6">
+                <input type="text" class="form-control" autocomplete="off" name="id_search" placeholder="BILL ID" value="{{ $arrSearch['id_search'] }}">
+              </div>       
+              <div class="form-group col-xs-6">
                 <select class="form-control select2" name="nguoi_thu_tien" id="nguoi_thu_tien">
                   <option value="">-Receiver-</option>
                   @foreach($collecterList as $payer)
@@ -111,138 +95,20 @@
                   @endforeach
                 </select>
               </div>
-              <div class="form-group col-xs-6"  style="padding-left: 5px">
-               <select class="form-control select2" name="nguoi_tu_van" id="nguoi_tu_van">
-                  <option value="">-Tư vấn-</option>
-                  @foreach($tuvanList as $ck)
-                        <option value="{{ $ck->id }}" {{ $arrSearch['nguoi_tu_van'] == $ck->id ? "selected" : "" }}>{{ $ck->name }}</option>
-                        @endforeach
-                </select>
-              </div>
+              
             </div>
-            
-            <div class="row">
-              @if(Auth::user()->id < 3)
-              <!-- <div class="form-group  col-xs-12">
-                      <label style="font-weight: bold; color: blue">
-                        <input type="checkbox" id="xe_4t" name="xe_4t" value="1" {{ $arrSearch['xe_4t'] == 1 ? "checked" : "" }}>
-                        4T&nbsp;&nbsp;&nbsp;
-                      </label>
-                  </div> -->
-                  @endif
-               <div class="form-group col-xs-12">
-                      <label style="font-weight: bold; color: red">
-                        <input type="checkbox" id="da_thu" name="da_thu" value="0" {{ $arrSearch['da_thu'] == 0 ? "checked" : "" }}>
-                        CHƯA THU TIỀN
-                      </label>
-                  </div>
-            </div>
-            
-            <div class="row" style="font-size: 12px;">
-
-              <div class="form-group col-xs-4">
-                <input type="checkbox" name="status[]" id="status_1" {{ in_array(1, $arrSearch['status']) ? "checked" : "" }} value="1">
-                <label for="status_1">MỚI</label>
-              </div>   
-              <div class="form-group col-xs-4">
-                <input type="checkbox" name="status[]" id="status_2" {{ in_array(2, $arrSearch['status']) ? "checked" : "" }} value="2">
-                <label for="status_2">Hoàn tất</label>
-              </div>               
-              <div class="form-group col-xs-4">
-                <input type="checkbox" name="status[]" id="status_3" {{ in_array(3, $arrSearch['status']) ? "checked" : "" }} value="3">
-                <label for="status_3">HỦY</label>
-              </div>   
-            </div>
-            @endif
+          
             <button type="submit" class="btn btn-info btn-sm">Search</button>
             <button type="button" id="btnReset" class="btn btn-danger btn-sm">Reset</button>
           </form>         
         </div>
       </div>
-      <div style="background-color: #dbdbd5;" class="table-responsive">
-        <div class="form-group" style="float: right">
-          <a href="javascript:;" class="btn btn-primary btn-sm" id="btnExport">Report</a>
-        </div>
-          <table class="table table-bordered" id="table_report">
-              <tr>
-                <th >Tổng BK</th>
-                <td class="text-right">
-                  {{ number_format($arrData['tong_bk']) }}
-                </td>
-                </tr>
-              <tr>
-                <th>Tổng tiền</th>
-                <td class="text-right">
-                  {{ number_format($arrData['tong_tien']) }}
-                </td>
-              </tr>
-              @if($notNH)
-              <tr>
-                <th>Tổng tiền ko flycam John'sTour</th>
-                <td class="text-right">
-                  {{ number_format($arrData['tong_tien_ko_cam_jt']) }}
-                </td>
-              </tr>
-              <?php 
-              $ck_nv = $arrData['tong_tien_ko_cam_jt']*5/100;
-              ?>
-              <tr>
-                <th>5%</th>
-                <td class="text-right">
-                  {{ number_format($ck_nv) }}
-                </td>
-              </tr>
-              @endif
-              <tr>
-                <th>Tổng HH cano</th>
-                <td class="text-right">
-                  {{ number_format($arrData['tong_chietkhau']) }}
-                </td>
-              </tr>
-              @if($notNH)
-              <tr>
-                <th>Tổng giảm</th>
-                <td class="text-right">
-                  {{ number_format($arrData['tong_giam']) }}
-                </td>
-              </tr>
-              <tr>
-                <th>Tổng cọc</th>
-                <td class="text-right">
-                  {{ number_format($arrData['tong_tien_coc']) }}
-                </td>
-              </tr>
-              <tr>
-                <th>Tổng chuyển khoản</th>
-                <td class="text-right">
-                  {{ number_format($arrData['tong_chuyen_khoan']) }}
-                </td>
-              </tr>      
-             <tr>
-                <th>Tổng tiền mặt</th>
-                <td class="text-right">              
-                  
-                  {{ number_format($arrData['tong_tien_mat'])  }}
-                </td>               
-              </tr>
-              <tr>
-                <th>Chi tiền mặt</th>
-                <td class="text-right">
-                  {{ number_format($chi_tien_mat) }}
-                </td>               
-              </tr>
-              
-              <tr>
-                <th>Tiền mặt sau chi</th>
-                <td class="text-right">
-                  {{ number_format($arrData['tong_tien_mat'] - $chi_tien_mat) }}
-                </td>               
-              </tr>
-              @endif
-              
-          </table>          
-        </div>
-        
+ 
+        <div class="box-header with-border">
+              <h3 class="box-title">List ( <span class="value">{{ $items->total() }} bills )</span>
+                - Total revenue: <strong style="color: blue; font-weight: bold;">{{ number_format($totalRevenue) }}</strong>
+              </h3>
+          </div>
       
         <div style="text-align:center; margin-top: 10px;">
             {{ $items->appends( $arrSearch )->links() }}
@@ -253,21 +119,16 @@
               <?php $i = 0; ?>
               @foreach( $items as $item )
                 <?php $i ++; ?>
-                <li id="row-{{ $item->booking_id }}" class="booking" style="padding: 10px;background-color: #fff; font-size:15px;margin-bottom: 10px; border-radius: 5px; color: #2c323f;  @if($item->da_thu == 0) background-color:#fcafa9 @endif @if($i%2 == 0)  background-color:#dde4eb @endif"  data-id="{{ $item->booking_id }}" data-date="{{ $item->use_date }}"> 
+                <li id="row-{{ $item->booking_id }}" class="booking" style="padding: 10px;background-color: #fff; font-size:15px;margin-bottom: 10px; border-radius: 5px; color: #2c323f;  @if($i%2 == 0)  background-color:#77777721 @endif"  data-id="{{ $item->booking_id }}" data-date="{{ $item->use_date }}"> 
                 <span class="label label-sm label-danger" id="error_unc_{{ $item->booking_id }}"></span>       
                  
                     @php $arrEdit = array_merge(['id' => $item->booking_id], $arrSearch) @endphp
                     
-                    <span style="color: #eea236; font-weight: bold;">BK{{ str_pad($item->booking_id,5,"0",STR_PAD_LEFT) }}</span> 
+                    <span style="color: #eea236; font-weight: bold;">{{ str_pad($item->booking_id,5,"0",STR_PAD_LEFT) }}</span> 
                     @if($item->bill_no)
                     - Bill : <span style="color: blue; font-weight: bold">{{ $item->bill_no }}</span>
                     @endif
-                    @if($item->da_thu == 0)
-                    <span style="text-align: right; float: right;">
-                    <input id="da_thu_{{ $item->id }}" data-table="booking" type="checkbox" data-column="da_thu" class="change-column-value-booking" value="1" data-id="{{ $item->id }}">
-                    <label for="da_thu_{{ $item->id }}" style="color: red"> ĐÃ THU</label>
-                  </span>
-                    @endif
+                   
                     <br>
                         <a style="text-transform: uppercase;font-weight:bold;" href="{{ route( 'booking.edit', $arrEdit ) }}">
                        {{ $item->name }}</a>
@@ -281,32 +142,24 @@
                   {{ $beachArr[$item->branch_id] }}
                   @endif
                     <br>
-                    <i class="glyphicon glyphicon-user"></i> 
-                  @if($item->partner_id)
-                  {{ $item->partner->name }} 
-                  @if($item->hdv_id)
-                  - HDV: {{ $item->hdv->name }}
-                  @else
-                  <label class="label label-sm label-danger">Chưa chọn HDV</label>
-                  @endif
-                  @endif
+                    
                   
                  <table class="table" style="margin-top:5px;margin-bottom: 10px;">
                    @foreach($item->details as $service)
                    <tr>
-                     <td width="50%">{{ $service->cate->name }}</td>
+                     <td width="50%">{{ $service->dish->name }}</td>
                      <td width="20%">{{ $service->amount }}</td>
                      <td width="30%" class="text-right">{{ number_format($service->total_price) }}</td>
                    </tr>
                    @endforeach
                  </table>
 
-                    - Tổng tiền: {{ number_format($item->total_price) }} 
+                    - Total: {{ number_format($item->total_price) }} 
                     @if($item->tien_coc > 0)
                     <br>- Cọc: {{ number_format($item->tien_coc) }} 
                     @endif 
                     @if($item->discount > 0) 
-                    <br>- Giảm: <span style="color: red;font-weight: bold;">{{ number_format($item->discount) }}</span>                    
+                    <br>- Discount: <span style="color: red;font-weight: bold;">{{ number_format($item->discount) }}</span>                    
                     @endif
                     @if($item->commision > 0) 
                     <br>- Discount rate / Discount (%): <span style="color: red;font-weight: bold;">{{ number_format($item->commision) }} 
@@ -315,19 +168,18 @@
                     @endif
                     </span>
                     @endif
-                    <br>- Còn lại: {{ number_format($item->con_lai) }}
-                    @if($item->sms_thu)
-                      <p class="alert-success sms">
-                          SMS : {{ $item->sms_thu }}
-                      </p>
-                    @endif
+                    <br>- Revenue: {{ number_format($item->con_lai) }}
+                    @if($item->rupees)
+                  <span style="color: red;">({{ number_format($item->rupees) }} rupees) </span
+                  @endif
+                   
                     @if($item->notes)                    
                     <br><span style="color:red; font-style: italic;">{!! nl2br($item->notes) !!}</span>
                     @endif    
                     
                     <div class="clearfix"></div>                   
                     
-                   <a style="float:right; margin-left: 2px" href="{{ route( 'booking.edit', $arrEdit ) }}" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></a>                
+                   <a style="float:right; margin-left: 2px" href="{{ route( 'booking.edit', $arrEdit ) }}" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></a>     <a class="btn btn-default btn-sm" href="{{ route( 'booking.detail', $item->id ) }}" ><i class="fa fa-print" aria-hidden="true"></i></a>           
                   
                       <div style="clear: both;"></div>
                 </li>              
