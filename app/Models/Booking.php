@@ -56,7 +56,8 @@ class Booking extends Model  {
                             'chup_anh',
                             'xe_4t',
                             'nguoi_tu_van',
-                            'hdv_id'
+                            'hdv_id',
+                            'rupees'
                             ];
     public static function getList($params = []){
         $query = self::where('status', 1);
