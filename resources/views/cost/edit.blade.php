@@ -40,32 +40,14 @@
                       </ul>
                   </div>
               @endif
-              <div class="row"> 
-            <!--   <div class="form-group col-xs-6">
-                <div class="checkbox">
-                      <label style="font-weight: bold; color: blue">
-                        <input type="checkbox" id="xe_4t" name="xe_4t" value="1" {{ old('xe_4t', $detail->xe_4t) == 1 ? "checked" : "" }}>
-                        4T
-                      </label>
-                    </div>
-                  </div> -->
-                <div class="form-group col-xs-6">
-            
-                  <div class="checkbox">
-                    <label>
-                      <input type="checkbox" name="is_fixed" value="1" {{ old('is_fixed', $detail->is_fixed) == 1 ? "checked" : "" }}>
-                      <span style="color: red">CHI PHÍ CỐ ĐỊNH</span>
-                    </label>
-                  </div>               
-                </div>
-              </div>
+             
               <div class="row">
-                <div class="form-group col-md-4">
-                  <label for="status">Status</label>
-                  <select class="form-control select2" name="status" id="status">                    
-                    <option value="1"  {{ old('status', $detail->status) == 1 ? "selected" : "" }}>Chưa thanh toán</option>
-                    <option value="2"  {{  old('status', $detail->status) == 2 ? "selected" : "" }}>Đã thanh toán</option>
-                    <option value="3"  {{  old('status', $detail->status) == 3 ? "selected" : "" }}>Thanh toán sau</option>
+                <div class="form-group col-md-4 col-md-12">
+                  <label for="status">Status</label>                 
+                  <select class="form-control select2" name="status" id="status">
+                    <option value="2"  {{  old('status', $detail->status) == 2 ? "selected" : "" }}>Paid</option>
+                    <option value="1"  {{ old('status', $detail->status) == 1 ? "selected" : "" }}>Not yet paid</option>
+                    <option value="3"  {{  old('status', $detail->status) == 3 ? "selected" : "" }}>Pay later</option>
                   </select>
                 </div>
                 <div class="form-group col-md-4 col-xs-6">
@@ -84,13 +66,10 @@
                         $date_use = old('date_use');
                     }
                   @endphp
-                <label for="email">Ngày</label>
+                <label for="date_use">Date</label>
                  <input type="text" name="date_use" class="form-control datepicker" value="{{ old('date_use', $date_use) }}" autocomplete="off">
                 </div>   
-                 <div class="form-group col-md-12 col-xs-12">
-                  <label for="email">BOOKING ID <span style="color: red">(code1, code2, code3, code4 ....)</span></label>
-                  <input type="text" name="booking_id" class="form-control" value="{{ old('booking_id', $detail->booking_id) }}" autocomplete="off">
-                </div>
+                
               </div>
               <div class="row"> 
                  <div class="form-group col-md-12 col-xs-12">                    
@@ -103,53 +82,25 @@
                   </select>
                 </div>             
               <input type="hidden" name="type" value="1">               
-              </div>
-              <div class="row" id="load_doi_tac">
-                  @if($partnerList->count() > 0)
-                  <div class="form-group col-md-12">
-                      <label>Chi tiết<span class="red-star">*</span></label>
-                      <select class="form-control select2" id="partner_id" name="partner_id">     
-                        <option value="">--Chọn--</option>      
-                        @foreach($partnerList as $cate)
-                        <option value="{{ $cate->id }}" {{ old('partner_id', $detail->partner_id) == $cate->id ? "selected" : "" }}>
-                          {{ $cate->name }}
-                        </option>
-                        @endforeach
-                      </select>
-                  </div>
-                  @endif
-              </div>      
-              <div class="form-group input-group" >
-                  <label for="type">Tài khoản nhận tiền (<span style="color:red; font-weight: bold">Chỉ "Thêm mới" tài khoản của ĐỐI TÁC</span>)</label>
-                  <select class="form-control select2" name="bank_info_id" id="bank_info_id">
-                    <option value="">--Tất cả--</option>
-                    @foreach($bankInfoList as $cate)
-                    <option value="{{ $cate->id }}" {{ old('bank_info_id', $detail->bank_info_id) == $cate->id ? "selected" : "" }}>{{ $cate->name }} - {{ $cate->bank_name }} - {{ $cate->bank_no }}</option>
-                    @endforeach
-                  </select>
-                  <span class="input-group-btn">
-                      <button style="margin-top:24px" class="btn btn-primary btn-sm" id="btnAddBankInfo" type="button" data-value="3">
-                        Thêm
-                      </button>
-                    </span>
-                </div>         
+              </div>               
+                     
                 <div class="row">
                   <div class="form-group col-xs-12">
-                    <label for="notes">Nội dung</label>
+                    <label for="notes">Content</label>
                     <textarea class="form-control" name="notes" id="notes">{!! old('notes', $detail->notes) !!}</textarea>
                   </div>
                   <div class="tinh-toan" >
                     <div class="form-group col-md-4 col-xs-6">
-                      <label for="price">Giá</label>
+                      <label for="price">Price</label>
                       <input type="text" name="price" class="form-control number gia" autocomplete="off" placeholder="Giá" value="{{ old('price', $detail->price) }}">
                     </div> 
                     <div class="form-group col-md-4 col-xs-6">
-                      <label for="amount">Số lượng</label>
+                      <label for="amount">Amount</label>
                       <input type="text" name="amount" class="form-control amount" autocomplete="off" placeholder="Số lượng" value="{{ old('amount', $detail->amount) }}">
                     </div>
                                      
                     <div class="form-group col-md-4 col-xs-12">
-                      <label for="total_money">Tổng tiền</label>
+                      <label for="total_money">Total</label>
                       <input type="text" name="total_money" class="form-control number total" autocomplete="off" placeholder="Tổng tiền" value="{{ old('total_money', $detail->total_money) }}">
                     </div>
                   </div>
@@ -163,7 +114,7 @@
                       </select>
                   </div>            
                 <div class="form-group" style="margin-top: 15px;">  
-                  <label class="col-md-3 row">Hình ảnh </label>
+                  <label class="col-md-3 row">Images </label>
                   <div class="col-md-9">
                     <img id="thumbnail_image" src="{{ old('image_url', $detail->image_url) ? Helper::showImageNew(old('image_url', $detail->image_url)) : URL::asset('admin/dist/img/img.png') }}" class="img-thumbnail" width="145" height="85">
                     
@@ -181,7 +132,7 @@
                             
                             <input type="file" id="file-image"  style="display:none" multiple/>
                          
-                            <button class="btn btn-primary btnMultiUpload" type="button"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Upload nhiều ảnh</button>
+                            <button class="btn btn-primary btnMultiUpload" type="button"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Upload multi images</button>
                             <div class="clearfix"></div>
                             <div id="div-image" style="margin-top:10px">
                               @php
@@ -196,7 +147,7 @@
                                   <div class="col-md-2">
                                     <img class="img-thumbnail" src="{{ Helper::showImage($hinh) }}" style="width:auto !important; height: 200px !important;">
                                     <div class="checkbox">
-                                      <button class="btn btn-danger btn-sm remove-image" type="button" data-value="{{  $hinh }}"  >Xóa</button>
+                                      <button class="btn btn-danger btn-sm remove-image" type="button" data-value="{{  $hinh }}"  >Delete</button>
                                     </div>
                                     <input type="hidden" name="old_image[]" value="{{ $hinh }}">
                                   </div>

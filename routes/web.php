@@ -213,7 +213,7 @@ Route::group([
     Route::group(['prefix' => 'booking'], function () {        
         Route::get('/', ['as' => 'booking.index', 'uses' => 'BookingController@index']);
         Route::get('/export', ['as' => 'booking.export', 'uses' => 'BookingController@export']);    
-        Route::get('/related', ['as' => 'booking.hdv-list', 'uses' => 'BookingController@hdvList']);
+        Route::get('/get-dish', ['as' => 'booking.get-dish', 'uses' => 'BookingController@getDish']);
         Route::get('/fast-search', ['as' => 'booking.fast-search', 'uses' => 'BookingController@fastSearch']);
         Route::get('/excel', ['as' => 'booking.excel', 'uses' => 'BookingController@exportExcel']);
         Route::get('/not-export', ['as' => 'booking.not-export', 'uses' => 'BookingController@notExport']);

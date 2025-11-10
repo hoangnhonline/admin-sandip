@@ -283,18 +283,7 @@
                   @endif
                 </td>   
                 @if($notNH)                          
-                <td style="white-space:nowrap">  
-
-                  <a href="{{ route( 'cost.copy', [ 'id' => $item->id ]) }}" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-duplicate"></span></a>
-                 
-                  @if($item->bank_info_id) 
-                  <a href="https://img.vietqr.io/image/{{str_replace(' ', '', strtolower($item->bank->bank_name))}}-{{$item->bank->bank_no}}-compact2.png?amount={{$item->total_money}}&accountName={{$item->bank->account_name}}&addInfo=COST {{ $item->id }} {{$item->noi_dung_ck}}"
-                                       class="btn btn-primary btn-sm btn-qrcode"><span
-                                            class="glyphicon glyphicon-qrcode"></span></a>
-                  @endif
-               
-                  
-                 
+                <td style="white-space:nowrap">                 
                     <a href="{{ route( 'cost.edit', [ 'id' => $item->id ]) }}" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></a>
                     @if($item->costType)
                     <a onclick="return callDelete('{{ $item->costType->name . " - ".number_format($item->total_money) }}','{{ route( 'cost.destroy', [ 'id' => $item->id ]) }}');" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></a>

@@ -28,9 +28,9 @@ class BookingController extends Controller
     public function maps(Request $request){
         return view('booking.maps');
     }
-    public function hdvList(Request $request){
-        $partner_id = $request->partner_id;
-        $hdvList = Hdv::where(['status' => 1, 'user_id' => $partner_id])->get();
+    public function getDish(Request $request){
+        $branch_id = $request->branch_id;
+        $hdvList = Dish::where(['status' => 1, 'branch_id' => $branch_id])->get();
         
         return view('booking.hdv-list', compact('hdvList'));
 
@@ -736,8 +736,10 @@ class BookingController extends Controller
         $arrHoahong = [];
         $arrTongTienKhongCam = [];
         $totalRevenue = 0;
+        $totalRupees = 0;
         foreach($allList as $item){
             $totalRevenue+= $item->con_lai;
+            $totalRupees+= $item->rupees;
             $arrData['tong_bk']++;
             $arrData['tong_giam'] += $item->discount;
             $arrData['tong_chietkhau'] += $item->commision;                
@@ -822,7 +824,7 @@ class BookingController extends Controller
         }
         
       
-        return view($view, compact( 'items', 'arrSearch', 'keyword', 'time_type', 'month', 'year', 'month_do', 'arrData', 'chietkhauList', 'branch_id', 'cateList', 'use_date_from_format', 'use_date_to_format', 'branchList', 'beachArr', 'partners', 'partner_id', 'cateArr', 'totalRevenue'));
+        return view($view, compact( 'items', 'arrSearch', 'keyword', 'time_type', 'month', 'year', 'month_do', 'arrData', 'chietkhauList', 'branch_id', 'cateList', 'use_date_from_format', 'use_date_to_format', 'branchList', 'beachArr', 'partners', 'partner_id', 'cateArr', 'totalRevenue', 'totalRupees'));
 
     }
 
@@ -1446,20 +1448,11 @@ class BookingController extends Controller
         $chietkhauList = ChietKhau::orderBy('sort_order')->get();
         $partners = Account::where('is_partner', 1)->get();
         $branchList = Branch::where('status', 1)->orderBy('display_order')->get();
-        if($user->branch_id == 7){
-            if($user->chup_anh == 1){
-                $cateList = Dish::where('chup_anh', 1)->orderBy('display_order')->get();    
-                $branchList = Branch::where('id', 7)->get();
-            }else{
-                $cateList = Dish::where('hon_son', 1)->orderBy('display_order')->get();    
-                $branchList = Branch::where('id', 7)->get();    
-            }
-            $partners = Account::where('is_partner', 1)->where('branch_id', 7)->get();
-        }else{
-            $cateList = Dish::orderBy('display_order')->get();                
-            $branchList = Branch::where('status', 1)->orderBy('display_order')->get();
-            $partners = Account::where('is_partner', 1)->get();
-        }        
+        
+        $cateList = Dish::orderBy('display_order')->where('branch_id', 1)->get();                
+        $branchList = Branch::where('status', 1)->orderBy('display_order')->get();
+        $partners = Account::where('is_partner', 1)->get();
+               
         return view($view, compact('cateList', 'use_date', 'bill', 'chietkhauList', 'partners', 'branchList'));
     }
     /**
@@ -1558,24 +1551,13 @@ class BookingController extends Controller
         $detail = Booking::find($id);
         $chietkhauList = ChietKhau::orderBy('sort_order')->get();
         
-        if(Auth::user()->branch_id == 7){
-            if(Auth::user()->chup_anh == 1){
-                $cateList = Dish::where('chup_anh', 1)->orderBy('display_order')->get();    
-                $branchList = Branch::where('id', 7)->get();
-            }else{
-                $cateList = Dish::where('hon_son', 1)->orderBy('display_order')->get();    
-                $branchList = Branch::where('id', 7)->get();    
-            }
-            $partners = Account::where('is_partner', 1)->where('branch_id', 7)->get();
-        }else{
-            $cateList = Dish::orderBy('display_order')->get();                
+        
+            $cateList = Dish::orderBy('display_order')->where('branch_id', $detail->branch_id)->get();                
             $branchList = Branch::where('status', 1)->orderBy('display_order')->get();
             $partners = Account::where('is_partner', 1)->get();
-        }
+        
         $view = 'booking.edit-tour';
-        if($detail->branch_id == 7){
-        //    $view = 'booking.edit-baibang';
-        }
+      
         
         
         return view($view , compact( 'detail', 'cateList','chietkhauList', 'partners', 'branchList'));

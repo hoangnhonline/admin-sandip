@@ -279,17 +279,17 @@
   });
 
   $(document).ready(function(){
-    $('#partner_id').change(function(){
+    $('#branch_id').change(function(){
    
       $.ajax({
-          url : "{{ route('booking.hdv-list') }}",
+          url : "{{ route('booking.get-dish') }}",
           data: {
-            partner_id : $(this).val()
+            branch_id : $(this).val()
           },
           type : "get", 
           success : function(data){
-              $('#hdv_id').html(data);
-              $('#hdv_id').select2('refresh');
+              $('select.cate').html(data);
+              $('select.cate').select2('refresh');
               
           }
         });

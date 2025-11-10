@@ -5,7 +5,7 @@
 <!-- Content Header (Page header) -->
 <section class="content-header" style="padding-top: 10px;">
   <h1 style="text-transform: uppercase;">    
-    CHI PHÍ - NGÀY {{$arrSearch['use_date_from']}}
+    COST MANAGEMENT {{$arrSearch['use_date_from']}}
   </h1>
   
 </section>
@@ -20,7 +20,7 @@
       <p class="alert alert-info" >{{ Session::get('message') }}</p>
       @endif
       @if($notNH)
-      <a href="{{ route('cost.create',['date_use' => $date_use]) }}" class="btn btn-info btn-sm" style="margin-bottom:5px">Add new</a>
+      <a href="{{ route('cost.create',['date_use' => $date_use]) }}" class="btn btn-info btn-sm" style="margin-bottom:5px">Add new cost</a>
       @endif
       <div class="panel panel-default">        
         <div class="panel-body">
@@ -28,16 +28,16 @@
              <div class="row">  
               <div class="form-group @if($time_type == 3) col-xs-6 @else col-xs-4 @endif" style="padding-right: 0px">              
                 <select class="form-control select2" name="time_type" id="time_type">                  
-                  <option value="">--Thời gian--</option>
-                  <option value="1" {{ $time_type == 1 ? "selected" : "" }}>Theo tháng</option>
-                  <option value="2" {{ $time_type == 2 ? "selected" : "" }}>Khoảng ngày</option>
-                  <option value="3" {{ $time_type == 3 ? "selected" : "" }}>Ngày cụ thể </option>
+                  <option value="">--Time--</option>
+                  <option value="1" {{ $time_type == 1 ? "selected" : "" }}>By month</option>
+                  <option value="2" {{ $time_type == 2 ? "selected" : "" }}>Date range</option>
+                  <option value="3" {{ $time_type == 3 ? "selected" : "" }}>By date</option>
                 </select>
               </div>
               @if($time_type == 1)
             <div class="form-group col-xs-4 chon-thang" style="padding-right: 5px">                
                 <select class="form-control select2 " id="month_change" name="month">
-                  <option value="">--THÁNG--</option>
+                  <option value="">--Month--</option>
                   @for($i = 1; $i <=12; $i++)
                   <option value="{{ str_pad($i, 2, "0", STR_PAD_LEFT) }}" {{ $month == $i ? "selected" : "" }}>{{ str_pad($i, 2, "0", STR_PAD_LEFT) }}</option>
                   @endfor
@@ -45,10 +45,7 @@
               </div>
               <div class="form-group col-xs-4 chon-thang" style="padding-left: 5px">                
                 <select class="form-control select2" id="year_change" name="year">
-                  <option value="">--NĂM--</option>                                            
-                  <option value="2024" {{ $year == 2024 ? "selected" : "" }}>2024</option>
-                  <option value="2025" {{ $year == 2025 ? "selected" : "" }}>2025</option>
-                  
+                  <option value="">--Year--</option>                   
                   <option value="2026" {{ $year == 2026 ? "selected" : "" }}>2026</option>
                   <option value="2027" {{ $year == 2027 ? "selected" : "" }}>2027</option>
                 </select>
@@ -69,7 +66,7 @@
             </div>  
             <div class="row">
                 @foreach($branchList as $beach)
-                  <div class="form-group col-xs-6">
+                  <div class="form-group col-xs-4" style="padding:0px; padding-left: 5px;">
                     &nbsp;&nbsp;&nbsp;<input type="checkbox" name="branch_ids[]" id="branch_ids" {{ in_array($beach->id, $arrSearch['branch_ids']) || empty($arrSearch['branch_ids']) ? "checked" : "" }} value="{{$beach->id}}">
                     <label for="branch_ids">{{$beach->name}}</label>
                   </div>
@@ -108,36 +105,15 @@
                 @endforeach
               </select>
             </div>
-            <div class="form-group col-xs-6" id="load_doi_tac">
-              @if(!empty($partnerList ) || $partnerList->count() > 0)
-            <div class="form-group ">
-                <select class="form-control select2" id="partner_id" name="partner_id">     
-                  <option value="">--Chi tiết--</option>      
-                  @foreach($partnerList as $cate)
-                  <option value="{{ $cate->id }}" {{ $partner_id == $cate->id ? "selected" : "" }}>
-                    {{ $cate->name }}
-                  </option>
-                  @endforeach
-                </select>
-            </div>
-            @endif
-            </div>
-            
-            </div>
-            @if($notNH)
-            <div class="row">
-              <div class="form-group col-xs-12">
+            <div class="form-group col-xs-6">
               <select class="form-control select2" name="nguoi_chi" id="nguoi_chi">
-                <option value="">--Người chi--</option>
+                <option value="">--Payer--</option>
                  @foreach($collecterList as $payer)
                 <option value="{{ $payer->id }}" {{ $nguoi_chi == $payer->id ? "selected" : "" }}>{{ $payer->name }}</option>
                 @endforeach 
               </select>
             </div> 
             </div>
-            @endif
-           
-
             <button type="submit" class="btn btn-success btn-sm">Search</button>
             <button type="reset" class="btn btn-default btn-sm">Reset</button>
           </form>         
@@ -148,11 +124,11 @@
           <div class="table-responsive">
           <table class="table table-bordered" id="table_report" style="margin-bottom:0px;font-size: 14px;">
               <tr>
-              <th>Tổng số lượng</th>
+              <th>Total Amount</th>
               <td class="text-right">{{ number_format($total_quantity) }}</td>
             </tr>
             <tr>
-              <th>Tổng chi phí</th>
+              <th>Total Money</th>
               <td class="text-right" style="color: red">{{ number_format($total_actual_amount) }}</td>
             </tr>
             @foreach($arrReport as $cate_id => $amountByCate)
@@ -169,45 +145,9 @@
       
           <div style="text-align:center">
             {{ $items->appends( $arrSearch )->links() }}
-          </div>  
-   
-             @if(Auth::user()->role == 1 && $notNH)
-              <div class="form-inline" style="padding: 5px">
-                <div class="form-group">            
-                  <select class="form-control select2 multi-change-column-value" data-column="type">
-                      <option value="">--SET PHÂN LOẠI--</option>
-                       <option value="1">Vận hành</option>
-                       <option value="2">Khác</option>                 
-                    </select>                         
-                </div> 
-                <div class="form-group">        
-                  <select class="form-control select2 multi-change-column-value" data-column="cate_id">
-                    <option value="">--SET LOẠI CHI PHÍ--</option>
-                    @foreach($cateList as $cate)
-                    <option value="{{ $cate->id }}">{{ $cate->name }}</option>
-                    @endforeach
-                  </select>
-                </div>
-                <div class="form-group">            
-                  <select class="form-control select2 multi-change-column-value" data-column="nguoi_chi">
-                      <option value="">--SET NGƯỜI CHI--</option>
-                       @foreach($collecterList as $payer)
-                      <option value="{{ $payer->id }}">{{ $payer->name }}</option>
-                      @endforeach     
-                  </select>                         
-                </div>               
-                <div class="form-group">            
-                  <select class="form-control select2 multi-change-column-value" data-column="status">
-                      <option value="">--SET TRẠNG THÁI--</option>                 
-                      <option value="1">Chưa thanh toán</option>
-                      <option value="2">Đã thanh toán</option>
-                      <option value="3">Thanh toán sau</option>
-                    </select>
-                </div>              
-              </div>
-              @endif
+          </div>
             <div style="font-size: 18px;padding: 10px; border-bottom: 1px solid #ddd">
-              Tổng: <span class="value">{{ $items->total() }} mục </span> - Tổng tiền: <span style="color:red">{{ number_format($total_actual_amount) }}</span>           
+              Total: <span class="value">{{ $items->total() }} items </span> - Total money: <span style="color:red">{{ number_format($total_actual_amount) }}</span>           
             </div>
             <ul style="padding: 0px">
              @if( $items->count() > 0 )
@@ -222,14 +162,11 @@
                     {{ date('H:i d/m', strtotime($item->created_at)) }}  
                     @if($notNH)
                     @if($item->status == 1)
-                        <label class="label label-danger label-sm">Chưa thanh
-                            toán</label>                        
+                        <label class="label label-danger label-sm">Not yet pay</label>                        
                     @elseif($item->status == 2)
-                        <label class="label label-success label-sm">Đã thanh
-                            toán</label>
+                        <label class="label label-success label-sm">Paid</label>
                     @else
-                      <label class="label label-warning label-sm">Thanh
-                            toán sau</label>
+                      <label class="label label-warning label-sm">Pay later</label>
                     @endif
                     @endif
                     <br>                   
@@ -237,22 +174,15 @@
                   <a href="{{ route( 'cost.edit', [ 'id' => $item->id ]) }}">{{ $item->costType->name }}</a> - {{ date('d/m', strtotime($item->date_use)) }} 
                   @else
                   {{ $item->cost_type_id }}
-                  @endif
-                  @if($item->partner)
-                  - {{ $item->partner->name }}
-                  @endif
+                  @endif                 
                   <br>
                      @if($item->branch_id)                                  
                   <i class="fa fa-map-marker" aria-hidden="true"></i> {{ $beachArr[$item->branch_id] }} <br>
                   @endif
-                    <i class="  glyphicon glyphicon-user"></i> Người chi: 
+                    <i class="  glyphicon glyphicon-user"></i> Payer: 
                     @if($item->nguoi_chi)
                     {{ $collecterNameArr[$item->nguoi_chi] }}
-                    @endif                   
-                    @if($item->booking_id)
-                    <br>
-                    <i class="glyphicon glyphicon-off"></i><span style="color: red"> PTT{{ $item->booking_id }}</span>
-                    @endif                     
+                    @endif         
                     <br>               
                     <i class="  glyphicon glyphicon-usd"></i>{{ number_format($item->amount) }} x {{ number_format($item->price) }} = {{ number_format($item->total_money) }}
                            <br>                      
@@ -264,32 +194,13 @@
                       {{ $item->image_url }}
                     </p>
                     @endif
-                    
-                  @if($item->sms_chi)
-                  <p class="alert-success sms">
-                   SMS CHI : {{ $item->sms_chi }}
-                  </p>
-                  @endif
                     <div class="clearfix" style="margin-top: 3px; margin-bottom: 3px"></div>
                    @if($item->image_url && $item->unc_type == 1)
                   <img src="{{ config('plantotravel.upload_url').$item->image_url }}" height="80"  width="80" style="border: 1px solid red" class="img-unc">
-                  @endif                
-                      
-                    @if($item->time_chi_tien)
-                      <br>
-                      <label class="label label-danger">Đã chi tiền</label>
-                      @endif  
-                      @if($item->code_chi_tien)
-                      <span style="font-weight: bold; color: red" title="Mã chi tiền">{{ $item->code_chi_tien }}</span>
-                    @endif
-
+                  @endif
 
                   @if(!$item->time_chi_tien && $item->status != 2)
-                    @if($item->bank_info_id)
-                    <a href="https://img.vietqr.io/image/{{str_replace(' ', '', strtolower($item->bank->bank_name))}}-{{$item->bank->bank_no}}-compact2.png?amount={{$item->total_money}}&accountName={{$item->bank->account_name}}&addInfo=COST {{ $item->id }} {{$item->noi_dung_ck}}"
-                                         class="btn btn-primary btn-sm btn-qrcode"><span
-                                              class="glyphicon glyphicon-qrcode"></span></a>
-                    @endif
+                   
                     @if($item->costType)
                     <a style="float: right" onclick="return callDelete('{{ $item->costType->name . " - ".number_format($item->total_money) }}','{{ route( 'cost.destroy', [ 'id' => $item->id ]) }}');" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></a>
                     @endif
@@ -303,7 +214,7 @@
               @endforeach
             @else
             <li style="list-style: none;padding: 5px">
-              <p>Không có dữ liệu.</p>
+              <p>No data!</p>
             </li>
             @endif
             </ul>

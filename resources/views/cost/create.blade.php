@@ -45,9 +45,9 @@
               <div class="row">
                 <div class="form-group col-md-4 col-xs-12">
                   <label for="status">Status</label>
-                  <select class="form-control select2" name="status" id="status">                    
-                    <option value="1"  {{ old('status') == 1 ? "selected" : "" }}>Not yet paid</option>
+                  <select class="form-control select2" name="status" id="status">
                     <option value="2"  {{  old('status') == 2 ? "selected" : "" }}>Paid</option>
+                    <option value="1"  {{ old('status') == 1 ? "selected" : "" }}>Not yet paid</option>
                     <option value="3"  {{  old('status') == 3 ? "selected" : "" }}>Pay later</option>
                   </select>
                 </div>

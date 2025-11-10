@@ -262,17 +262,17 @@
   });
 
   $(document).ready(function(){
-    $('#branch_id').change(function(){
+    $('#partner_id').change(function(){
    
       $.ajax({
-          url : "{{ route('booking.get-dish') }}",
+          url : "{{ route('booking.hdv-list') }}",
           data: {
-            branch_id : $(this).val()
+            partner_id : $(this).val()
           },
           type : "get", 
           success : function(data){
-              $('select.cate').html(data);
-              $('select.cate').select2('refresh');
+              $('#hdv_id').html(data);
+              $('#hdv_id').select2('refresh');
               
           }
         });

@@ -114,11 +114,7 @@
          <!-- /.box-header -->
           <div class="box-header with-border">
               <h3 class="box-title">List ( <span class="value">{{ $items->total() }} bills )</span>
-                - Total revenue: <strong style="color: blue; font-weight: bold;">{{ number_format($totalRevenue) }} 
-              @if($totalRupees > 0)
-                <span style="color: blue">({{ number_format($totalRupees) }})</span>
-              @endif
-              </strong>
+                - Total revenue: <strong style="color: blue; font-weight: bold;">{{ number_format($totalRevenue) }}</strong>
               </h3>
           </div>
         <!-- /.box-header -->
