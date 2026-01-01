@@ -112,6 +112,10 @@
                   <label for="branch_ids">{{$beach->name}}</label>
                 </div>
               @endforeach
+              <div class="form-group" style="border-right: 1px solid #9ba39d">
+              &nbsp;&nbsp;&nbsp;<input type="checkbox" name="tren_2" id="tren_2" {{ $arrSearch['tren_2'] == 1 ? "checked" : "" }} value="1">
+              <label for="tren_2">Trên 3tr&nbsp;&nbsp;&nbsp;&nbsp;</label>
+            </div>
             </div>            
           </form>         
         </div>

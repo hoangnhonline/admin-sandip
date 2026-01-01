@@ -88,7 +88,7 @@ class CostController extends Controller
             $query->where('city_id', $city_id);
         }
         if($tren_2){
-            $query->where('total_money','>=', 5000000);
+            $query->where('total_money','>=', 3000000);
         }
         if($xe_4t){
             $query->where('xe_4t', $xe_4t);

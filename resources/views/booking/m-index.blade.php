@@ -108,7 +108,7 @@
               <h3 class="box-title">List ( <span class="value">{{ $items->total() }} bills )</span>
                 - Total revenue: <strong style="color: blue; font-weight: bold;">{{ number_format($totalRevenue) }}
                 @if($totalRupees > 0)
-                <span style="color: blue">({{ number_format($totalRupees) }})</span>
+                <span style="color: blue">({{ number_format($totalRupees) }} rupees)</span>
                 @endif
                 </strong>
               </h3>
@@ -151,7 +151,13 @@
                  <table class="table" style="margin-top:5px;margin-bottom: 10px;">
                    @foreach($item->details as $service)
                    <tr>
-                     <td width="50%">{{ $service->dish->name }}</td>
+                     <td width="50%">
+                      @if($service->dish)
+                      {{ $service->dish->name }}
+                      @else
+                      -error-
+                      @endif
+                    </td>
                      <td width="20%">{{ $service->amount }}</td>
                      <td width="30%" class="text-right">{{ number_format($service->total_price) }}</td>
                    </tr>

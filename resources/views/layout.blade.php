@@ -270,9 +270,9 @@
                 $(".datepicker").datepicker({
                     dateFormat: "dd/mm/yy",
                 });
-                $(".timepicker").datetimepicker({
-                  //  dateFormat: "H:i",
-                });
+                // $(".timepicker").datetimepicker({
+                //   //  dateFormat: "H:i",
+                // });
                 $("#btnQuickSearch").click(function () {
                     if ($.trim($("#keyword").val()) != "") {
                         location.href = "{{ route('booking.fast-search')}}?keyword=" + $("#keyword").val();

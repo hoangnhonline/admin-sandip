@@ -116,7 +116,7 @@
               <h3 class="box-title">List ( <span class="value">{{ $items->total() }} bills )</span>
                 - Total revenue: <strong style="color: blue; font-weight: bold;">{{ number_format($totalRevenue) }} 
               @if($totalRupees > 0)
-                <span style="color: blue">({{ number_format($totalRupees) }})</span>
+                <span style="color: blue">({{ number_format($totalRupees) }} rupees)</span>
               @endif
               </strong>
               </h3>

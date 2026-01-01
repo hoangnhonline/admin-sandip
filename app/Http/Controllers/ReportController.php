@@ -699,4 +699,139 @@ class ReportController extends Controller
 
 
     }
+
+    public function thuTien(Request $request){       
+        
+        $error = $request->error ?? 0;
+        $monthDefault = date('m');
+        $month = $request->month ?? $monthDefault;
+        $type = $request->type ?? 1;
+        $year = $request->year ?? date('Y');
+        $mindate = "$year-$month-01";
+        $maxdate = date("Y-m-t", strtotime($mindate));
+        $maxDay = date('d', strtotime($maxdate));
+        $minDay = 1;
+
+        $all = Booking::where('use_date', '>=', $mindate)            
+            ->where('use_date', '<=', $maxdate)->whereIn('status',[1, 2])->get();
+        
+        $costAll = Cost::where('date_use', '>=', $mindate)->where('date_use', '<=', $maxdate)->where('status','>', 0)->where('city_id','<>', 3)->get();
+        $view = 'report.thu-tien';
+        
+        $arrCost = [];
+        $tong_chi = $tong_chi_phi_van_hanh = $tong_chi_phi_khac = 0;        
+        $totalChi = [];
+        $totalChiByPerson = [];
+        foreach($costAll as $costDay){
+            if(!isset($totalChi[$costDay->nguoi_chi])){
+                $totalChi[$costDay->nguoi_chi] = 0;
+            }
+            $totalChi[$costDay->nguoi_chi]+= $costDay->total_money;
+            
+            $key = (int) date('d', strtotime($costDay->date_use));
+            if(!isset($arrCost[$key])){
+                $arrCost[$key]['total'] = 0;
+                $arrCost[$key]['tong_chi_phi_van_hanh'] = 0;
+                $arrCost[$key]['tong_chi_phi_khac'] = 0;
+                $arrCost[$key]['nguoi_chi'][$costDay->nguoi_chi] = 0;
+            }   
+            $arrCost[$key]['nguoi_chi'][$costDay->nguoi_chi] = $costDay->total_money;
+            if(!isset($arrCost[$key][$costDay->cate_id])){
+                $arrCost[$key][$costDay->cate_id]['total'] = 0;                
+            }           
+           // var_dump($costDay->partner_id);
+            if($costDay->partner_id > 0 && !isset($arrCost[$key][$costDay->cate_id][$costDay->partner_id])){
+                //var_dump("aaaaa", $costDay->cate_id, $costDay->partner_id);
+                $arrCost[$key][$costDay->cate_id][$costDay->partner_id] = 0; 
+               // echo "<hr>";
+            }                  
+            
+            $arrCost[$key]['total'] += $costDay->total_money;
+
+            $arrCateLoaiTru = [1, 8, 51, 9, 10, 12]; 
+
+            if($costDay->type == 1){
+              
+                $arrCost[$key]['tong_chi_phi_van_hanh'] += $costDay->total_money;    
+                              
+            }else{
+                $arrCost[$key]['tong_chi_phi_khac'] += $costDay->total_money;
+            }
+            
+            $arrCost[$key][$costDay->cate_id]['total'] += $costDay->total_money;
+            if($costDay->partner_id > 0){
+               $arrCost[$key][$costDay->cate_id][$costDay->partner_id] += $costDay->total_money;    
+            }          
+
+            $tong_chi += $costDay->total_money;
+            if($costDay->type == 1){
+                $tong_chi_phi_van_hanh += $costDay->total_money;
+            }else{
+                $tong_chi_phi_khac += $costDay->total_money;
+            }
+        } 
+              
+        $tong_thuc_thu = $tong_coc = 0;        
+        $tong_hoa_hong_sales = 0;
+        $arrDay = [];
+        $arrNguoiThu = [];
+        foreach($all as $bk){
+            $tong_thuc_thu += $bk->con_lai;
+            if(!isset($arrNguoiThu[$bk->nguoi_thu_tien])){
+                $arrNguoiThu[$bk->nguoi_thu_tien] = 0;   
+            }
+            $arrNguoiThu[$bk->nguoi_thu_tien] += $bk->con_lai;
+            $key = (int) date('d', strtotime($bk->use_date));        
+          
+            if(!isset($arrDay[$key])){
+                $arrDay[$key] = [
+                        'tong_tien' => 0, 
+                        'tong_giam' => 0, 
+                        'tong_chiet_khau' => 0, 
+                        'tong_tien_coc' => 0,
+                        'tong_chi_5' => 0,
+                        'tong_con_lai_chua_tru_chi_phi' => 0,
+                        'tong_chi_phi_van_hanh' => 0,
+                        'tong_chi_phi_khac' => 0,
+                        'tong_john' => 0,
+                        'tong_20' => 0,
+                        'con_lai' => 0
+                                       ];
+            }
+            $arrDay[$key]['tong_tien'] += $bk->total_price;
+            $arrDay[$key]['con_lai'] += $bk->con_lai;
+            $arrDay[$key]['tong_giam'] += $bk->discount;
+            $chietkhau = $bk->commision;      
+            if(!isset($arrDay[$key]['person'][$bk->nguoi_thu_tien])){
+                $arrDay[$key]['person'][$bk->nguoi_thu_tien] = 0;
+            }
+            $arrDay[$key]['person'][$bk->nguoi_thu_tien] += $bk->con_lai;
+
+            $arrDay[$key]['tong_chiet_khau'] += $chietkhau;
+            $arrDay[$key]['tong_tien_coc'] += $bk->tien_coc;
+            
+            if($year < 2024 || ($month <= 5 && $year == 2024)){
+                if($error == 1){
+                    $tien_chi_5 = ($bk->total_price - $tong_tien_flycam_johntour)*5/100;
+                }else{
+                    $tien_chi_5 = ($bk->total_price - $bk->discount - $bk->commision + $bk->tien_coc)*5/100;
+                }             
+            }else{
+                $tien_chi_5 = ($bk->total_price - $bk->discount - $bk->commision + $bk->tien_coc)*5/100;
+            }
+            
+            $arrDay[$key]['tong_chi_5'] += $tien_chi_5;
+            $arrDay[$key]['tong_con_lai_chua_tru_chi_phi'] += $bk->total_price - $bk->discount - $chietkhau - $bk->tien_coc - $tien_chi_5;    
+
+          
+        }       
+    
+        $minDateFormat = date('d/m/Y', strtotime($mindate));
+        $maxDateFormat = date('d/m/Y', strtotime($maxdate));
+        $cateList = CostType::orderBy('display_order')->get();
+               
+        return view($view, compact('arrDay', 'tong_thuc_thu', 'tong_hoa_hong_sales', 'arrCost', 'tong_chi','maxDay', 'minDateFormat', 'maxDateFormat', 'month', 'year', 'cateList', 'type', 'tong_chi_phi_van_hanh', 'tong_chi_phi_khac', 'minDay', 'maxDay', 'arrNguoiThu', 'totalChi'));
+
+
+    }
 }
